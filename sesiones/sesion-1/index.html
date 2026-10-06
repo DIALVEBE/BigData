@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sesión 1 · Introducción a Big Data</title>
+    <meta name="description" content="Session 1: updated bilingual introduction to Big Data.">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <strong>Universidad Santo Tomás</strong>
+        <span>Optativa 1 · Big Data</span>
+      </div>
+      <nav class="nav-actions" aria-label="Navigation">
+        <a class="home-link" href="../../"><span data-lang="es">Inicio</span><span data-lang="en">Home</span></a>
+        <div class="language-toggle" aria-label="Language selector">
+          <button type="button" data-lang-button="es">ES</button>
+          <button type="button" data-lang-button="en">EN</button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero lesson-hero">
+        <div class="hero-inner">
+          <div>
+            <p class="eyebrow" data-lang="es">Sesión 1 · Jueves, 1 de octubre</p>
+            <p class="eyebrow" data-lang="en">Session 1 · Thursday, October 1</p>
+            <div data-lang="es">
+              <h1>Introducción a Big Data</h1>
+              <p>Los datos no son valiosos por ser grandes: se vuelven valiosos cuando permiten observar patrones, tomar mejores decisiones y actuar a tiempo.</p>
+            </div>
+            <div data-lang="en">
+              <h1>Introduction to Big Data</h1>
+              <p>Data is not valuable just because it is big: it becomes valuable when it reveals patterns, improves decisions, and supports timely action.</p>
+            </div>
+            <div class="stats-band">
+              <div class="stat">
+                <strong>402.7M</strong>
+                <span data-lang="es">TB creados cada día, estimación 2025-2026</span>
+                <span data-lang="en">TB created each day, 2025-2026 estimate</span>
+              </div>
+              <div class="stat">
+                <strong>175 ZB</strong>
+                <span data-lang="es">datasfera global estimada para 2025</span>
+                <span data-lang="en">estimated global datasphere for 2025</span>
+              </div>
+              <div class="stat">
+                <strong>7.3B</strong>
+                <span data-lang="es">suscripciones móviles inteligentes en 2025</span>
+                <span data-lang="en">smartphone mobile subscriptions in 2025</span>
+              </div>
+              <div class="stat">
+                <strong>5.52B</strong>
+                <span data-lang="es">personas conectadas reportadas por Domo</span>
+                <span data-lang="en">people online reported by Domo</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <svg class="signal-map" viewBox="0 0 520 470" role="img">
+              <rect x="48" y="64" width="424" height="328" rx="22" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.32)" stroke-width="2"/>
+              <g fill="rgba(255,255,255,.9)">
+                <circle cx="142" cy="142" r="34"/>
+                <circle cx="264" cy="102" r="22"/>
+                <circle cx="376" cy="154" r="30"/>
+                <circle cx="178" cy="260" r="24"/>
+                <circle cx="314" cy="262" r="42"/>
+                <circle cx="408" cy="320" r="18"/>
+              </g>
+              <g fill="none" stroke="#9fe5ef" stroke-width="4" stroke-linecap="round">
+                <path d="M142 142 L264 102 L376 154 L314 262 L178 260 Z"/>
+                <path d="M314 262 L408 320"/>
+                <path d="M142 142 L178 260"/>
+              </g>
+              <g fill="#083747" font-family="Inter, sans-serif" font-weight="900" font-size="18">
+                <text x="118" y="148">IoT</text>
+                <text x="244" y="108">API</text>
+                <text x="344" y="160">SQL</text>
+                <text x="151" y="266">TXT</text>
+                <text x="286" y="269">ML</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Ruta de la sesión</h2>
+              <p>La presentación original fue reorganizada como una guía de lectura con definiciones, ejemplos y una actividad de cierre.</p>
+            </div>
+            <div data-lang="en">
+              <h2>Session Path</h2>
+              <p>The original presentation was reorganized as a reading guide with definitions, examples, and a closing activity.</p>
+            </div>
+          </div>
+          <nav class="toc" aria-label="Session sections">
+            <a href="#valor"><span data-lang="es">1. Valor de los datos</span><span data-lang="en">1. Data value</span></a>
+            <a href="#escala"><span data-lang="es">2. Escala actual</span><span data-lang="en">2. Current scale</span></a>
+            <a href="#tipos"><span data-lang="es">3. Tipos de datos</span><span data-lang="en">3. Data types</span></a>
+            <a href="#definicion"><span data-lang="es">4. Definición</span><span data-lang="en">4. Definition</span></a>
+            <a href="#historia"><span data-lang="es">5. Historia breve</span><span data-lang="en">5. Brief history</span></a>
+            <a href="#vs"><span data-lang="es">6. Las V</span><span data-lang="en">6. The Vs</span></a>
+            <a href="#arquitectura"><span data-lang="es">7. Arquitectura</span><span data-lang="en">7. Architecture</span></a>
+            <a href="#actividad"><span data-lang="es">8. Actividad</span><span data-lang="en">8. Activity</span></a>
+          </nav>
+        </div>
+      </section>
+
+      <section class="section" id="valor">
+        <div class="section-inner two-col">
+          <div>
+            <div data-lang="es">
+              <p class="eyebrow">De datos a ventaja competitiva</p>
+              <h2>Los datos existen, pero no siempre se usan bien</h2>
+            </div>
+            <div data-lang="en">
+              <p class="eyebrow">From data to competitive advantage</p>
+              <h2>Data exists, but it is not always used well</h2>
+            </div>
+          </div>
+          <div>
+            <p data-lang="es">Las organizaciones registran ventas, clics, rutas, sensores, llamadas, imágenes, pagos y conversaciones. Big Data comienza cuando esa información crece en volumen, velocidad o variedad hasta exigir nuevas formas de almacenamiento, procesamiento, gobierno y análisis.</p>
+            <p data-lang="en">Organizations record sales, clicks, routes, sensors, calls, images, payments, and conversations. Big Data begins when that information grows in volume, velocity, or variety enough to require new forms of storage, processing, governance, and analysis.</p>
+            <div class="note">
+              <p data-lang="es"><strong>Idea clave:</strong> el objetivo no es guardar todo; es decidir qué datos merecen conservarse, cómo se protegen y qué preguntas pueden responder.</p>
+              <p data-lang="en"><strong>Key idea:</strong> the goal is not to store everything; it is to decide what data deserves to be kept, how it is protected, and what questions it can answer.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="escala">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>El mundo se llenó de datos</h2>
+              <p>Las cifras de la PPTX fueron revisadas. Se conserva la intuición, pero se aclara que las estimaciones varían según la metodología.</p>
+            </div>
+            <div data-lang="en">
+              <h2>The world filled up with data</h2>
+              <p>The figures from the PPTX were reviewed. The intuition remains, but the page clarifies that estimates vary by methodology.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <article class="card">
+              <strong data-lang="es">Datos creados por día</strong>
+              <strong data-lang="en">Data created per day</strong>
+              <p data-lang="es">Una estimación reciente calcula cerca de 402.74 millones de terabytes diarios. La cifra ayuda a dimensionar la escala, no debe leerse como medición exacta en tiempo real.</p>
+              <p data-lang="en">A recent estimate puts daily data creation near 402.74 million terabytes. The figure is useful for scale, not as an exact real-time measurement.</p>
+            </article>
+            <article class="card">
+              <strong data-lang="es">Datasfera global</strong>
+              <strong data-lang="en">Global datasphere</strong>
+              <p data-lang="es">IDC proyectó 175 zettabytes para 2025, frente a 33 ZB en 2018. Ese crecimiento explica la necesidad de nubes, lagos de datos y procesamiento distribuido.</p>
+              <p data-lang="en">IDC projected 175 zettabytes for 2025, up from 33 ZB in 2018. That growth explains the need for clouds, data lakes, and distributed processing.</p>
+            </article>
+            <article class="card">
+              <strong data-lang="es">Usuarios y dispositivos</strong>
+              <strong data-lang="en">Users and devices</strong>
+              <p data-lang="es">En 2025 se reportan casi 7.3 mil millones de suscripciones móviles inteligentes y miles de millones de personas conectadas generando trazas digitales.</p>
+              <p data-lang="en">In 2025 there are almost 7.3 billion smartphone mobile subscriptions and billions of connected people producing digital traces.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="tipos">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>¿Qué son los datos?</h2>
+              <p>Un dato es una unidad básica de información procesable por un sistema. En Big Data importan tanto su forma como su contexto.</p>
+            </div>
+            <div data-lang="en">
+              <h2>What is data?</h2>
+              <p>A datum is a basic unit of information that a system can process. In Big Data, both form and context matter.</p>
+            </div>
+          </div>
+          <div class="data-types">
+            <article class="card">
+              <strong data-lang="es">Estructurados</strong>
+              <strong data-lang="en">Structured</strong>
+              <p data-lang="es">Tablas, bases de datos relacionales y hojas de cálculo con esquema fijo. Ejemplos: ventas, nómina, inventario.</p>
+              <p data-lang="en">Tables, relational databases, and spreadsheets with fixed schema. Examples: sales, payroll, inventory.</p>
+            </article>
+            <article class="card">
+              <strong data-lang="es">Semiestructurados</strong>
+              <strong data-lang="en">Semi-structured</strong>
+              <p data-lang="es">Datos con etiquetas o jerarquías flexibles: JSON, XML, logs, eventos de APIs, mensajes de sensores.</p>
+              <p data-lang="en">Data with flexible tags or hierarchies: JSON, XML, logs, API events, sensor messages.</p>
+            </article>
+            <article class="card">
+              <strong data-lang="es">No estructurados</strong>
+              <strong data-lang="en">Unstructured</strong>
+              <p data-lang="es">Texto libre, imágenes, audio, video, publicaciones en redes y documentos que requieren extracción o interpretación.</p>
+              <p data-lang="en">Free text, images, audio, video, social posts, and documents that require extraction or interpretation.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="definicion">
+        <div class="section-inner two-col">
+          <div>
+            <div data-lang="es">
+              <p class="eyebrow">Definición actualizada</p>
+              <h2>Big Data es un problema de escala, diversidad y oportunidad</h2>
+            </div>
+            <div data-lang="en">
+              <p class="eyebrow">Updated definition</p>
+              <h2>Big Data is a problem of scale, diversity, and timing</h2>
+            </div>
+          </div>
+          <div>
+            <p data-lang="es">Una definición práctica: Big Data describe activos de información cuyo volumen, velocidad, variedad u otras condiciones exceden lo que una organización puede gestionar de forma eficiente con herramientas tradicionales. Por eso exige arquitecturas distribuidas, automatización, gobierno y analítica avanzada.</p>
+            <p data-lang="en">A practical definition: Big Data describes information assets whose volume, velocity, variety, or other conditions exceed what an organization can efficiently manage with traditional tools. That is why it requires distributed architectures, automation, governance, and advanced analytics.</p>
+            <p data-lang="es">La palabra importante no es solamente <em>big</em>. Dos organizaciones pueden tener el mismo tamaño de datos y problemas muy distintos: una necesita respuestas en milisegundos, otra integra formatos heterogéneos, y otra debe garantizar trazabilidad legal.</p>
+            <p data-lang="en">The important word is not only <em>big</em>. Two organizations can have the same data size and very different problems: one needs millisecond responses, another integrates heterogeneous formats, and another must guarantee legal traceability.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="historia">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Breve historia</h2>
+              <p>Big Data no aparece de la nada: es la evolución de bases de datos, inteligencia de negocios, web, nube e inteligencia artificial.</p>
+            </div>
+            <div data-lang="en">
+              <h2>Brief History</h2>
+              <p>Big Data does not appear from nowhere: it evolves from databases, business intelligence, the web, cloud, and artificial intelligence.</p>
+            </div>
+          </div>
+          <div class="timeline">
+            <div class="timeline-item"><time>1960s-1970s</time><span data-lang="es">Sistemas transaccionales y bases relacionales organizan datos estructurados.</span><span data-lang="en">Transactional systems and relational databases organize structured data.</span></div>
+            <div class="timeline-item"><time>1980s-1990s</time><span data-lang="es">La inteligencia de negocios convierte datos históricos en reportes gerenciales.</span><span data-lang="en">Business intelligence turns historical data into managerial reports.</span></div>
+            <div class="timeline-item"><time>2001</time><span data-lang="es">Doug Laney formula las 3 V: volumen, velocidad y variedad.</span><span data-lang="en">Doug Laney formulates the 3 Vs: volume, velocity, and variety.</span></div>
+            <div class="timeline-item"><time>2004-2006</time><span data-lang="es">MapReduce y Hadoop popularizan el procesamiento distribuido en hardware común.</span><span data-lang="en">MapReduce and Hadoop popularize distributed processing on commodity hardware.</span></div>
+            <div class="timeline-item"><time>2010s</time><span data-lang="es">La nube y Spark aceleran el análisis a gran escala y reducen barreras de infraestructura.</span><span data-lang="en">Cloud platforms and Spark accelerate large-scale analytics and reduce infrastructure barriers.</span></div>
+            <div class="timeline-item"><time>2020s</time><span data-lang="es">Lakehouse, streaming, MLOps e IA generativa hacen más importante la calidad, el linaje y la gobernanza.</span><span data-lang="en">Lakehouse, streaming, MLOps, and generative AI make quality, lineage, and governance more important.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="vs">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Las V de Big Data</h2>
+              <p>Las 3 V siguen siendo la entrada conceptual, pero en proyectos reales se evalúan más dimensiones.</p>
+            </div>
+            <div data-lang="en">
+              <h2>The Vs of Big Data</h2>
+              <p>The 3 Vs remain the conceptual entry point, but real projects evaluate more dimensions.</p>
+            </div>
+          </div>
+          <div class="v-grid">
+            <article class="card"><strong>Volumen · Volume</strong><p data-lang="es">Cantidad de datos que se deben capturar, almacenar y procesar.</p><p data-lang="en">Amount of data to capture, store, and process.</p></article>
+            <article class="card"><strong>Velocidad · Velocity</strong><p data-lang="es">Ritmo al que los datos se generan y pierden valor.</p><p data-lang="en">Rate at which data is generated and loses value.</p></article>
+            <article class="card"><strong>Variedad · Variety</strong><p data-lang="es">Formatos, fuentes y estructuras diferentes.</p><p data-lang="en">Different formats, sources, and structures.</p></article>
+            <article class="card"><strong>Veracidad · Veracity</strong><p data-lang="es">Calidad, confiabilidad, sesgo e integridad.</p><p data-lang="en">Quality, reliability, bias, and integrity.</p></article>
+            <article class="card"><strong>Valor · Value</strong><p data-lang="es">Beneficio que justifica el costo técnico y operativo.</p><p data-lang="en">Benefit that justifies technical and operational cost.</p></article>
+            <article class="card"><strong>Visualización · Visualization</strong><p data-lang="es">Capacidad de explicar hallazgos de manera clara.</p><p data-lang="en">Ability to explain findings clearly.</p></article>
+            <article class="card"><strong>Variabilidad · Variability</strong><p data-lang="es">Cambios en significado, patrones o comportamiento.</p><p data-lang="en">Changes in meaning, patterns, or behavior.</p></article>
+            <article class="card"><strong>Vulnerabilidad · Vulnerability</strong><p data-lang="es">Riesgos de privacidad, seguridad y cumplimiento.</p><p data-lang="en">Privacy, security, and compliance risks.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="sectores">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Aplicaciones en sectores clave</h2>
+              <p>La pregunta importante es qué decisión mejora cuando la organización entiende sus datos.</p>
+            </div>
+            <div data-lang="en">
+              <h2>Applications in Key Sectors</h2>
+              <p>The important question is which decision improves when the organization understands its data.</p>
+            </div>
+          </div>
+          <div class="sector-grid">
+            <article class="card"><strong data-lang="es">Salud</strong><strong data-lang="en">Healthcare</strong><p data-lang="es">Historia clínica, imágenes, triage, ocupación y modelos de riesgo.</p><p data-lang="en">Clinical records, images, triage, occupancy, and risk models.</p></article>
+            <article class="card"><strong data-lang="es">Finanzas</strong><strong data-lang="en">Finance</strong><p data-lang="es">Fraude, scoring, transacciones, riesgo y personalización.</p><p data-lang="en">Fraud, scoring, transactions, risk, and personalization.</p></article>
+            <article class="card"><strong data-lang="es">Transporte</strong><strong data-lang="en">Transportation</strong><p data-lang="es">Rutas, demanda, mantenimiento predictivo y seguridad vial.</p><p data-lang="en">Routes, demand, predictive maintenance, and road safety.</p></article>
+            <article class="card"><strong data-lang="es">Educación</strong><strong data-lang="en">Education</strong><p data-lang="es">Seguimiento académico, permanencia, recursos y aprendizaje adaptativo.</p><p data-lang="en">Academic tracking, retention, resources, and adaptive learning.</p></article>
+            <article class="card"><strong data-lang="es">Comercio</strong><strong data-lang="en">Commerce</strong><p data-lang="es">Recomendaciones, inventario, precios, logística y experiencia del cliente.</p><p data-lang="en">Recommendations, inventory, pricing, logistics, and customer experience.</p></article>
+            <article class="card"><strong data-lang="es">Gobierno</strong><strong data-lang="en">Government</strong><p data-lang="es">Servicios públicos, datos abiertos, movilidad, seguridad y focalización social.</p><p data-lang="en">Public services, open data, mobility, safety, and social targeting.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="arquitectura">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Arquitectura Big Data: del dato a la decisión</h2>
+              <p>La arquitectura resume el camino desde la fuente hasta la acción. La gobernanza atraviesa todas las capas.</p>
+            </div>
+            <div data-lang="en">
+              <h2>Big Data Architecture: from data to decision</h2>
+              <p>The architecture summarizes the path from source to action. Governance crosses every layer.</p>
+            </div>
+          </div>
+          <div class="architecture">
+            <div class="arch-step"><strong data-lang="es">Ingesta</strong><strong data-lang="en">Ingestion</strong><span>Kafka · NiFi · APIs · CDC</span></div>
+            <div class="arch-step"><strong data-lang="es">Almacenamiento</strong><strong data-lang="en">Storage</strong><span>Data lake · Object storage · NoSQL</span></div>
+            <div class="arch-step"><strong data-lang="es">Procesamiento</strong><strong data-lang="en">Processing</strong><span>Spark · Flink · SQL engines</span></div>
+            <div class="arch-step"><strong data-lang="es">Análisis e IA</strong><strong data-lang="en">Analytics and AI</strong><span>Python · ML · Forecasting · NLP</span></div>
+            <div class="arch-step"><strong data-lang="es">Visualización</strong><strong data-lang="en">Visualization</strong><span>Dashboards · Reports · Alerts</span></div>
+          </div>
+          <div class="governance">
+            <strong data-lang="es">Capa transversal:</strong>
+            <strong data-lang="en">Cross-cutting layer:</strong>
+            <span data-lang="es"> gobernanza, seguridad, calidad, catálogo, linaje, control de acceso y cumplimiento normativo.</span>
+            <span data-lang="en"> governance, security, quality, catalog, lineage, access control, and regulatory compliance.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Conceptos básicos</h2>
+              <p>Estos términos aparecen durante la sesión y volverán en las siguientes clases.</p>
+            </div>
+            <div data-lang="en">
+              <h2>Basic Concepts</h2>
+              <p>These terms appear during the session and will return in the next classes.</p>
+            </div>
+          </div>
+          <div class="concept-grid">
+            <article class="card"><strong>Batch processing</strong><p data-lang="es">Procesamiento por lotes sobre grandes conjuntos de datos cuando la respuesta no necesita ser inmediata.</p><p data-lang="en">Batch processing over large datasets when the response does not need to be immediate.</p></article>
+            <article class="card"><strong>Cluster computing</strong><p data-lang="es">Coordinación de varios equipos para actuar como una plataforma de cómputo y almacenamiento.</p><p data-lang="en">Coordination of multiple machines to act as a computing and storage platform.</p></article>
+            <article class="card"><strong>Data warehouse</strong><p data-lang="es">Repositorio curado, estructurado y optimizado para análisis e informes.</p><p data-lang="en">Curated, structured repository optimized for analytics and reporting.</p></article>
+            <article class="card"><strong>Data lake</strong><p data-lang="es">Repositorio flexible para datos estructurados, semiestructurados y no estructurados.</p><p data-lang="en">Flexible repository for structured, semi-structured, and unstructured data.</p></article>
+            <article class="card"><strong>ETL / ELT</strong><p data-lang="es">Flujos para extraer, transformar y cargar datos; en la nube moderna suele cargarse primero y transformarse después.</p><p data-lang="en">Flows to extract, transform, and load data; in modern cloud stacks, data is often loaded first and transformed later.</p></article>
+            <article class="card"><strong>NoSQL</strong><p data-lang="es">Familia de bases no relacionales útil para documentos, grafos, columnas, clave-valor y escalabilidad distribuida.</p><p data-lang="en">Family of non-relational databases useful for documents, graphs, columns, key-value data, and distributed scalability.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section activity" id="actividad">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Actividad de cierre: ¿dónde viven los datos?</h2>
+              <p>Trabaja con una empresa o sector que conozcas y conecta fuentes de datos con decisiones reales.</p>
+            </div>
+            <div data-lang="en">
+              <h2>Closing Activity: where does data live?</h2>
+              <p>Work with a company or sector you know and connect data sources with real decisions.</p>
+            </div>
+          </div>
+          <div class="activity-grid">
+            <article class="card">
+              <h3 data-lang="es">Instrucciones</h3>
+              <h3 data-lang="en">Instructions</h3>
+              <ol data-lang="es">
+                <li>Elige una organización: banco, hospital, universidad, comercio, transporte o gobierno.</li>
+                <li>Identifica mínimo seis fuentes de datos que genera o consume cada día.</li>
+                <li>Clasifica cada fuente como estructurada, semiestructurada o no estructurada.</li>
+                <li>Relaciona cada fuente con la V más fuerte y explica por qué.</li>
+                <li>Formula una pregunta de negocio que esos datos podrían responder.</li>
+              </ol>
+              <ol data-lang="en">
+                <li>Choose an organization: bank, hospital, university, commerce, transportation, or government.</li>
+                <li>Identify at least six data sources it generates or consumes every day.</li>
+                <li>Classify each source as structured, semi-structured, or unstructured.</li>
+                <li>Connect each source with the strongest V and explain why.</li>
+                <li>Write one business question that those data sources could answer.</li>
+              </ol>
+            </article>
+            <article class="card">
+              <h3 data-lang="es">Producto esperado</h3>
+              <h3 data-lang="en">Expected output</h3>
+              <p data-lang="es">Una tabla breve con columnas: fuente, tipo, V dominante, justificación y pregunta de negocio. La calidad se evalúa por la relación entre evidencia y decisión.</p>
+              <p data-lang="en">A short table with columns: source, type, dominant V, justification, and business question. Quality is evaluated by the relationship between evidence and decision.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-inner sources">
+          <div data-lang="es">
+            <h2>Fuentes consultadas para actualizar la sesión</h2>
+            <ul>
+              <li><a href="https://explodingtopics.com/blog/data-generated-per-day">Exploding Topics: Amount of Data Created Daily</a>.</li>
+              <li><a href="https://www.seagate.com/www-content/promos/age-of-ai/files/seagate-age-of-ai.pdf">Seagate / IDC: Data Age 2025</a>.</li>
+              <li><a href="https://www.statista.com/statistics/330695/number-of-smartphone-users-worldwide/">Statista: smartphone mobile network subscriptions worldwide</a>.</li>
+              <li><a href="https://www.domoinvestors.com/news/news-details/2024/Domo-Releases-12th-Annual-Data-Never-Sleeps-Report/default.aspx">Domo: Data Never Sleeps 12.0</a>.</li>
+              <li><a href="https://www.gartner.com/en/topics/data-and-analytics">Gartner: Data and Analytics</a>.</li>
+            </ul>
+          </div>
+          <div data-lang="en">
+            <h2>Sources used to update the session</h2>
+            <ul>
+              <li><a href="https://explodingtopics.com/blog/data-generated-per-day">Exploding Topics: Amount of Data Created Daily</a>.</li>
+              <li><a href="https://www.seagate.com/www-content/promos/age-of-ai/files/seagate-age-of-ai.pdf">Seagate / IDC: Data Age 2025</a>.</li>
+              <li><a href="https://www.statista.com/statistics/330695/number-of-smartphone-users-worldwide/">Statista: smartphone mobile network subscriptions worldwide</a>.</li>
+              <li><a href="https://www.domoinvestors.com/news/news-details/2024/Domo-Releases-12th-Annual-Data-Never-Sleeps-Report/default.aspx">Domo: Data Never Sleeps 12.0</a>.</li>
+              <li><a href="https://www.gartner.com/en/topics/data-and-analytics">Gartner: Data and Analytics</a>.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="section-inner">
+        <span>Universidad Santo Tomás · Big Data</span>
+        <span>2026</span>
+      </div>
+    </footer>
+
+    <script src="../../script.js"></script>
+  </body>
+</html>

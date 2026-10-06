@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Big Data | Universidad Santo Tomás</title>
+    <meta name="description" content="Bilingual course site for the Big Data elective at Universidad Santo Tomás.">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <strong>Universidad Santo Tomás</strong>
+        <span>Optativa 1 · Big Data</span>
+      </div>
+      <nav class="nav-actions" aria-label="Language">
+        <div class="language-toggle" aria-label="Language selector">
+          <button type="button" data-lang-button="es">ES</button>
+          <button type="button" data-lang-button="en">EN</button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <div>
+            <p class="eyebrow">Universidad Santo Tomás</p>
+            <div data-lang="es">
+              <h1>Big Data</h1>
+              <p>Un recorrido introductorio por los datos masivos, su valor para la toma de decisiones y las arquitecturas que permiten convertir señales dispersas en conocimiento accionable.</p>
+            </div>
+            <div data-lang="en">
+              <h1>Big Data</h1>
+              <p>An introductory journey through massive data, its value for decision-making, and the architectures that turn scattered signals into actionable knowledge.</p>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <svg class="signal-map" viewBox="0 0 520 470" role="img">
+              <defs>
+                <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#ffffff" stop-opacity="0.98"/>
+                  <stop offset="1" stop-color="#9fe5ef" stop-opacity="0.86"/>
+                </linearGradient>
+              </defs>
+              <rect x="36" y="48" width="448" height="344" rx="28" fill="none" stroke="rgba(255,255,255,.42)" stroke-width="2"/>
+              <path d="M80 326 C150 256 176 288 232 214 C286 142 338 170 434 92" fill="none" stroke="url(#g)" stroke-width="10" stroke-linecap="round"/>
+              <path d="M88 356 H432" stroke="rgba(255,255,255,.22)" stroke-width="2"/>
+              <path d="M88 286 H432" stroke="rgba(255,255,255,.16)" stroke-width="2"/>
+              <path d="M88 216 H432" stroke="rgba(255,255,255,.16)" stroke-width="2"/>
+              <path d="M88 146 H432" stroke="rgba(255,255,255,.16)" stroke-width="2"/>
+              <g fill="#fff">
+                <circle cx="80" cy="326" r="13"/>
+                <circle cx="170" cy="275" r="13"/>
+                <circle cx="232" cy="214" r="13"/>
+                <circle cx="333" cy="161" r="13"/>
+                <circle cx="434" cy="92" r="13"/>
+              </g>
+              <g fill="rgba(255,255,255,.84)" font-family="Inter, sans-serif" font-size="18" font-weight="800">
+                <text x="72" y="414">ingesta</text>
+                <text x="214" y="414">procesamiento</text>
+                <text x="374" y="414">decisión</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Tabla de contenido</h2>
+              <p>Cinco sesiones presenciales durante octubre. La primera sesión ya está publicada con el contenido actualizado de la presentación 1.</p>
+            </div>
+            <div data-lang="en">
+              <h2>Table of Contents</h2>
+              <p>Five in-person sessions during October. The first session is already published with updated content from presentation 1.</p>
+            </div>
+          </div>
+
+          <table class="session-table">
+            <thead>
+              <tr>
+                <th data-lang="es">Sesión</th>
+                <th data-lang="es">Fecha</th>
+                <th data-lang="es">Tema</th>
+                <th data-lang="es">Página</th>
+                <th data-lang="en">Session</th>
+                <th data-lang="en">Date</th>
+                <th data-lang="en">Topic</th>
+                <th data-lang="en">Page</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Sesión / Session">1</td>
+                <td data-label="Fecha / Date">Jueves, 1 de octubre · Thursday, October 1</td>
+                <td data-label="Tema / Topic">
+                  <span data-lang="es">Introducción a Big Data</span>
+                  <span data-lang="en">Introduction to Big Data</span>
+                </td>
+                <td data-label="Página / Page"><a href="sesiones/sesion-1/"><span data-lang="es">Abrir sesión</span><span data-lang="en">Open session</span></a></td>
+              </tr>
+              <tr>
+                <td data-label="Sesión / Session">2</td>
+                <td data-label="Fecha / Date">Jueves, 8 de octubre · Thursday, October 8</td>
+                <td data-label="Tema / Topic">
+                  <span data-lang="es">Data Lake y Data Warehouse</span>
+                  <span data-lang="en">Data Lake and Data Warehouse</span>
+                </td>
+                <td data-label="Página / Page"><span class="pill locked">PPTX 2</span></td>
+              </tr>
+              <tr>
+                <td data-label="Sesión / Session">3</td>
+                <td data-label="Fecha / Date">Jueves, 15 de octubre · Thursday, October 15</td>
+                <td data-label="Tema / Topic">
+                  <span data-lang="es">Bases de datos para Big Data</span>
+                  <span data-lang="en">Databases for Big Data</span>
+                </td>
+                <td data-label="Página / Page"><span class="pill locked">PPTX 3</span></td>
+              </tr>
+              <tr>
+                <td data-label="Sesión / Session">4</td>
+                <td data-label="Fecha / Date">Jueves, 22 de octubre · Thursday, October 22</td>
+                <td data-label="Tema / Topic">
+                  <span data-lang="es">MongoDB y análisis de sentimientos</span>
+                  <span data-lang="en">MongoDB and sentiment analysis</span>
+                </td>
+                <td data-label="Página / Page"><span class="pill locked">PPTX 4</span></td>
+              </tr>
+              <tr>
+                <td data-label="Sesión / Session">5</td>
+                <td data-label="Fecha / Date">Jueves, 29 de octubre · Thursday, October 29</td>
+                <td data-label="Tema / Topic">
+                  <span data-lang="es">Gobernanza de datos</span>
+                  <span data-lang="en">Data governance</span>
+                </td>
+                <td data-label="Página / Page"><span class="pill locked">PPTX 5</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <div class="grid">
+            <article class="tile">
+              <strong data-lang="es">Bilingüe</strong>
+              <strong data-lang="en">Bilingual</strong>
+              <p data-lang="es">El selector ES/EN conserva la preferencia en el navegador.</p>
+              <p data-lang="en">The ES/EN selector keeps the preference in the browser.</p>
+            </article>
+            <article class="tile">
+              <strong data-lang="es">Responsive</strong>
+              <strong data-lang="en">Responsive</strong>
+              <p data-lang="es">La tabla y las páginas se adaptan a escritorio, tablet y móvil.</p>
+              <p data-lang="en">The table and pages adapt to desktop, tablet, and mobile.</p>
+            </article>
+            <article class="tile">
+              <strong data-lang="es">Actualizado</strong>
+              <strong data-lang="en">Updated</strong>
+              <p data-lang="es">La sesión 1 reemplaza cifras e imágenes antiguas por contenido revisado.</p>
+              <p data-lang="en">Session 1 replaces old figures and images with reviewed content.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="section-inner">
+        <span>Universidad Santo Tomás · Big Data</span>
+        <span>2026</span>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
