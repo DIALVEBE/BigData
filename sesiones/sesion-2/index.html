@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sesión 2 · Bases de datos y SQL</title>
+    <meta name="description" content="Session 2: bilingual introduction to databases, relational design, data cleaning, and SQL queries.">
+    <link rel="stylesheet" href="../../styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <strong>Universidad Santo Tomás</strong>
+        <span>Optativa 1 · Big Data</span>
+      </div>
+      <nav class="nav-actions" aria-label="Navigation">
+        <a class="home-link" href="../../"><span data-lang="es">Inicio</span><span data-lang="en">Home</span></a>
+        <div class="language-toggle" aria-label="Language selector">
+          <button type="button" data-lang-button="es">ES</button>
+          <button type="button" data-lang-button="en">EN</button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero lesson-hero">
+        <div class="hero-inner">
+          <div>
+            <p class="eyebrow" data-lang="es">Sesión 2 · Jueves, 8 de octubre</p>
+            <p class="eyebrow" data-lang="en">Session 2 · Thursday, October 8</p>
+            <div data-lang="es">
+              <h1>Bases de datos y SQL</h1>
+              <p>De los datos sueltos a consultas que permiten responder preguntas con tablas, relaciones y criterios claros.</p>
+            </div>
+            <div data-lang="en">
+              <h1>Databases and SQL</h1>
+              <p>From loose data to queries that answer questions through tables, relationships, and clear criteria.</p>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <svg class="signal-map" viewBox="0 0 520 470" role="img">
+              <rect x="58" y="56" width="404" height="330" rx="24" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.32)" stroke-width="2"/>
+              <g fill="rgba(255,255,255,.92)" stroke="#9fe5ef" stroke-width="4">
+                <rect x="104" y="110" width="126" height="92" rx="12"/>
+                <rect x="292" y="110" width="126" height="92" rx="12"/>
+                <rect x="198" y="260" width="126" height="92" rx="12"/>
+              </g>
+              <g stroke="#9fe5ef" stroke-width="5" stroke-linecap="round">
+                <path d="M230 156 H292"/>
+                <path d="M167 202 L226 260"/>
+                <path d="M355 202 L298 260"/>
+              </g>
+              <g fill="#083747" font-family="Inter, sans-serif" font-weight="900" font-size="18">
+                <text x="130" y="148">Clientes</text>
+                <text x="319" y="148">Pedidos</text>
+                <text x="228" y="298">SQL</text>
+              </g>
+              <g fill="#083747" font-family="Inter, sans-serif" font-size="13" font-weight="800">
+                <text x="124" y="174">PK id_cliente</text>
+                <text x="310" y="174">FK id_cliente</text>
+                <text x="224" y="323">SELECT · JOIN</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Ruta de aprendizaje</h2>
+              <p>Esta guía acompaña la práctica en SQLBolt y conecta diseño de bases de datos con análisis exploratorio y limpieza de datos.</p>
+            </div>
+            <div data-lang="en">
+              <h2>Learning Path</h2>
+              <p>This guide supports SQLBolt practice and connects database design with exploratory analysis and data cleaning.</p>
+            </div>
+          </div>
+          <nav class="toc" aria-label="Session sections">
+            <a href="#datos"><span data-lang="es">1. Datos y bases</span><span data-lang="en">1. Data and databases</span></a>
+            <a href="#modelos"><span data-lang="es">2. SQL y NoSQL</span><span data-lang="en">2. SQL and NoSQL</span></a>
+            <a href="#claves"><span data-lang="es">3. Claves y relaciones</span><span data-lang="en">3. Keys and relationships</span></a>
+            <a href="#normalizacion"><span data-lang="es">4. Normalización</span><span data-lang="en">4. Normalization</span></a>
+            <a href="#eda"><span data-lang="es">5. EDA y limpieza</span><span data-lang="en">5. EDA and cleaning</span></a>
+            <a href="#sql"><span data-lang="es">6. SQL básico</span><span data-lang="en">6. Basic SQL</span></a>
+            <a href="#join"><span data-lang="es">7. INNER JOIN</span><span data-lang="en">7. INNER JOIN</span></a>
+            <a href="#reto"><span data-lang="es">8. Reto final</span><span data-lang="en">8. Final challenge</span></a>
+          </nav>
+        </div>
+      </section>
+
+      <section class="section" id="datos">
+        <div class="section-inner two-col">
+          <div>
+            <div data-lang="es">
+              <p class="eyebrow">Fundamentos</p>
+              <h2>¿Qué son los datos y qué es una base de datos?</h2>
+            </div>
+            <div data-lang="en">
+              <p class="eyebrow">Foundations</p>
+              <h2>What is data and what is a database?</h2>
+            </div>
+          </div>
+          <div class="content-flow">
+            <p data-lang="es">Un dato es una representación registrable: un nombre, una fecha, una edad, el precio de un producto o la calificación de una película. Una base de datos organiza esos datos para almacenarlos, consultarlos, relacionarlos y actualizarlos.</p>
+            <p data-lang="en">A datum is a recordable representation: a name, a date, an age, a product price, or a movie rating. A database organizes data so it can be stored, queried, related, and updated.</p>
+            <div class="mermaid-box">
+              <pre class="mermaid">flowchart LR
+    A[Data: sales and customers] --> B[Database]
+    B --> C[Queries]
+    C --> D[Information for decisions]</pre>
+            </div>
+            <div class="note">
+              <p data-lang="es"><strong>Pregunta guía:</strong> ¿qué cambia cuando la misma información deja de vivir en una hoja de cálculo aislada y pasa a ser usada por una aplicación con cientos de usuarios?</p>
+              <p data-lang="en"><strong>Guiding question:</strong> what changes when the same information stops living in an isolated spreadsheet and becomes part of an application used by hundreds of people?</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="modelos">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Bases relacionales y no relacionales</h2>
+              <p>No toda la información se organiza igual. El modelo se elige según el problema, las consultas y las reglas de consistencia.</p>
+            </div>
+            <div data-lang="en">
+              <h2>Relational and Non-Relational Databases</h2>
+              <p>Not all information is organized the same way. The model depends on the problem, the queries, and consistency rules.</p>
+            </div>
+          </div>
+          <div class="two-col">
+            <article class="card">
+              <strong data-lang="es">Relacionales (SQL)</strong>
+              <strong data-lang="en">Relational (SQL)</strong>
+              <p data-lang="es">Organizan información en tablas conectadas por claves. Son muy usadas en matrículas, facturación, inventarios y transacciones.</p>
+              <p data-lang="en">They organize information in tables connected by keys. They are widely used for enrollment, billing, inventory, and transactions.</p>
+              <div class="mermaid-box">
+                <pre class="mermaid">erDiagram
+    CUSTOMERS ||--o{ ORDERS : places
+    CUSTOMERS {
+        int customer_id PK
+        string name
+        string city
+    }
+    ORDERS {
+        int order_id PK
+        int customer_id FK
+        date date
+        float total
+    }</pre>
+              </div>
+            </article>
+            <article class="card">
+              <strong data-lang="es">No relacionales (NoSQL)</strong>
+              <strong data-lang="en">Non-relational (NoSQL)</strong>
+              <p data-lang="es">Pueden usar documentos, pares clave-valor, grafos o columnas anchas. NoSQL no significa “sin estructura”; significa que no se limita al modelo relacional tradicional.</p>
+              <p data-lang="en">They may use documents, key-value pairs, graphs, or wide columns. NoSQL does not mean “without structure”; it means not limited to the traditional relational model.</p>
+              <pre class="code-panel"><code>{
+  "order_id": 101,
+  "customer": {"name": "Ana", "city": "Tunja"},
+  "products": [
+    {"name": "Notebook", "quantity": 2},
+    {"name": "Pencil", "quantity": 3}
+  ],
+  "total": 18000
+}</code></pre>
+            </article>
+          </div>
+          <div class="table-wrap" style="margin-top:1rem">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th data-lang="es">Aspecto</th><th data-lang="es">Relacionales</th><th data-lang="es">No relacionales</th>
+                  <th data-lang="en">Aspect</th><th data-lang="en">Relational</th><th data-lang="en">Non-relational</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td data-lang="es">Organización</td><td data-lang="es">Tablas relacionadas</td><td data-lang="es">Documentos, claves, grafos u otros modelos</td><td data-lang="en">Organization</td><td data-lang="en">Related tables</td><td data-lang="en">Documents, keys, graphs, or other models</td></tr>
+                <tr><td data-lang="es">Estructura</td><td data-lang="es">Esquema definido</td><td data-lang="es">Puede ser más flexible</td><td data-lang="en">Structure</td><td data-lang="en">Defined schema</td><td data-lang="en">Can be more flexible</td></tr>
+                <tr><td data-lang="es">Consulta</td><td data-lang="es">Principalmente SQL</td><td data-lang="es">Lenguajes o API según el gestor</td><td data-lang="en">Querying</td><td data-lang="en">Mostly SQL</td><td data-lang="en">Languages or APIs depending on the system</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="claves">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Relaciones y claves</h2>
+              <p>Las claves permiten conectar tablas sin repetir todos los datos en cada registro.</p>
+            </div>
+            <div data-lang="en">
+              <h2>Relationships and Keys</h2>
+              <p>Keys connect tables without repeating all data in every record.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <article class="card"><strong>PK</strong><p data-lang="es">La clave primaria identifica de forma única cada fila de una tabla.</p><p data-lang="en">The primary key uniquely identifies each row in a table.</p></article>
+            <article class="card"><strong>FK</strong><p data-lang="es">La clave foránea referencia una clave de otra tabla.</p><p data-lang="en">The foreign key references a key from another table.</p></article>
+            <article class="card"><strong>1:N</strong><p data-lang="es">Un cliente puede tener muchos pedidos; cada pedido pertenece a un cliente.</p><p data-lang="en">One customer can have many orders; each order belongs to one customer.</p></article>
+          </div>
+          <div class="architecture" style="margin-top:1rem">
+            <div class="arch-step"><strong>Students</strong><span>student_id PK · name</span></div>
+            <div class="arch-step"><strong>Enrollments</strong><span>student_id FK · course_id FK · term</span></div>
+            <div class="arch-step"><strong>Courses</strong><span>course_id PK · name</span></div>
+            <div class="arch-step"><strong data-lang="es">Relación</strong><strong data-lang="en">Relationship</strong><span data-lang="es">Muchos a muchos mediante tabla intermedia.</span><span data-lang="en">Many-to-many through an intermediate table.</span></div>
+            <div class="arch-step"><strong data-lang="es">Regla</strong><strong data-lang="en">Rule</strong><span data-lang="es">Cada inscripción referencia registros existentes.</span><span data-lang="en">Each enrollment references existing records.</span></div>
+          </div>
+          <div class="note" style="margin-top:1rem">
+            <p data-lang="es"><strong>Importante:</strong> si `id_cliente = 1` aparece en dos pedidos, eso no es necesariamente un duplicado. Puede representar dos compras legítimas de la misma persona.</p>
+            <p data-lang="en"><strong>Important:</strong> if `customer_id = 1` appears in two orders, that is not necessarily a duplicate. It may represent two legitimate purchases by the same person.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="normalizacion">
+        <div class="section-inner two-col">
+          <div>
+            <div data-lang="es">
+              <p class="eyebrow">Diseño relacional</p>
+              <h2>Normalización: organizar para evitar problemas</h2>
+            </div>
+            <div data-lang="en">
+              <p class="eyebrow">Relational design</p>
+              <h2>Normalization: organizing to avoid problems</h2>
+            </div>
+          </div>
+          <div class="content-flow">
+            <p data-lang="es">La normalización separa entidades y relaciones para reducir redundancias innecesarias. Evita errores de actualización, inserción y eliminación cuando un dato se repite sin control.</p>
+            <p data-lang="en">Normalization separates entities and relationships to reduce unnecessary redundancy. It prevents update, insertion, and deletion problems when data is repeated without control.</p>
+            <div class="architecture">
+              <div class="arch-step"><strong data-lang="es">Datos repetidos</strong><strong data-lang="en">Repeated data</strong><span>Ventas</span></div>
+              <div class="arch-step"><strong data-lang="es">Entidades</strong><strong data-lang="en">Entities</strong><span>Clientes · Pedidos · Detalles</span></div>
+              <div class="arch-step"><strong data-lang="es">Tablas</strong><strong data-lang="en">Tables</strong><span data-lang="es">Separar información</span><span data-lang="en">Separate information</span></div>
+              <div class="arch-step"><strong data-lang="es">Claves</strong><strong data-lang="en">Keys</strong><span>PK · FK</span></div>
+              <div class="arch-step"><strong data-lang="es">Consistencia</strong><strong data-lang="en">Consistency</strong><span data-lang="es">Menos redundancia</span><span data-lang="en">Less redundancy</span></div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th data-lang="es">Forma normal</th><th data-lang="es">Idea introductoria</th><th data-lang="en">Normal form</th><th data-lang="en">Introductory idea</th></tr></thead>
+                <tbody>
+                  <tr><td>1FN / 1NF</td><td data-lang="es">Valores atómicos en cada celda.</td><td>1NF</td><td data-lang="en">Atomic values in each cell.</td></tr>
+                  <tr><td>2FN / 2NF</td><td data-lang="es">Evitar dependencias parciales en claves compuestas.</td><td>2NF</td><td data-lang="en">Avoid partial dependencies in composite keys.</td></tr>
+                  <tr><td>3FN / 3NF</td><td data-lang="es">Evitar dependencias transitivas de atributos no clave.</td><td>3NF</td><td data-lang="en">Avoid transitive dependencies of non-key attributes.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="eda">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>EDA, limpieza y diseño de bases</h2>
+              <p>En ciencia de datos, explorar y limpiar datos no es lo mismo que normalizar tablas, pero ambos procesos se complementan.</p>
+            </div>
+            <div data-lang="en">
+              <h2>EDA, Cleaning, and Database Design</h2>
+              <p>In data science, exploring and cleaning data is not the same as normalizing tables, but both processes complement each other.</p>
+            </div>
+          </div>
+          <div class="architecture">
+            <div class="arch-step"><strong data-lang="es">Fuentes</strong><strong data-lang="en">Sources</strong><span>CSV · Excel · Apps</span></div>
+            <div class="arch-step"><strong>EDA</strong><span data-lang="es">Explorar variables y errores</span><span data-lang="en">Explore variables and errors</span></div>
+            <div class="arch-step"><strong data-lang="es">Limpieza</strong><strong data-lang="en">Cleaning</strong><span data-lang="es">Corregir y transformar</span><span data-lang="en">Fix and transform</span></div>
+            <div class="arch-step"><strong data-lang="es">Diseño</strong><strong data-lang="en">Design</strong><span data-lang="es">Tablas y relaciones</span><span data-lang="en">Tables and relationships</span></div>
+            <div class="arch-step"><strong>SQL</strong><span data-lang="es">Consultar y decidir</span><span data-lang="en">Query and decide</span></div>
+          </div>
+          <div class="table-wrap" style="margin-top:1rem">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th data-lang="es">Situación</th><th data-lang="es">EDA o limpieza</th><th data-lang="es">Diseño relacional</th>
+                  <th data-lang="en">Situation</th><th data-lang="en">EDA or cleaning</th><th data-lang="en">Relational design</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td data-lang="es">Un cliente aparece dos veces</td><td data-lang="es">Verificar si es duplicado real.</td><td data-lang="es">Garantizar identificador único.</td><td data-lang="en">A customer appears twice</td><td data-lang="en">Check whether it is a real duplicate.</td><td data-lang="en">Ensure a unique identifier.</td></tr>
+                <tr><td data-lang="es">Una ciudad aparece como `Bogota`, `Bogotá` y `BOGOTA`</td><td data-lang="es">Estandarizar categorías.</td><td data-lang="es">Definir reglas de validación.</td><td data-lang="en">A city appears as `Bogota`, `Bogotá`, and `BOGOTA`</td><td data-lang="en">Standardize categories.</td><td data-lang="en">Define validation rules.</td></tr>
+                <tr><td data-lang="es">El nombre del programa se repite en miles de filas</td><td data-lang="es">Reconocer baja variedad.</td><td data-lang="es">Crear tabla `Programas` y referenciarla.</td><td data-lang="en">A program name repeats in thousands of rows</td><td data-lang="en">Recognize low variety.</td><td data-lang="en">Create a `Programs` table and reference it.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="sql">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>¿Qué es SQL?</h2>
+              <p>SQL permite consultar, insertar, actualizar y eliminar información. En esta sesión trabajamos consultas sin modificar datos.</p>
+            </div>
+            <div data-lang="en">
+              <h2>What is SQL?</h2>
+              <p>SQL lets us query, insert, update, and delete information. In this session we query data without modifying it.</p>
+            </div>
+          </div>
+          <div class="two-col">
+            <div class="content-flow">
+              <p data-lang="es">Una consulta básica responde: qué quiero ver, de qué tabla viene y qué condición debe cumplir.</p>
+              <p data-lang="en">A basic query answers: what I want to see, which table it comes from, and what condition it must satisfy.</p>
+              <pre class="code-panel"><code>SELECT name, city
+FROM Customers
+WHERE city = 'Tunja';</code></pre>
+              <p data-lang="es">La convención de escribir `SELECT` y `FROM` en mayúsculas mejora la lectura. Para textos se usan comillas simples.</p>
+              <p data-lang="en">The convention of writing `SELECT` and `FROM` in uppercase improves readability. Text values use single quotes.</p>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>SQL</th><th data-lang="es">Función</th><th data-lang="en">Function</th></tr></thead>
+                <tbody>
+                  <tr><td><code>SELECT</code></td><td data-lang="es">Escoger columnas</td><td data-lang="en">Choose columns</td></tr>
+                  <tr><td><code>FROM</code></td><td data-lang="es">Indicar la tabla</td><td data-lang="en">Indicate the table</td></tr>
+                  <tr><td><code>WHERE</code></td><td data-lang="es">Filtrar registros</td><td data-lang="en">Filter records</td></tr>
+                  <tr><td><code>DISTINCT</code></td><td data-lang="es">Evitar repetidos en la salida</td><td data-lang="en">Avoid repeated values in the output</td></tr>
+                  <tr><td><code>ORDER BY</code></td><td data-lang="es">Ordenar resultados</td><td data-lang="en">Sort results</td></tr>
+                  <tr><td><code>LIMIT</code></td><td data-lang="es">Limitar filas devueltas</td><td data-lang="en">Limit returned rows</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="lab">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Laboratorio en SQLBolt</h2>
+              <p>SQLBolt permite practicar en el navegador sin instalar programas ni crear una base de datos local.</p>
+            </div>
+            <div data-lang="en">
+              <h2>SQLBolt Lab</h2>
+              <p>SQLBolt lets you practice in the browser without installing software or creating a local database.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <article class="card"><strong>1. SELECT</strong><p><a href="https://sqlbolt.com/lesson/select_queries_introduction">SQLBolt lesson 1</a></p><pre class="code-panel"><code>SELECT title, year
+FROM Movies;</code></pre></article>
+            <article class="card"><strong>2. WHERE</strong><p><a href="https://sqlbolt.com/lesson/select_queries_with_constraints">SQLBolt lesson 2</a></p><pre class="code-panel"><code>SELECT title, year
+FROM Movies
+WHERE year BETWEEN 2000 AND 2010;</code></pre></article>
+            <article class="card"><strong>3. LIKE</strong><p><a href="https://sqlbolt.com/lesson/select_queries_with_constraints_pt_2">SQLBolt lesson 3</a></p><pre class="code-panel"><code>SELECT title
+FROM Movies
+WHERE title LIKE 'Toy%';</code></pre></article>
+            <article class="card"><strong>4. DISTINCT</strong><p><a href="https://sqlbolt.com/lesson/filtering_sorting_query_results">SQLBolt lesson 4</a></p><pre class="code-panel"><code>SELECT DISTINCT director
+FROM Movies;</code></pre></article>
+            <article class="card"><strong>5. ORDER BY</strong><p data-lang="es">Ordena y limita resultados.</p><p data-lang="en">Sort and limit results.</p><pre class="code-panel"><code>SELECT title, year
+FROM Movies
+ORDER BY year DESC
+LIMIT 5;</code></pre></article>
+            <article class="card"><strong>6. Review</strong><p><a href="https://sqlbolt.com/lesson/select_queries_review">SQLBolt review</a></p><p data-lang="es">Combina filtros, ordenamiento y límites.</p><p data-lang="en">Combine filters, sorting, and limits.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="join">
+        <div class="section-inner two-col">
+          <div>
+            <div data-lang="es">
+              <p class="eyebrow">Dos tablas</p>
+              <h2>INNER JOIN: unir información relacionada</h2>
+            </div>
+            <div data-lang="en">
+              <p class="eyebrow">Two tables</p>
+              <h2>INNER JOIN: combining related information</h2>
+            </div>
+          </div>
+          <div class="content-flow">
+            <p data-lang="es">`INNER JOIN` conserva las filas que encuentran coincidencia según la condición `ON`. Si una película no tiene fila relacionada en taquilla, no aparece en ese resultado.</p>
+            <p data-lang="en">`INNER JOIN` keeps rows that find a match according to the `ON` condition. If a movie has no related box-office row, it does not appear in that result.</p>
+            <div class="architecture">
+              <div class="arch-step"><strong>Movies</strong><span>id PK · title · director · year</span></div>
+              <div class="arch-step"><strong>BoxOffice</strong><span>movie_id FK · rating · sales</span></div>
+              <div class="arch-step"><strong>ON</strong><span>Movies.id = BoxOffice.movie_id</span></div>
+              <div class="arch-step"><strong>INNER JOIN</strong><span data-lang="es">Solo coincidencias</span><span data-lang="en">Matches only</span></div>
+              <div class="arch-step"><strong>SELECT</strong><span data-lang="es">Título, calificación, ventas</span><span data-lang="en">Title, rating, sales</span></div>
+            </div>
+            <pre class="code-panel"><code>SELECT Movies.title, BoxOffice.rating
+FROM Movies
+INNER JOIN BoxOffice
+ON Movies.id = BoxOffice.movie_id;</code></pre>
+            <pre class="code-panel"><code>SELECT Movies.title, BoxOffice.domestic_sales
+FROM Movies
+INNER JOIN BoxOffice
+ON Movies.id = BoxOffice.movie_id
+WHERE BoxOffice.domestic_sales > 200000000
+ORDER BY BoxOffice.domestic_sales DESC;</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="plantilla">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Plantilla de consulta</h2>
+              <p>No necesitas usar todas las cláusulas en cada consulta. Empieza por `SELECT` y `FROM`, y añade lo necesario.</p>
+            </div>
+            <div data-lang="en">
+              <h2>Query Template</h2>
+              <p>You do not need every clause in every query. Start with `SELECT` and `FROM`, then add what you need.</p>
+            </div>
+          </div>
+          <pre class="code-panel"><code>SELECT column1, column2
+FROM table1
+INNER JOIN table2
+ON table1.id = table2.related_id
+WHERE condition
+ORDER BY column1 DESC
+LIMIT 5;</code></pre>
+          <div class="architecture" style="margin-top:1rem">
+            <div class="arch-step"><strong data-lang="es">Pregunta</strong><strong data-lang="en">Question</strong><span data-lang="es">Qué quiero saber</span><span data-lang="en">What I want to know</span></div>
+            <div class="arch-step"><strong>FROM</strong><span data-lang="es">Dónde están los datos</span><span data-lang="en">Where the data is</span></div>
+            <div class="arch-step"><strong>JOIN</strong><span data-lang="es">Si necesito otra tabla</span><span data-lang="en">If I need another table</span></div>
+            <div class="arch-step"><strong>WHERE</strong><span data-lang="es">Filtros necesarios</span><span data-lang="en">Required filters</span></div>
+            <div class="arch-step"><strong>ORDER · LIMIT</strong><span data-lang="es">Ordenar o reducir salida</span><span data-lang="en">Sort or reduce output</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section activity" id="reto">
+        <div class="section-inner">
+          <div class="section-head">
+            <div data-lang="es">
+              <h2>Desafío final: analista de datos de películas</h2>
+              <p>Responde preguntas usando las tablas `Movies` y `BoxOffice` de SQLBolt.</p>
+            </div>
+            <div data-lang="en">
+              <h2>Final Challenge: Movie Data Analyst</h2>
+              <p>Answer questions using SQLBolt's `Movies` and `BoxOffice` tables.</p>
+            </div>
+          </div>
+          <div class="activity-grid">
+            <article class="card">
+              <h3 data-lang="es">Consultas</h3>
+              <h3 data-lang="en">Queries</h3>
+              <ol data-lang="es">
+                <li>Títulos de todas las películas disponibles.</li>
+                <li>Películas estrenadas después de 2005.</li>
+                <li>Películas que contienen `Toy` en el título.</li>
+                <li>Directores diferentes registrados.</li>
+                <li>Las cinco películas más recientes.</li>
+                <li>Títulos junto a su calificación de taquilla.</li>
+                <li>Películas con ventas internacionales superiores a 300 millones.</li>
+                <li>Las tres películas con mayores ventas nacionales.</li>
+              </ol>
+              <ol data-lang="en">
+                <li>Titles of all available movies.</li>
+                <li>Movies released after 2005.</li>
+                <li>Movies containing `Toy` in the title.</li>
+                <li>Different registered directors.</li>
+                <li>The five most recent movies.</li>
+                <li>Titles with their box-office rating.</li>
+                <li>Movies with international sales over 300 million.</li>
+                <li>The three movies with the highest domestic sales.</li>
+              </ol>
+            </article>
+            <article class="card">
+              <h3 data-lang="es">Entrega sugerida</h3>
+              <h3 data-lang="en">Suggested Output</h3>
+              <p data-lang="es">Para cada consulta registra la pregunta, el SQL escrito y una frase que explique el resultado. Si falla, lee el error y vuelve a intentar.</p>
+              <p data-lang="en">For each query, record the question, the SQL you wrote, and one sentence explaining the result. If it fails, read the error and try again.</p>
+              <p><a href="https://sqlbolt.com/lesson/select_queries_with_joins">SQLBolt JOIN lesson</a></p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-inner sources">
+          <div data-lang="es">
+            <h2>Recursos para continuar</h2>
+            <ul>
+              <li><a href="https://sqlbolt.com/">SQLBolt: lecciones interactivas de SQL</a>.</li>
+              <li><a href="https://www.sqlite.org/docs.html">SQLite: documentación oficial</a>.</li>
+              <li><a href="https://www.postgresql.org/docs/current/tutorial.html">PostgreSQL: tutorial oficial</a>.</li>
+            </ul>
+          </div>
+          <div data-lang="en">
+            <h2>Resources to Continue</h2>
+            <ul>
+              <li><a href="https://sqlbolt.com/">SQLBolt: interactive SQL lessons</a>.</li>
+              <li><a href="https://www.sqlite.org/docs.html">SQLite: official documentation</a>.</li>
+              <li><a href="https://www.postgresql.org/docs/current/tutorial.html">PostgreSQL: official tutorial</a>.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="section-inner">
+        <span>Diego Alejandro Vela Beltrán</span>
+        <span>Magíster en Inteligencia Artificial</span>
+      </div>
+    </footer>
+
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: false, theme: "base", themeVariables: { primaryColor: "#e7f4f7", primaryTextColor: "#17212b", primaryBorderColor: "#0a6f88", lineColor: "#0a6f88", fontFamily: "Inter, sans-serif" } });
+      await mermaid.run({ querySelector: ".mermaid" });
+    </script>
+    <script src="../../script.js"></script>
+  </body>
+</html>

@@ -22,11 +22,16 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
   line-height: 1.55;
+  overflow-x: hidden;
 }
 
 a {
@@ -240,6 +245,10 @@ h1 {
 .pill.locked {
   background: #eef1f4;
   color: var(--muted);
+}
+
+.pill span {
+  display: inline;
 }
 
 .grid {
@@ -459,6 +468,80 @@ h1 {
 
 .sources li {
   margin-bottom: 0.55rem;
+}
+
+.content-flow {
+  display: grid;
+  gap: 1.15rem;
+}
+
+.content-flow p,
+.content-flow ul,
+.content-flow ol {
+  margin: 0;
+}
+
+.code-panel {
+  margin: 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #101820;
+  color: #f2f7fa;
+}
+
+.code-panel code {
+  display: block;
+  min-width: max-content;
+  padding: 1rem;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+}
+
+.data-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.8rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.data-table th {
+  background: #edf5f7;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.data-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.mermaid-box {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1rem;
+  background: white;
+}
+
+.mermaid-box .mermaid {
+  min-width: 520px;
 }
 
 footer {
