@@ -70,11 +70,11 @@
           <div class="section-head">
             <div data-lang="es">
               <h2>Ruta de aprendizaje</h2>
-              <p>Esta guía acompaña la práctica en SQLBolt y conecta diseño de bases de datos con análisis exploratorio y limpieza de datos.</p>
+              <p>Esta guía conecta diseño de bases de datos, calidad de datos y consultas SQL con ejemplos completos de organizaciones reales.</p>
             </div>
             <div data-lang="en">
               <h2>Learning Path</h2>
-              <p>This guide supports SQLBolt practice and connects database design with exploratory analysis and data cleaning.</p>
+              <p>This guide connects database design, data quality, and SQL queries through complete examples from real organizations.</p>
             </div>
           </div>
           <nav class="toc" aria-label="Session sections">
@@ -85,7 +85,7 @@
             <a href="#eda"><span data-lang="es">5. EDA y limpieza</span><span data-lang="en">5. EDA and cleaning</span></a>
             <a href="#sql"><span data-lang="es">6. SQL básico</span><span data-lang="en">6. Basic SQL</span></a>
             <a href="#join"><span data-lang="es">7. INNER JOIN</span><span data-lang="en">7. INNER JOIN</span></a>
-            <a href="#reto"><span data-lang="es">8. Reto final</span><span data-lang="en">8. Final challenge</span></a>
+            <a href="#practica"><span data-lang="es">8. Vamos a practicar</span><span data-lang="en">8. Let's practice</span></a>
           </nav>
         </div>
       </section>
@@ -114,6 +114,22 @@
             <div class="note">
               <p data-lang="es"><strong>Pregunta guía:</strong> ¿qué cambia cuando la misma información deja de vivir en una hoja de cálculo aislada y pasa a ser usada por una aplicación con cientos de usuarios?</p>
               <p data-lang="en"><strong>Guiding question:</strong> what changes when the same information stops living in an isolated spreadsheet and becomes part of an application used by hundreds of people?</p>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th data-lang="es">Responsabilidad</th><th data-lang="es">Qué resuelve</th><th data-lang="es">Ejemplo</th>
+                    <th data-lang="en">Responsibility</th><th data-lang="en">What it solves</th><th data-lang="en">Example</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td data-lang="es">Persistencia</td><td data-lang="es">Conservar datos aunque la aplicación se cierre.</td><td data-lang="es">Las matrículas de un semestre siguen disponibles meses después.</td><td data-lang="en">Persistence</td><td data-lang="en">Keep data even when the app closes.</td><td data-lang="en">Semester enrollments remain available months later.</td></tr>
+                  <tr><td data-lang="es">Concurrencia</td><td data-lang="es">Permitir muchos usuarios trabajando al mismo tiempo.</td><td data-lang="es">Varios funcionarios consultan y actualizan solicitudes sin sobrescribirlas.</td><td data-lang="en">Concurrency</td><td data-lang="en">Allow many users to work at the same time.</td><td data-lang="en">Several staff members query and update requests without overwriting them.</td></tr>
+                  <tr><td data-lang="es">Integridad</td><td data-lang="es">Proteger reglas mínimas de validez.</td><td data-lang="es">Una inscripción no debería apuntar a un estudiante inexistente.</td><td data-lang="en">Integrity</td><td data-lang="en">Protect basic validity rules.</td><td data-lang="en">An enrollment should not point to a nonexistent student.</td></tr>
+                  <tr><td data-lang="es">Seguridad</td><td data-lang="es">Controlar quién puede ver o modificar información.</td><td data-lang="es">Un estudiante consulta sus notas; coordinación consulta reportes agregados.</td><td data-lang="en">Security</td><td data-lang="en">Control who can see or modify information.</td><td data-lang="en">A student sees their grades; coordination sees aggregated reports.</td></tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -184,6 +200,26 @@
               </tbody>
             </table>
           </div>
+          <div class="grid" style="margin-top:1rem">
+            <article class="card">
+              <strong data-lang="es">Cuándo pensar relacional</strong>
+              <strong data-lang="en">When to think relational</strong>
+              <p data-lang="es">Cuando las reglas son claras, las relaciones importan y se requiere consistencia: pagos, matrículas, inventarios, historias de cambios o trazabilidad.</p>
+              <p data-lang="en">When rules are clear, relationships matter, and consistency is required: payments, enrollments, inventories, change history, or traceability.</p>
+            </article>
+            <article class="card">
+              <strong data-lang="es">Cuándo pensar no relacional</strong>
+              <strong data-lang="en">When to think non-relational</strong>
+              <p data-lang="es">Cuando los documentos cambian con frecuencia, se consulta por clave, se modelan redes o se necesita absorber eventos con estructura flexible.</p>
+              <p data-lang="en">When documents change frequently, data is queried by key, networks are modeled, or events with flexible structure must be absorbed.</p>
+            </article>
+            <article class="card">
+              <strong data-lang="es">Decisión práctica</strong>
+              <strong data-lang="en">Practical decision</strong>
+              <p data-lang="es">No se elige por moda. Se elige por preguntas, volumen, latencia, reglas, equipo, costos y mantenimiento.</p>
+              <p data-lang="en">It is not chosen by trend. It is chosen by questions, volume, latency, rules, team, cost, and maintenance.</p>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -214,6 +250,21 @@
           <div class="note" style="margin-top:1rem">
             <p data-lang="es"><strong>Importante:</strong> si `id_cliente = 1` aparece en dos pedidos, eso no es necesariamente un duplicado. Puede representar dos compras legítimas de la misma persona.</p>
             <p data-lang="en"><strong>Important:</strong> if `customer_id = 1` appears in two orders, that is not necessarily a duplicate. It may represent two legitimate purchases by the same person.</p>
+          </div>
+          <div class="table-wrap" style="margin-top:1rem">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th data-lang="es">Cardinalidad</th><th data-lang="es">Lectura</th><th data-lang="es">Ejemplo contextual</th>
+                  <th data-lang="en">Cardinality</th><th data-lang="en">How to read it</th><th data-lang="en">Contextual example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1:1</td><td data-lang="es">Una fila se asocia con máximo una fila de otra tabla.</td><td data-lang="es">Un usuario tiene un perfil de configuración.</td><td>1:1</td><td data-lang="en">One row is associated with at most one row in another table.</td><td data-lang="en">A user has one configuration profile.</td></tr>
+                <tr><td>1:N</td><td data-lang="es">Una fila principal se relaciona con muchas filas dependientes.</td><td data-lang="es">Un programa académico tiene muchos estudiantes.</td><td>1:N</td><td data-lang="en">One parent row relates to many dependent rows.</td><td data-lang="en">An academic program has many students.</td></tr>
+                <tr><td>N:M</td><td data-lang="es">Muchas filas se relacionan con muchas filas; requiere tabla intermedia.</td><td data-lang="es">Estudiantes y asignaturas se conectan mediante inscripciones.</td><td>N:M</td><td data-lang="en">Many rows relate to many rows; it needs an intermediate table.</td><td data-lang="en">Students and courses connect through enrollments.</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -249,6 +300,26 @@
                   <tr><td>3FN / 3NF</td><td data-lang="es">Evitar dependencias transitivas de atributos no clave.</td><td>3NF</td><td data-lang="en">Avoid transitive dependencies of non-key attributes.</td></tr>
                 </tbody>
               </table>
+            </div>
+            <div class="grid">
+              <article class="card">
+                <strong data-lang="es">Anomalía de actualización</strong>
+                <strong data-lang="en">Update anomaly</strong>
+                <p data-lang="es">Si el nombre de un programa está repetido en 500 filas, corregir una tilde puede dejar valores distintos si no se actualiza todo.</p>
+                <p data-lang="en">If a program name is repeated in 500 rows, fixing one accent may leave different values if not every row is updated.</p>
+              </article>
+              <article class="card">
+                <strong data-lang="es">Anomalía de inserción</strong>
+                <strong data-lang="en">Insertion anomaly</strong>
+                <p data-lang="es">Si los programas solo existen dentro de filas de estudiantes, no podríamos registrar un programa nuevo hasta tener estudiantes.</p>
+                <p data-lang="en">If programs only exist inside student rows, we could not register a new program until it has students.</p>
+              </article>
+              <article class="card">
+                <strong data-lang="es">Anomalía de eliminación</strong>
+                <strong data-lang="en">Deletion anomaly</strong>
+                <p data-lang="es">Si borramos el único estudiante de un programa, podríamos perder accidentalmente la información del programa.</p>
+                <p data-lang="en">If we delete the only student in a program, we might accidentally lose the program information.</p>
+              </article>
             </div>
           </div>
         </div>
@@ -288,6 +359,10 @@
               </tbody>
             </table>
           </div>
+          <div class="note" style="margin-top:1rem">
+            <p data-lang="es"><strong>No confundas dos usos de “normalizar”:</strong> en bases de datos significa diseñar tablas para reducir redundancia; en aprendizaje automático puede significar escalar valores numéricos, por ejemplo transformar edades o precios a un rango comparable.</p>
+            <p data-lang="en"><strong>Do not confuse two uses of “normalize”:</strong> in databases it means designing tables to reduce redundancy; in machine learning it may mean scaling numeric values, for example transforming ages or prices to a comparable range.</p>
+          </div>
         </div>
       </section>
 
@@ -305,13 +380,14 @@
           </div>
           <div class="two-col">
             <div class="content-flow">
-              <p data-lang="es">Una consulta básica responde: qué quiero ver, de qué tabla viene y qué condición debe cumplir.</p>
-              <p data-lang="en">A basic query answers: what I want to see, which table it comes from, and what condition it must satisfy.</p>
-              <pre class="code-panel"><code>SELECT name, city
-FROM Customers
-WHERE city = 'Tunja';</code></pre>
-              <p data-lang="es">La convención de escribir `SELECT` y `FROM` en mayúsculas mejora la lectura. Para textos se usan comillas simples.</p>
-              <p data-lang="en">The convention of writing `SELECT` and `FROM` in uppercase improves readability. Text values use single quotes.</p>
+              <p data-lang="es">Una consulta básica responde: qué quiero ver, de qué tabla viene, qué condición debe cumplir y cómo quiero ordenar el resultado. SQL no es solamente sintaxis: es una forma de convertir preguntas de negocio en operaciones sobre datos.</p>
+              <p data-lang="en">A basic query answers: what I want to see, which table it comes from, what condition it must satisfy, and how I want the result sorted. SQL is not only syntax: it is a way to turn business questions into operations over data.</p>
+              <pre class="code-panel"><code>SELECT nombre, ciudad, promedio
+FROM Estudiantes
+WHERE ciudad = 'Tunja' AND promedio >= 4.0
+ORDER BY promedio DESC;</code></pre>
+              <p data-lang="es">Esta consulta se leería así: muestra estudiantes de Tunja con promedio igual o superior a 4.0, ordenados de mayor a menor promedio. La convención de escribir palabras clave en mayúsculas mejora la lectura; para textos usamos comillas simples.</p>
+              <p data-lang="en">This query reads as: show students from Tunja with GPA equal to or above 4.0, sorted from highest to lowest GPA. The convention of writing keywords in uppercase improves readability; text values use single quotes.</p>
             </div>
             <div class="table-wrap">
               <table class="data-table">
@@ -330,34 +406,68 @@ WHERE city = 'Tunja';</code></pre>
         </div>
       </section>
 
-      <section class="section" id="lab">
+      <section class="section" id="ejemplos">
         <div class="section-inner">
           <div class="section-head">
             <div data-lang="es">
-              <h2>Laboratorio en SQLBolt</h2>
-              <p>SQLBolt permite practicar en el navegador sin instalar programas ni crear una base de datos local.</p>
+              <h2>Ejemplos con contexto completo</h2>
+              <p>Antes de practicar en una plataforma, conviene aprender a traducir situaciones reales a tablas, condiciones y resultados esperados.</p>
             </div>
             <div data-lang="en">
-              <h2>SQLBolt Lab</h2>
-              <p>SQLBolt lets you practice in the browser without installing software or creating a local database.</p>
+              <h2>Examples with Full Context</h2>
+              <p>Before practicing in a platform, it helps to translate real situations into tables, conditions, and expected results.</p>
             </div>
           </div>
           <div class="grid">
-            <article class="card"><strong>1. SELECT</strong><p><a href="https://sqlbolt.com/lesson/select_queries_introduction">SQLBolt lesson 1</a></p><pre class="code-panel"><code>SELECT title, year
-FROM Movies;</code></pre></article>
-            <article class="card"><strong>2. WHERE</strong><p><a href="https://sqlbolt.com/lesson/select_queries_with_constraints">SQLBolt lesson 2</a></p><pre class="code-panel"><code>SELECT title, year
-FROM Movies
-WHERE year BETWEEN 2000 AND 2010;</code></pre></article>
-            <article class="card"><strong>3. LIKE</strong><p><a href="https://sqlbolt.com/lesson/select_queries_with_constraints_pt_2">SQLBolt lesson 3</a></p><pre class="code-panel"><code>SELECT title
-FROM Movies
-WHERE title LIKE 'Toy%';</code></pre></article>
-            <article class="card"><strong>4. DISTINCT</strong><p><a href="https://sqlbolt.com/lesson/filtering_sorting_query_results">SQLBolt lesson 4</a></p><pre class="code-panel"><code>SELECT DISTINCT director
-FROM Movies;</code></pre></article>
-            <article class="card"><strong>5. ORDER BY</strong><p data-lang="es">Ordena y limita resultados.</p><p data-lang="en">Sort and limit results.</p><pre class="code-panel"><code>SELECT title, year
-FROM Movies
-ORDER BY year DESC
-LIMIT 5;</code></pre></article>
-            <article class="card"><strong>6. Review</strong><p><a href="https://sqlbolt.com/lesson/select_queries_review">SQLBolt review</a></p><p data-lang="es">Combina filtros, ordenamiento y límites.</p><p data-lang="en">Combine filters, sorting, and limits.</p></article>
+            <article class="card">
+              <strong data-lang="es">Universidad: seguimiento académico</strong>
+              <strong data-lang="en">University: academic monitoring</strong>
+              <p data-lang="es">Coordinación quiere identificar estudiantes activos de Ingeniería de Sistemas con promedio alto para invitarlos a monitorías.</p>
+              <p data-lang="en">Coordination wants to identify active Systems Engineering students with high GPA to invite them to tutoring roles.</p>
+              <pre class="code-panel"><code>SELECT nombre, semestre, promedio
+FROM Estudiantes
+WHERE programa = 'Ingeniería de Sistemas'
+  AND estado = 'Activo'
+  AND promedio >= 4.2
+ORDER BY promedio DESC;</code></pre>
+            </article>
+            <article class="card">
+              <strong data-lang="es">Tienda: inventario crítico</strong>
+              <strong data-lang="en">Store: critical inventory</strong>
+              <p data-lang="es">El área de compras necesita saber qué productos tienen pocas unidades y se venden con frecuencia.</p>
+              <p data-lang="en">The purchasing area needs to know which products have few units and sell frequently.</p>
+              <pre class="code-panel"><code>SELECT producto, categoria, stock, ventas_mes
+FROM Inventario
+WHERE stock <= 10
+  AND ventas_mes >= 50
+ORDER BY stock ASC, ventas_mes DESC;</code></pre>
+            </article>
+            <article class="card">
+              <strong data-lang="es">Salud: citas pendientes</strong>
+              <strong data-lang="en">Healthcare: pending appointments</strong>
+              <p data-lang="es">Un centro médico quiere priorizar citas pendientes de pacientes mayores de 60 años.</p>
+              <p data-lang="en">A medical center wants to prioritize pending appointments for patients over 60 years old.</p>
+              <pre class="code-panel"><code>SELECT paciente, edad, especialidad, fecha_cita
+FROM Citas
+WHERE estado = 'Pendiente'
+  AND edad > 60
+ORDER BY fecha_cita ASC;</code></pre>
+            </article>
+          </div>
+          <div class="table-wrap" style="margin-top:1rem">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th data-lang="es">Pregunta humana</th><th data-lang="es">Elemento SQL</th><th data-lang="es">Decisión que habilita</th>
+                  <th data-lang="en">Human question</th><th data-lang="en">SQL element</th><th data-lang="en">Decision enabled</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td data-lang="es">¿A quién debo priorizar?</td><td><code>WHERE</code></td><td data-lang="es">Reducir una población a los casos relevantes.</td><td data-lang="en">Who should I prioritize?</td><td><code>WHERE</code></td><td data-lang="en">Reduce a population to relevant cases.</td></tr>
+                <tr><td data-lang="es">¿Qué columnas necesito ver?</td><td><code>SELECT</code></td><td data-lang="es">Evitar ruido y exponer solo información útil.</td><td data-lang="en">Which columns do I need to see?</td><td><code>SELECT</code></td><td data-lang="en">Avoid noise and expose only useful information.</td></tr>
+                <tr><td data-lang="es">¿Qué va primero?</td><td><code>ORDER BY</code></td><td data-lang="es">Convertir datos en una lista de acción.</td><td data-lang="en">What comes first?</td><td><code>ORDER BY</code></td><td data-lang="en">Turn data into an action list.</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -375,25 +485,27 @@ LIMIT 5;</code></pre></article>
             </div>
           </div>
           <div class="content-flow">
-            <p data-lang="es">`INNER JOIN` conserva las filas que encuentran coincidencia según la condición `ON`. Si una película no tiene fila relacionada en taquilla, no aparece en ese resultado.</p>
-            <p data-lang="en">`INNER JOIN` keeps rows that find a match according to the `ON` condition. If a movie has no related box-office row, it does not appear in that result.</p>
+            <p data-lang="es">`INNER JOIN` conserva las filas que encuentran coincidencia según la condición `ON`. Si una inscripción apunta a una asignatura inexistente, no aparecerá en el resultado del cruce; por eso la integridad referencial es tan importante.</p>
+            <p data-lang="en">`INNER JOIN` keeps rows that find a match according to the `ON` condition. If an enrollment points to a nonexistent course, it will not appear in the joined result; that is why referential integrity matters so much.</p>
             <div class="architecture">
-              <div class="arch-step"><strong>Movies</strong><span>id PK · title · director · year</span></div>
-              <div class="arch-step"><strong>BoxOffice</strong><span>movie_id FK · rating · sales</span></div>
-              <div class="arch-step"><strong>ON</strong><span>Movies.id = BoxOffice.movie_id</span></div>
+              <div class="arch-step"><strong>Estudiantes</strong><span>id_estudiante PK · nombre · programa</span></div>
+              <div class="arch-step"><strong>Inscripciones</strong><span>id_estudiante FK · id_asignatura FK · nota</span></div>
+              <div class="arch-step"><strong>ON</strong><span>Estudiantes.id_estudiante = Inscripciones.id_estudiante</span></div>
               <div class="arch-step"><strong>INNER JOIN</strong><span data-lang="es">Solo coincidencias</span><span data-lang="en">Matches only</span></div>
-              <div class="arch-step"><strong>SELECT</strong><span data-lang="es">Título, calificación, ventas</span><span data-lang="en">Title, rating, sales</span></div>
+              <div class="arch-step"><strong>SELECT</strong><span data-lang="es">Nombre, asignatura, nota</span><span data-lang="en">Name, course, grade</span></div>
             </div>
-            <pre class="code-panel"><code>SELECT Movies.title, BoxOffice.rating
-FROM Movies
-INNER JOIN BoxOffice
-ON Movies.id = BoxOffice.movie_id;</code></pre>
-            <pre class="code-panel"><code>SELECT Movies.title, BoxOffice.domestic_sales
-FROM Movies
-INNER JOIN BoxOffice
-ON Movies.id = BoxOffice.movie_id
-WHERE BoxOffice.domestic_sales > 200000000
-ORDER BY BoxOffice.domestic_sales DESC;</code></pre>
+            <pre class="code-panel"><code>SELECT Estudiantes.nombre, Inscripciones.id_asignatura, Inscripciones.nota
+FROM Estudiantes
+INNER JOIN Inscripciones
+ON Estudiantes.id_estudiante = Inscripciones.id_estudiante;</code></pre>
+            <pre class="code-panel"><code>SELECT Estudiantes.nombre, Asignaturas.nombre AS asignatura, Inscripciones.nota
+FROM Estudiantes
+INNER JOIN Inscripciones
+ON Estudiantes.id_estudiante = Inscripciones.id_estudiante
+INNER JOIN Asignaturas
+ON Inscripciones.id_asignatura = Asignaturas.id_asignatura
+WHERE Estudiantes.programa = 'Ingeniería de Sistemas'
+ORDER BY Inscripciones.nota DESC;</code></pre>
           </div>
         </div>
       </section>
@@ -427,49 +539,28 @@ LIMIT 5;</code></pre>
         </div>
       </section>
 
-      <section class="section activity" id="reto">
+      <section class="section activity" id="practica">
         <div class="section-inner">
           <div class="section-head">
             <div data-lang="es">
-              <h2>Desafío final: analista de datos de películas</h2>
-              <p>Responde preguntas usando las tablas `Movies` y `BoxOffice` de SQLBolt.</p>
+              <h2>Vamos a practicar</h2>
+              <p>Usaremos una plataforma interactiva para escribir consultas, equivocarnos con tranquilidad y leer los resultados. Más adelante resolveremos ejercicios guiados paso a paso.</p>
             </div>
             <div data-lang="en">
-              <h2>Final Challenge: Movie Data Analyst</h2>
-              <p>Answer questions using SQLBolt's `Movies` and `BoxOffice` tables.</p>
+              <h2>Let's Practice</h2>
+              <p>We will use an interactive platform to write queries, make mistakes safely, and read the results. Later we will solve guided exercises step by step.</p>
             </div>
           </div>
-          <div class="activity-grid">
+          <div class="practice-banner">
             <article class="card">
-              <h3 data-lang="es">Consultas</h3>
-              <h3 data-lang="en">Queries</h3>
-              <ol data-lang="es">
-                <li>Títulos de todas las películas disponibles.</li>
-                <li>Películas estrenadas después de 2005.</li>
-                <li>Películas que contienen `Toy` en el título.</li>
-                <li>Directores diferentes registrados.</li>
-                <li>Las cinco películas más recientes.</li>
-                <li>Títulos junto a su calificación de taquilla.</li>
-                <li>Películas con ventas internacionales superiores a 300 millones.</li>
-                <li>Las tres películas con mayores ventas nacionales.</li>
-              </ol>
-              <ol data-lang="en">
-                <li>Titles of all available movies.</li>
-                <li>Movies released after 2005.</li>
-                <li>Movies containing `Toy` in the title.</li>
-                <li>Different registered directors.</li>
-                <li>The five most recent movies.</li>
-                <li>Titles with their box-office rating.</li>
-                <li>Movies with international sales over 300 million.</li>
-                <li>The three movies with the highest domestic sales.</li>
-              </ol>
-            </article>
-            <article class="card">
-              <h3 data-lang="es">Entrega sugerida</h3>
-              <h3 data-lang="en">Suggested Output</h3>
-              <p data-lang="es">Para cada consulta registra la pregunta, el SQL escrito y una frase que explique el resultado. Si falla, lee el error y vuelve a intentar.</p>
-              <p data-lang="en">For each query, record the question, the SQL you wrote, and one sentence explaining the result. If it fails, read the error and try again.</p>
-              <p><a href="https://sqlbolt.com/lesson/select_queries_with_joins">SQLBolt JOIN lesson</a></p>
+              <h3 data-lang="es">Abrir práctica introductoria</h3>
+              <h3 data-lang="en">Open introductory practice</h3>
+              <p data-lang="es">Antes de escribir muchas consultas, entra a la introducción y reconoce el entorno: tabla, editor, resultado, mensaje de error y validación.</p>
+              <p data-lang="en">Before writing many queries, open the introduction and recognize the environment: table, editor, result, error message, and validation.</p>
+              <a class="practice-link" href="https://sqlbolt.com/lesson/introduction">
+                <span data-lang="es">Vamos a practicar</span>
+                <span data-lang="en">Let's practice</span>
+              </a>
             </article>
           </div>
         </div>
@@ -480,7 +571,6 @@ LIMIT 5;</code></pre>
           <div data-lang="es">
             <h2>Recursos para continuar</h2>
             <ul>
-              <li><a href="https://sqlbolt.com/">SQLBolt: lecciones interactivas de SQL</a>.</li>
               <li><a href="https://www.sqlite.org/docs.html">SQLite: documentación oficial</a>.</li>
               <li><a href="https://www.postgresql.org/docs/current/tutorial.html">PostgreSQL: tutorial oficial</a>.</li>
             </ul>
@@ -488,7 +578,6 @@ LIMIT 5;</code></pre>
           <div data-lang="en">
             <h2>Resources to Continue</h2>
             <ul>
-              <li><a href="https://sqlbolt.com/">SQLBolt: interactive SQL lessons</a>.</li>
               <li><a href="https://www.sqlite.org/docs.html">SQLite: official documentation</a>.</li>
               <li><a href="https://www.postgresql.org/docs/current/tutorial.html">PostgreSQL: official tutorial</a>.</li>
             </ul>

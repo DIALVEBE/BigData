@@ -462,6 +462,33 @@ h1 {
   border-color: rgba(255, 255, 255, 0.18);
 }
 
+.practice-banner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.practice-banner .card {
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.practice-banner h3 {
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+}
+
+.practice-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin-top: 1.25rem;
+  padding: 0.85rem 1.2rem;
+  border-radius: 8px;
+  background: white;
+  color: #17212b;
+  font-weight: 900;
+  text-decoration: none;
+}
+
 .sources {
   font-size: 0.95rem;
 }
