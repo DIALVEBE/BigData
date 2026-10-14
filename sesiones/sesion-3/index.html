@@ -1,242 +1,204 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sesión 3 · Hadoop y Apache Spark</title>
-    <meta name="description" content="Bilingual practical guide to Hadoop Streaming, Apache Spark, DataFrames, and Spark SQL.">
-    <link rel="stylesheet" href="../../styles.css">
-  </head>
-  <body>
-    <header class="topbar">
-      <div class="brand"><strong>Universidad Santo Tomás</strong><span>Optativa 1 · Big Data</span></div>
-      <nav class="nav-actions" aria-label="Navigation">
-        <a class="home-link" href="../../"><span data-lang="es">Inicio</span><span data-lang="en">Home</span></a>
-        <div class="language-toggle" aria-label="Language selector">
-          <button type="button" data-lang-button="es">ES</button><button type="button" data-lang-button="en">EN</button>
-        </div>
-      </nav>
-    </header>
-    <main>
-      <section class="hero lesson-hero">
-        <div class="hero-inner">
-          <div>
-            <p class="eyebrow" data-lang="es">Sesión 3 · Hadoop y Spark</p>
-            <p class="eyebrow" data-lang="en">Session 3 · Hadoop and Spark</p>
-            <div data-lang="es"><h1>Hadoop y Apache Spark</h1><p>Una guía práctica para procesar comentarios de redes sociales con MapReduce, DataFrames y Spark SQL.</p></div>
-            <div data-lang="en"><h1>Hadoop and Apache Spark</h1><p>A practical guide to processing social-media comments with MapReduce, DataFrames, and Spark SQL.</p></div>
-            <div class="stats-band">
-              <div class="stat"><strong>50</strong><span data-lang="es">comentarios sintéticos</span><span data-lang="en">synthetic comments</span></div>
-              <div class="stat"><strong>2</strong><span data-lang="es">caminos de instalación</span><span data-lang="en">installation paths</span></div>
-              <div class="stat"><strong>3</strong><span data-lang="es">redes sociales</span><span data-lang="en">social networks</span></div>
-              <div class="stat"><strong>2</strong><span data-lang="es">motores de análisis</span><span data-lang="en">analysis engines</span></div>
-            </div>
-          </div>
-          <div class="hero-visual" aria-hidden="true">
-            <svg class="signal-map" viewBox="0 0 520 470" role="img">
-              <rect x="45" y="52" width="430" height="350" rx="28" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
-              <path d="M88 322 H430 M88 252 H430 M88 182 H430" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
-              <path d="M92 330 C150 285 170 190 240 245 S336 330 430 112" fill="none" stroke="#9fe5ef" stroke-width="10" stroke-linecap="round"/>
-              <g fill="#fff"><circle cx="92" cy="330" r="13"/><circle cx="178" cy="242" r="13"/><circle cx="240" cy="245" r="13"/><circle cx="335" cy="300" r="13"/><circle cx="430" cy="112" r="13"/></g>
-              <g fill="rgba(255,255,255,.9)" font-family="Inter, sans-serif" font-size="18" font-weight="800"><text x="78" y="430">CSV</text><text x="205" y="430">MAP</text><text x="322" y="430">SPARK</text></g>
-            </svg>
-          </div>
-        </div>
-      </section>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesión 3 · Hadoop y Apache Spark</title>
+<meta name="description" content="Guía bilingüe de teoría y práctica local con Apache Hadoop, MapReduce y Apache Spark.">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+<header class="topbar"><div class="brand"><strong>Universidad Santo Tomás</strong><span>Optativa 1 · Big Data</span></div><nav class="nav-actions" aria-label="Navigation"><a class="home-link" href="../../"><span data-lang="es">Inicio</span><span data-lang="en">Home</span></a><div class="language-toggle" aria-label="Language selector"><button type="button" data-lang-button="es">ES</button><button type="button" data-lang-button="en">EN</button></div></nav></header>
+<main>
+<section class="hero lesson-hero"><div class="hero-inner"><div>
+<p class="eyebrow" data-lang="es">Sesión 3 · Práctica local</p><p class="eyebrow" data-lang="en">Session 3 · Local practice</p>
+<div data-lang="es"><h1>Hadoop y Apache Spark</h1><p>Instalaremos las herramientas directamente en Ubuntu o WSL2, construiremos un flujo MapReduce y analizaremos el mismo CSV con PySpark.</p></div>
+<div data-lang="en"><h1>Hadoop and Apache Spark</h1><p>We will install the tools directly on Ubuntu or WSL2, build a MapReduce workflow, and analyze the same CSV with PySpark.</p></div>
+<div class="stats-band"><div class="stat"><strong>10 → 50</strong><span data-lang="es">filas de práctica</span><span data-lang="en">practice rows</span></div><div class="stat"><strong>2</strong><span data-lang="es">modelos de procesamiento</span><span data-lang="en">processing models</span></div><div class="stat"><strong>1</strong><span data-lang="es">carpeta de trabajo</span><span data-lang="en">working folder</span></div><div class="stat"><strong>0</strong><span data-lang="es">archivos entregados</span><span data-lang="en">provided files</span></div></div>
+</div><div class="hero-visual" aria-hidden="true"><svg class="signal-map" viewBox="0 0 520 470" role="img"><rect x="45" y="52" width="430" height="350" rx="28" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.35)" stroke-width="2"/><path d="M88 322 H430 M88 252 H430 M88 182 H430" stroke="rgba(255,255,255,.18)" stroke-width="2"/><path d="M92 330 C150 285 170 190 240 245 S336 330 430 112" fill="none" stroke="#9fe5ef" stroke-width="10" stroke-linecap="round"/><g fill="#fff"><circle cx="92" cy="330" r="13"/><circle cx="178" cy="242" r="13"/><circle cx="240" cy="245" r="13"/><circle cx="335" cy="300" r="13"/><circle cx="430" cy="112" r="13"/></g><g fill="rgba(255,255,255,.9)" font-family="Inter, sans-serif" font-size="18" font-weight="800"><text x="78" y="430">MAP</text><text x="205" y="430">SHUFFLE</text><text x="382" y="430">REDUCE</text></g></svg></div></div></section>
 
-      <section class="section alt"><div class="section-inner">
-        <div class="section-head"><div data-lang="es"><h2>Ruta de aprendizaje</h2><p>Empieza desde cero: conoce el problema, ejecuta un conteo con Hadoop y repite el análisis con Spark.</p></div><div data-lang="en"><h2>Learning path</h2><p>Start from zero: understand the problem, run a Hadoop count, and repeat the analysis with Spark.</p></div></div>
-        <nav class="toc" aria-label="Session sections">
-          <a href="#contexto"><span data-lang="es">1. Contexto y datos</span><span data-lang="en">1. Context and data</span></a>
-          <a href="#hadoop"><span data-lang="es">2. Hadoop y MapReduce</span><span data-lang="en">2. Hadoop and MapReduce</span></a>
-          <a href="#hadoop-lab"><span data-lang="es">3. Laboratorio Hadoop</span><span data-lang="en">3. Hadoop lab</span></a>
-          <a href="#spark"><span data-lang="es">4. Apache Spark</span><span data-lang="en">4. Apache Spark</span></a>
-          <a href="#spark-lab"><span data-lang="es">5. Laboratorio Spark</span><span data-lang="en">5. Spark lab</span></a>
-          <a href="#comparacion"><span data-lang="es">6. Comparación</span><span data-lang="en">6. Comparison</span></a>
-          <a href="#actividad"><span data-lang="es">7. Actividad integradora</span><span data-lang="en">7. Integrated activity</span></a>
-          <a href="#glosario"><span data-lang="es">8. Glosario y fuentes</span><span data-lang="en">8. Glossary and sources</span></a>
-        </nav>
-      </div></section>
+<section class="section alt"><div class="section-inner"><div class="section-head"><div data-lang="es"><h2>Ruta de aprendizaje</h2><p>La práctica empieza con diez filas creadas por nosotros. Después podrás sustituirlas por un dataset autorizado de 50 registros.</p></div><div data-lang="en"><h2>Learning path</h2><p>The lab starts with ten rows we create ourselves. Later you can replace them with an authorized 50-record dataset.</p></div></div><nav class="toc" aria-label="Session sections">
+<a href="#antes"><span data-lang="es">1. Antes de empezar</span><span data-lang="en">1. Before you start</span></a><a href="#hadoop"><span data-lang="es">2. Teoría de Hadoop</span><span data-lang="en">2. Hadoop theory</span></a><a href="#hadoop-lab"><span data-lang="es">3. Práctica Hadoop</span><span data-lang="en">3. Hadoop practice</span></a><a href="#spark"><span data-lang="es">4. Teoría de Spark</span><span data-lang="en">4. Spark theory</span></a><a href="#spark-lab"><span data-lang="es">5. Práctica Spark</span><span data-lang="en">5. Spark practice</span></a><a href="#comparacion"><span data-lang="es">6. Comparación</span><span data-lang="en">6. Comparison</span></a><a href="#actividad"><span data-lang="es">7. Actividad</span><span data-lang="en">7. Activity</span></a><a href="#fuentes"><span data-lang="es">8. Fuentes</span><span data-lang="en">8. Sources</span></a>
+</nav></div></section>
 
-      <section class="section" id="contexto"><div class="section-inner two-col">
-        <div><div data-lang="es"><p class="eyebrow">Punto de partida</p><h2>Del comentario al resultado</h2></div><div data-lang="en"><p class="eyebrow">Starting point</p><h2>From a comment to a result</h2></div></div>
-        <div class="content-flow">
-          <p data-lang="es">Leer diez comentarios es sencillo. Analizar millones exige organizar el almacenamiento y el procesamiento. En esta práctica usaremos <strong>50 registros sintéticos</strong> sobre comentarios institucionales: no son publicaciones reales ni contienen información privada.</p>
-          <p data-lang="en">Reading ten comments is easy. Analyzing millions requires more careful storage and processing. In this lab we use <strong>50 synthetic records</strong> about institutional comments: they are not real posts and contain no private information.</p>
-          <div class="note"><p data-lang="es"><strong>Precisión importante:</strong> Hadoop y Spark no detectan spam ni toxicidad en esta guía. Solo cuentan y comparan etiquetas que ya vienen en el CSV.</p><p data-lang="en"><strong>Important distinction:</strong> Hadoop and Spark do not detect spam or toxicity in this guide. They only count and compare labels already present in the CSV.</p></div>
-          <div class="table-wrap"><table class="data-table"><thead><tr><th data-lang="es">Columna</th><th data-lang="es">Uso</th><th data-lang="en">Column</th><th data-lang="en">Purpose</th></tr></thead><tbody>
-            <tr><td data-lang="es"><code>id</code></td><td data-lang="es">Identificador del comentario.</td><td data-lang="en"><code>id</code></td><td data-lang="en">Comment identifier.</td></tr>
-            <tr><td data-lang="es"><code>comentario</code></td><td data-lang="es">Texto del mensaje.</td><td data-lang="en"><code>comentario</code></td><td data-lang="en">Message text.</td></tr>
-            <tr><td data-lang="es"><code>red_social</code></td><td data-lang="es">Facebook, Instagram o TikTok.</td><td data-lang="en"><code>red_social</code></td><td data-lang="en">Facebook, Instagram, or TikTok.</td></tr>
-            <tr><td data-lang="es"><code>prioridad_referencial</code></td><td data-lang="es">Etiqueta Alta, Media o Baja.</td><td data-lang="en"><code>prioridad_referencial</code></td><td data-lang="en">High, Medium, or Low label.</td></tr>
-            <tr><td data-lang="es"><code>spam_referencial</code></td><td data-lang="es">Etiqueta previa Sí/No.</td><td data-lang="en"><code>spam_referencial</code></td><td data-lang="en">Pre-existing Yes/No label.</td></tr>
-          </tbody></table></div>
-          <p data-lang="es">Valores para comprobar el trabajo: Facebook 26, Instagram 17, TikTok 7 y 10 comentarios etiquetados como spam. El modo de ejecución será local; con 50 filas no se puede afirmar qué herramienta es más rápida.</p>
-          <p data-lang="en">Expected checks: Facebook 26, Instagram 17, TikTok 7, and 10 comments labeled as spam. Execution is local; with 50 rows we cannot claim which tool is faster.</p>
-        </div>
-      </div></section>
+<section class="section" id="antes"><div class="section-inner two-col"><div><div data-lang="es"><p class="eyebrow">Punto de partida</p><h2>Qué vamos a construir</h2></div><div data-lang="en"><p class="eyebrow">Starting point</p><h2>What we will build</h2></div></div><div class="content-flow">
+<p data-lang="es">No recibirás un ZIP ni un proyecto preparado. Crearás la carpeta, el CSV, los programas y el proyecto de Spark directamente en tu terminal. Así puedes observar qué hace cada archivo y cada comando.</p><p data-lang="en">You will not receive a ZIP or a prepared project. You will create the folder, CSV, programs, and Spark project directly in your terminal.</p>
+<div class="note"><p data-lang="es"><strong>Entorno:</strong> usa Ubuntu, Ubuntu en WSL2 o una terminal Linux equivalente. Los comandos están escritos para Bash.</p><p data-lang="en"><strong>Environment:</strong> use Ubuntu, Ubuntu on WSL2, or an equivalent Linux terminal. Commands are written for Bash.</p></div>
+<div class="table-wrap"><table class="data-table"><thead><tr><th data-lang="es">Resultado</th><th data-lang="es">Qué aprenderás</th><th data-lang="en">Outcome</th><th data-lang="en">What you will learn</th></tr></thead><tbody><tr><td data-lang="es">Hadoop Streaming</td><td data-lang="es">Separar MAP de REDUCE.</td><td data-lang="en">Hadoop Streaming</td><td data-lang="en">Separate MAP from REDUCE.</td></tr><tr><td data-lang="es">PySpark</td><td data-lang="es">Leer, agrupar, filtrar y consultar un DataFrame.</td><td data-lang="en">PySpark</td><td data-lang="en">Read, group, filter, and query a DataFrame.</td></tr><tr><td data-lang="es">Modo local</td><td data-lang="es">Comprender el modelo sin afirmar que existe un clúster.</td><td data-lang="en">Local mode</td><td data-lang="en">Understand the model without claiming a cluster.</td></tr></tbody></table></div>
+<p data-lang="es">La primera versión tendrá 10 comentarios: Facebook 6 e Instagram 4. Después podrás usar 50 registros: Facebook 26, Instagram 17 y una tercera red con 7.</p><p data-lang="en">The first version has 10 comments: Facebook 6 and Instagram 4. Later you can use 50 records: Facebook 26, Instagram 17, and a third network with 7.</p>
+</div></div></section>
 
-      <section class="section alt" id="hadoop"><div class="section-inner">
-        <div class="section-head"><div data-lang="es"><p class="eyebrow">Parte I</p><h2>¿Qué aporta Hadoop?</h2><p>Hadoop es un ecosistema de código abierto para gestionar almacenamiento y procesamiento en uno o varios equipos.</p></div><div data-lang="en"><p class="eyebrow">Part I</p><h2>What does Hadoop provide?</h2><p>Hadoop is an open-source ecosystem for managing storage and processing across one or more machines.</p></div></div>
-        <div class="grid">
-          <article class="card"><strong data-lang="es">Volumen, velocidad y variedad</strong><strong data-lang="en">Volume, velocity, and variety</strong><p data-lang="es">Big Data también considera veracidad y valor: no basta con acumular datos; deben ser confiables y útiles para decidir.</p><p data-lang="en">Big Data also considers veracity and value: collecting data is not enough; it must be trustworthy and useful for decisions.</p></article>
-          <article class="card"><strong>HDFS</strong><p data-lang="es">Sistema de archivos distribuido. El NameNode gestiona metadatos y los DataNodes almacenan bloques.</p><p data-lang="en">Distributed file system. The NameNode manages metadata and DataNodes store blocks.</p></article>
-          <article class="card"><strong>YARN</strong><p data-lang="es">Organiza recursos y ejecución de aplicaciones en un clúster mediante ResourceManager, NodeManagers y ApplicationMasters.</p><p data-lang="en">Organizes resources and application execution in a cluster through ResourceManager, NodeManagers, and ApplicationMasters.</p></article>
-        </div>
-        <div class="mermaid-box" style="margin-top:1rem"><pre class="mermaid">flowchart LR
-  U[User] --> NN[NameNode<br/>metadata]
-  NN --> D1[DataNode A<br/>blocks]
-  NN --> D2[DataNode B<br/>blocks]
-  D1 <-->|replication| D2</pre></div>
-        <div class="two-col" style="margin-top:2rem"><div data-lang="es"><h3>MapReduce en tres momentos</h3><p>El mapper convierte cada fila en un par como <code>(Facebook, 1)</code>. Shuffle/Sort reúne las mismas claves. El reducer suma los valores y devuelve un conteo.</p></div><div data-lang="en"><h3>MapReduce in three stages</h3><p>The mapper turns each row into a pair such as <code>(Facebook, 1)</code>. Shuffle/Sort groups identical keys. The reducer adds the values and returns a count.</p></div><div class="mermaid-box"><pre class="mermaid">flowchart LR
-  A[CSV] --> B[MAP]
-  B --> C[Facebook, 1]
-  B --> D[Instagram, 1]
-  C --> E[SHUFFLE / SORT]
-  D --> E
-  E --> F[REDUCE: sum]</pre></div></div>
-        <div class="note" style="margin-top:1.2rem"><p data-lang="es"><strong>Alcance de este laboratorio:</strong> no iniciaremos HDFS ni YARN. Ejecutaremos MapReduce localmente con Hadoop Streaming y Python.</p><p data-lang="en"><strong>Lab scope:</strong> we will not start HDFS or YARN. We will run MapReduce locally with Hadoop Streaming and Python.</p></div>
-      </div></section>
+<section class="section alt" id="hadoop"><div class="section-inner"><div class="section-head"><div data-lang="es"><p class="eyebrow">Parte 1 · Apache Hadoop</p><h2>Hadoop: almacenar y procesar a escala</h2><p>Hadoop es un ecosistema, no una sola aplicación. Sus componentes separan almacenamiento, recursos y procesamiento.</p></div><div data-lang="en"><p class="eyebrow">Part 1 · Apache Hadoop</p><h2>Hadoop: storage and processing at scale</h2><p>Hadoop is an ecosystem, not one application. Its components separate storage, resources, and processing.</p></div></div>
+<div class="grid"><article class="card"><strong>HDFS</strong><p data-lang="es">Sistema de archivos distribuido. Divide archivos grandes en bloques, los replica y los distribuye. El NameNode conserva metadatos y los DataNodes almacenan bloques.</p><p data-lang="en">Distributed file system. It splits large files into blocks, replicates, and distributes them. The NameNode keeps metadata and DataNodes store blocks.</p></article><article class="card"><strong>YARN</strong><p data-lang="es">Administrador de recursos que decide dónde y con cuánta capacidad se ejecutan las aplicaciones del clúster.</p><p data-lang="en">Resource manager that decides where and with how much capacity cluster applications run.</p></article><article class="card"><strong>MapReduce</strong><p data-lang="es">Modelo que transforma registros en pares clave–valor, agrupa por clave y combina valores.</p><p data-lang="en">Model that transforms records into key-value pairs, groups by key, and combines values.</p></article></div>
+<div class="mermaid-box" style="margin-top:1rem"><pre class="mermaid">flowchart LR
+  F[Archivo grande] --> B[Bloques]
+  B --> N[NameNode: metadatos]
+  B --> D1[DataNode A]
+  B --> D2[DataNode B]
+  D1 -. copias .-> D2
+  RM[ResourceManager] --> T[Tareas MapReduce]</pre></div>
+<div class="two-col" style="margin-top:2rem"><div data-lang="es"><h3>El clúster no es obligatorio para aprender</h3><p>HDFS, YARN y varios nodos son importantes en producción, pero esta práctica usa modo local: un computador y archivos locales.</p></div><div data-lang="en"><h3>A cluster is not required to learn</h3><p>HDFS, YARN, and multiple nodes matter in production, but this lab uses local mode: one computer and local files.</p></div><div class="note"><p data-lang="es"><strong>Escala:</strong> distribuir puede ayudar con mucho volumen, pero añade coordinación, red, particiones y tolerancia a fallos. Con diez filas no medimos rendimiento.</p><p data-lang="en"><strong>Scale:</strong> distribution can help with large volumes, but adds coordination, networking, partitions, and fault tolerance. With ten rows we are not measuring performance.</p></div></div></div></section>
 
-      <section class="section" id="hadoop-lab"><div class="section-inner two-col">
-        <div><div data-lang="es"><p class="eyebrow">Laboratorio 1</p><h2>Contar comentarios con Hadoop Streaming</h2><p>El mismo CSV se procesa como texto y cada programa recibe datos por <code>stdin</code> y produce datos por <code>stdout</code>.</p></div><div data-lang="en"><p class="eyebrow">Lab 1</p><h2>Count comments with Hadoop Streaming</h2><p>The same CSV is processed as text; each program reads from <code>stdin</code> and writes to <code>stdout</code>.</p></div></div>
-        <div class="content-flow">
-          <div data-lang="es"><h3>1. Mapper</h3><p>Lee la tercera columna, omite el encabezado y emite una unidad por comentario.</p></div><div data-lang="en"><h3>1. Mapper</h3><p>It reads the third column, skips the header, and emits one unit per comment.</p></div>
-          <pre class="code-panel"><code>import csv
+<section class="section" id="mapreduce"><div class="section-inner"><div class="section-head"><div data-lang="es"><h2>MapReduce explicado con sobres</h2><p>Imagina diez sobres. Cada sobre contiene un comentario y queremos contar cuántos pertenecen a cada red.</p></div><div data-lang="en"><h2>MapReduce explained with envelopes</h2><p>Imagine ten envelopes. Each contains a comment and we want to count each network.</p></div></div><div class="architecture"><div class="arch-step"><strong data-lang="es">Entrada</strong><strong data-lang="en">Input</strong><span data-lang="es">Diez filas del CSV.</span><span data-lang="en">Ten CSV rows.</span></div><div class="arch-step"><strong>MAP</strong><span data-lang="es">Cada fila se vuelve (red, 1).</span><span data-lang="en">Each row becomes (network, 1).</span></div><div class="arch-step"><strong>SHUFFLE</strong><span data-lang="es">Junta etiquetas iguales.</span><span data-lang="en">Groups equal labels.</span></div><div class="arch-step"><strong>REDUCE</strong><span data-lang="es">Suma los unos.</span><span data-lang="en">Adds the ones.</span></div><div class="arch-step"><strong data-lang="es">Salida</strong><strong data-lang="en">Output</strong><span>Facebook 6; Instagram 4.</span></div></div><div class="mermaid-box" style="margin-top:1.2rem"><pre class="mermaid">flowchart LR
+  A[10 CSV rows] --> B[MAP: read network]
+  B --> C1[Facebook: 1]
+  B --> C2[Instagram: 1]
+  B --> C3[Facebook: 1]
+  B --> C4[...]
+  C1 --> D[SHUFFLE: same keys together]
+  C2 --> D
+  C3 --> D
+  C4 --> D
+  D --> E[REDUCE: add values]
+  E --> F[Facebook: 6]
+  E --> G[Instagram: 4]</pre></div><div class="two-col" style="margin-top:1.2rem"><div data-lang="es"><h3>¿Por qué el mapper emite 1?</h3><p>Cada fila representa una ocurrencia. Seis filas de Facebook producen seis veces <code>Facebook → 1</code>; el reducer suma esos unos.</p></div><div data-lang="en"><h3>Why does the mapper emit 1?</h3><p>Each row is one occurrence. Six Facebook rows produce six <code>Facebook → 1</code> pairs; the reducer adds those ones.</p></div></div></div></section>
+
+<section class="section alt" id="hadoop-lab"><div class="section-inner two-col"><div><div data-lang="es"><p class="eyebrow">Laboratorio Hadoop</p><h2>De cero al resultado</h2><p>Todos los archivos se crean en la carpeta de trabajo.</p></div><div data-lang="en"><p class="eyebrow">Hadoop lab</p><h2>From zero to result</h2><p>Every file is created inside the working folder.</p></div></div><div class="content-flow">
+<div data-lang="es"><h3>Paso 1. Instalar herramientas</h3><p>Abre Ubuntu o WSL2:</p></div><div data-lang="en"><h3>Step 1. Install tools</h3><p>Open Ubuntu or WSL2:</p></div><pre class="code-panel"><code>sudo apt update
+sudo apt install -y openjdk-17-jdk python3 wget
+java -version
+python3 --version</code></pre><p data-lang="es">Java 17 es la versión adecuada para Hadoop 3.5.0.</p><p data-lang="en">Java 17 is the appropriate version for Hadoop 3.5.0.</p>
+<div data-lang="es"><h3>Paso 2. Descargar Hadoop</h3><p>La descarga pesa aproximadamente 554 MB.</p></div><div data-lang="en"><h3>Step 2. Download Hadoop</h3><p>The download is approximately 554 MB.</p></div><pre class="code-panel"><code>mkdir -p ~/practica-bigdata
+cd ~/practica-bigdata
+wget https://downloads.apache.org/hadoop/common/hadoop-3.5.0/hadoop-3.5.0.tar.gz
+tar -xzf hadoop-3.5.0.tar.gz
+
+export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
+export HADOOP_HOME=$HOME/practica-bigdata/hadoop-3.5.0
+export PATH=$HADOOP_HOME/bin:$PATH
+hadoop version</code></pre><div class="note"><p data-lang="es">La salida debe mostrar Hadoop 3.5.0. Las variables <code>export</code> duran mientras permanezca abierta la terminal.</p><p data-lang="en">The output should show Hadoop 3.5.0. The <code>export</code> variables last while the terminal remains open.</p></div>
+<div data-lang="es"><h3>Paso 3. Crear el CSV</h3><p>Escribe estas diez filas de prueba:</p></div><div data-lang="en"><h3>Step 3. Create the CSV</h3><p>Write these ten test rows:</p></div><pre class="code-panel"><code>mkdir -p datos
+cat &gt; datos/comentarios.csv &lt;&lt;'EOF'
+id,comentario,red_social,spam_referencial,prioridad_referencial
+1,Consulta sobre inscripciones,Facebook,No,Media
+2,Gracias por la informacion,Instagram,No,Baja
+3,Publicidad no solicitada,Facebook,Sí,Baja
+4,Cuando son las matriculas,Instagram,No,Media
+5,Quiero estudiar ingenieria,Facebook,No,Alta
+6,Visita nuestro enlace,Facebook,Sí,Baja
+7,Informacion sobre becas,Instagram,No,Alta
+8,Como solicito certificado,Facebook,No,Media
+9,Muchas gracias,Instagram,No,Baja
+10,Consulta sobre horarios,Facebook,No,Media
+EOF
+cat datos/comentarios.csv</code></pre>
+<div data-lang="es"><h3>Paso 4. Crear el MAP</h3><p>Ejecuta <code>nano mapper.py</code> y pega:</p></div><div data-lang="en"><h3>Step 4. Create MAP</h3><p>Run <code>nano mapper.py</code> and paste:</p></div><pre class="code-panel"><code>import csv
 import sys
 
-for line in sys.stdin:
-    if not line.strip():
+for fila in csv.reader(sys.stdin):
+    if not fila or fila[0].strip().lower() == "id":
         continue
-    row = next(csv.reader([line]))
-    if len(row) &lt; 3 or row[0].lstrip("\ufeff ").lower() == "id":
-        continue
-    network = row[2].strip()
-    if network:
-        print(f"{network}\t1")</code></pre>
-          <div data-lang="es"><h3>2. Reducer</h3><p>Hadoop ordena las claves antes del reducer. El programa acumula los valores mientras la red social sea la misma.</p></div><div data-lang="en"><h3>2. Reducer</h3><p>Hadoop sorts keys before the reducer. The program accumulates values while the social network remains the same.</p></div>
-          <pre class="code-panel"><code>import sys
+    if len(fila) &gt;= 3 and fila[2].strip():
+        print(f"{fila[2].strip()}\t1")</code></pre>
+<div data-lang="es"><h3>Paso 5. Crear el REDUCE</h3><p>Ejecuta <code>nano reducer.py</code> y pega:</p></div><div data-lang="en"><h3>Step 5. Create REDUCE</h3><p>Run <code>nano reducer.py</code> and paste:</p></div><pre class="code-panel"><code>import sys
 
-current = None
+red_actual = None
 total = 0
-for line in sys.stdin:
-    parts = line.rstrip("\n").split("\t", 1)
-    if len(parts) != 2:
-        continue
-    network, value = parts
-    try:
-        amount = int(value)
-    except ValueError:
-        continue
-    if network != current:
-        if current is not None:
-            print(f"{current}\t{total}")
-        current, total = network, 0
-    total += amount
-if current is not None:
-    print(f"{current}\t{total}")</code></pre>
-          <div class="note"><p data-lang="es"><strong>Limitación:</strong> el mapper procesa una línea a la vez. Las comas entre comillas funcionan, pero los saltos de línea dentro de una celda requieren otro formato o lector.</p><p data-lang="en"><strong>Limitation:</strong> the mapper processes one line at a time. Quoted commas work, but newlines inside a cell require another format or reader.</p></div>
-          <div class="card"><div data-lang="es"><h3>Ejecutar</h3><p>En PowerShell, ubicado en la raíz del proyecto del ZIP:</p></div><div data-lang="en"><h3>Run it</h3><p>In PowerShell, from the ZIP project's root:</p></div><pre class="code-panel"><code>docker compose config
-docker compose pull
-docker compose run --rm hadoop</code></pre><p data-lang="es">Resultado esperado: <code>Facebook 26</code>, <code>Instagram 17</code>, <code>TikTok 7</code>. La salida queda en <code>resultados/hadoop/part-*</code>.</p><p data-lang="en">Expected output: <code>Facebook 26</code>, <code>Instagram 17</code>, <code>TikTok 7</code>. Output is written to <code>resultados/hadoop/part-*</code>.</p></div>
-        </div>
-      </div></section>
 
-      <section class="section alt"><div class="section-inner"><div class="section-head"><div data-lang="es"><h2>Dos caminos de instalación</h2><p>Elige solo uno. Docker es el camino recomendado para este laboratorio.</p></div><div data-lang="en"><h2>Two installation paths</h2><p>Choose one. Docker is the recommended path for this lab.</p></div></div><div class="two-col">
-        <article class="card"><h3 data-lang="es">A. Docker Desktop + WSL2</h3><h3 data-lang="en">A. Docker Desktop + WSL2</h3><p data-lang="es">Instala WSL2 como soporte, Docker Desktop y verifica <code>docker run --rm hello-world</code>. No necesitas instalar Ubuntu, Java, Hadoop ni Spark en Windows.</p><p data-lang="en">Install WSL2 as support, Docker Desktop, and verify <code>docker run --rm hello-world</code>. You do not need to install Ubuntu, Java, Hadoop, or Spark on Windows.</p><pre class="code-panel"><code>wsl --update
-wsl --set-default-version 2
-docker --version
-docker compose version</code></pre></article>
-        <article class="card"><h3 data-lang="es">B. Ubuntu en WSL2</h3><h3 data-lang="en">B. Ubuntu on WSL2</h3><p data-lang="es">Instala Java 17, Python y Hadoop; luego ejecuta el mapper con una tubería y finalmente el script de Hadoop. Esta ruta ayuda a comprender la instalación manual.</p><p data-lang="en">Install Java 17, Python, and Hadoop; then run the mapper through a Linux pipe and finally the Hadoop script. This path helps explain manual installation.</p><pre class="code-panel"><code>sudo apt update
-sudo apt install -y openjdk-17-jdk python3 wget tar
-python3 hadoop/mapper.py &lt; datos/comentarios.csv | sort | python3 hadoop/reducer.py
-bash hadoop/ejecutar.sh</code></pre></article>
-      </div><div class="note" style="margin-top:1rem"><p data-lang="es">Docker simplifica la instalación, pero no corrige una virtualización deshabilitada. En equipos institucionales revisa las políticas de licencia y soporte.</p><p data-lang="en">Docker simplifies installation, but it cannot fix disabled virtualization. On institutional equipment, check licensing and support policies.</p></div></div></section>
+for linea in sys.stdin:
+    red, cantidad = linea.strip().split("\t")
+    cantidad = int(cantidad)
+    if red == red_actual:
+        total += cantidad
+    else:
+        if red_actual is not None:
+            print(f"{red_actual}\t{total}")
+        red_actual = red
+        total = cantidad
 
-      <section class="section" id="spark"><div class="section-inner"><div class="section-head"><div data-lang="es"><p class="eyebrow">Parte II</p><h2>¿Qué es Apache Spark?</h2><p>Spark ofrece operaciones de alto nivel para leer, filtrar, agrupar y consultar datos con Python, SQL, Scala o Java.</p></div><div data-lang="en"><p class="eyebrow">Part II</p><h2>What is Apache Spark?</h2><p>Spark provides high-level operations to read, filter, group, and query data with Python, SQL, Scala, or Java.</p></div></div>
-        <div class="grid"><article class="card"><strong>Driver</strong><p data-lang="es">Programa principal: crea la sesión y coordina el trabajo.</p><p data-lang="en">Main program: creates the session and coordinates the job.</p></article><article class="card"><strong>Executors</strong><p data-lang="es">Procesos que realizan tareas en un clúster.</p><p data-lang="en">Processes that perform tasks in a cluster.</p></article><article class="card"><strong>Partitions</strong><p data-lang="es">Partes lógicas que pueden procesarse en paralelo.</p><p data-lang="en">Logical portions that can be processed in parallel.</p></article></div>
-        <div class="mermaid-box" style="margin-top:1rem"><pre class="mermaid">flowchart TB
-  P[Python program] --> D[Driver / SparkSession]
-  D --> X[Execution plan]
-  X --> E1[Executor 1]
-  X --> E2[Executor 2]
-  E1 --> R[Results]
-  E2 --> R</pre></div>
-        <div class="two-col" style="margin-top:2rem"><div class="content-flow"><h3>DataFrames</h3><p data-lang="es">Un DataFrame es una colección con filas, columnas y esquema. Se parece a una tabla SQL o a pandas, pero Spark puede repartir su procesamiento.</p><p data-lang="en">A DataFrame is a collection with rows, columns, and a schema. It resembles a SQL table or pandas, but Spark can distribute its processing.</p><pre class="code-panel"><code>spark = (SparkSession.builder
-    .appName("CommentAnalysis")
-    .master("local[2]")
-    .getOrCreate())</code></pre></div><div class="content-flow"><h3 data-lang="es">Transformaciones y acciones</h3><h3 data-lang="en">Transformations and actions</h3><p data-lang="es"><code>filter</code>, <code>select</code> y <code>groupBy</code> construyen planes. <code>show</code>, <code>count</code> y una escritura ejecutan el trabajo. Spark usa evaluación diferida en muchas transformaciones.</p><p data-lang="en"><code>filter</code>, <code>select</code>, and <code>groupBy</code> build plans. <code>show</code>, <code>count</code>, and a write execute the work. Spark uses lazy evaluation for many transformations.</p><div class="note"><p data-lang="es"><code>df.count()</code> devuelve un número; <code>df.groupBy(...).count()</code> crea un DataFrame agregado.</p><p data-lang="en"><code>df.count()</code> returns a number; <code>df.groupBy(...).count()</code> creates an aggregated DataFrame.</p></div></div></div>
-      </div></section>
+if red_actual is not None:
+    print(f"{red_actual}\t{total}")</code></pre>
+<div data-lang="es"><h3>Paso 6. Probar antes de usar Hadoop</h3><p>La tubería simula MAP, ordenación y REDUCE:</p></div><div data-lang="en"><h3>Step 6. Test before using Hadoop</h3><p>This pipe simulates MAP, sorting, and REDUCE:</p></div><pre class="code-panel"><code>cat datos/comentarios.csv | python3 mapper.py | sort | python3 reducer.py</code></pre><p data-lang="es">Resultado: Facebook 6 e Instagram 4.</p><p data-lang="en">Result: Facebook 6 and Instagram 4.</p>
+<div data-lang="es"><h3>Paso 7. Ejecutar Hadoop Streaming</h3><p>Encuentra el JAR y ejecuta en modo local:</p></div><div data-lang="en"><h3>Step 7. Run Hadoop Streaming</h3><p>Find the JAR and run in local mode:</p></div><pre class="code-panel"><code>STREAMING_JAR=$(find "$HADOOP_HOME/share/hadoop/tools/lib" \
+  -name 'hadoop-streaming-*.jar' | head -n 1)
 
-      <section class="section alt" id="spark-lab"><div class="section-inner two-col"><div><div data-lang="es"><p class="eyebrow">Laboratorio 2</p><h2>Analizar el CSV con Spark</h2><p>DataFrames y Spark SQL permiten expresar más preguntas sin escribir un reducer específico para cada una.</p></div><div data-lang="en"><p class="eyebrow">Lab 2</p><h2>Analyze the CSV with Spark</h2><p>DataFrames and Spark SQL express more questions without writing a dedicated reducer for each one.</p></div></div><div class="content-flow">
-        <pre class="code-panel"><code>from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, count, desc, sum as spark_sum, when
+hadoop jar "$STREAMING_JAR" \
+  -D mapreduce.framework.name=local \
+  -D fs.defaultFS=file:/// \
+  -files mapper.py,reducer.py \
+  -mapper "python3 mapper.py" \
+  -reducer "python3 reducer.py" \
+  -input datos/comentarios.csv \
+  -output resultado_hadoop</code></pre><div class="note"><p data-lang="es">No iniciamos HDFS ni YARN: el trabajo es local y lee archivos del sistema local.</p><p data-lang="en">We do not start HDFS or YARN: the job is local and reads local files.</p></div>
+<div data-lang="es"><h3>Paso 8. Consultar y repetir</h3></div><div data-lang="en"><h3>Step 8. Read and repeat</h3></div><pre class="code-panel"><code>cat resultado_hadoop/part-00000
+rm -r resultado_hadoop</code></pre><p data-lang="es">El segundo comando solo se usa antes de repetir el trabajo.</p><p data-lang="en">Use the second command only before running the job again.</p>
+</div></div></section>
+
+<section class="section" id="dataset"><div class="section-inner two-col"><div><div data-lang="es"><p class="eyebrow">Paso 9</p><h2>Usar un dataset real</h2><p>Cuando funcione el ejemplo, reemplaza <code>datos/comentarios.csv</code> por un archivo autorizado.</p></div><div data-lang="en"><p class="eyebrow">Step 9</p><h2>Use a real dataset</h2><p>Once the example works, replace <code>datos/comentarios.csv</code> with an authorized file.</p></div></div><div class="content-flow"><p data-lang="es">El mapper seguirá usando la tercera columna, <code>red_social</code>. Conserva encabezados, separador coma, UTF-8 y un registro por línea. No uses datos personales sin autorización.</p><p data-lang="en">The mapper will still use the third column, <code>red_social</code>. Keep headers, comma separator, UTF-8, and one record per line. Do not use personal data without authorization.</p><div class="table-wrap"><table class="data-table"><thead><tr><th data-lang="es">Red</th><th data-lang="es">Esperado</th><th data-lang="en">Network</th><th data-lang="en">Expected</th></tr></thead><tbody><tr><td data-lang="es">Facebook</td><td data-lang="es">26</td><td data-lang="en">Facebook</td><td data-lang="en">26</td></tr><tr><td data-lang="es">Instagram</td><td data-lang="es">17</td><td data-lang="en">Instagram</td><td data-lang="en">17</td></tr><tr><td data-lang="es">Tercera red</td><td data-lang="es">7</td><td data-lang="en">Third network</td><td data-lang="en">7</td></tr><tr><td data-lang="es">Total</td><td data-lang="es">50</td><td data-lang="en">Total</td><td data-lang="en">50</td></tr></tbody></table></div><div class="note"><p data-lang="es"><strong>Dataset opcional:</strong> puedes consultar <a href="https://www.kaggle.com/datasets/jorgeynezs/comentarios">comentarios en Kaggle</a> en un proyecto separado. Esta sesión no distribuye archivos de datos.</p><p data-lang="en"><strong>Optional dataset:</strong> you can study <a href="https://www.kaggle.com/datasets/jorgeynezs/comentarios">comments on Kaggle</a> in a separate project. This session does not distribute data files.</p></div></div></div></section>
+
+<section class="section alt" id="spark"><div class="section-inner"><div class="section-head"><div data-lang="es"><p class="eyebrow">Parte 2 · Apache Spark</p><h2>Spark: expresar análisis con DataFrames</h2><p>Spark es un motor de procesamiento; PySpark es su interfaz para Python.</p></div><div data-lang="en"><p class="eyebrow">Part 2 · Apache Spark</p><h2>Spark: express analysis with DataFrames</h2><p>Spark is a processing engine; PySpark is its Python interface.</p></div></div><div class="grid"><article class="card"><strong>Driver</strong><p data-lang="es">Programa que crea SparkSession, construye el plan y coordina el trabajo.</p><p data-lang="en">Program that creates SparkSession, builds the plan, and coordinates the work.</p></article><article class="card"><strong>Executors</strong><p data-lang="es">Procesos que ejecutan tareas sobre particiones.</p><p data-lang="en">Processes that execute tasks over partitions.</p></article><article class="card"><strong>Partitions</strong><p data-lang="es">Fragmentos lógicos que pueden procesarse en paralelo.</p><p data-lang="en">Logical fragments that can be processed in parallel.</p></article></div><div class="mermaid-box" style="margin-top:1rem"><pre class="mermaid">flowchart TB
+  P[Programa Python] --> D[Driver / SparkSession]
+  D --> L[Plan lógico]
+  L --> X[Plan físico]
+  X --> E1[Executor: particiones 1 y 2]
+  X --> E2[Executor: particiones 3 y 4]
+  E1 --> R[Resultado]
+  E2 --> R</pre></div><div class="two-col" style="margin-top:2rem"><div data-lang="es"><h3>DataFrame</h3><p>Tabla distribuible con filas, columnas y esquema. Spark puede optimizar filtros, agrupaciones y ordenamientos.</p></div><div data-lang="en"><h3>DataFrame</h3><p>A distributable table with rows, columns, and a schema. Spark can optimize filters, groups, and sorting.</p></div><div data-lang="es"><h3>Evaluación diferida</h3><p><code>select</code>, <code>filter</code> y <code>groupBy</code> describen transformaciones. <code>show</code>, <code>count</code> y <code>write</code> activan el cálculo.</p></div><div data-lang="en"><h3>Lazy evaluation</h3><p><code>select</code>, <code>filter</code>, and <code>groupBy</code> describe transformations. <code>show</code>, <code>count</code>, and <code>write</code> trigger computation.</p></div></div><div class="note" style="margin-top:1rem"><p data-lang="es"><strong>Spark no es HDFS:</strong> puede leer archivos locales, HDFS y otros orígenes, y ejecutarse localmente o en un clúster.</p><p data-lang="en"><strong>Spark is not HDFS:</strong> it can read local files, HDFS, and other sources, and run locally or on a cluster.</p></div></div></section>
+
+<section class="section" id="spark-lab"><div class="section-inner two-col"><div><div data-lang="es"><p class="eyebrow">Laboratorio Spark</p><h2>Crear un proyecto con uv</h2><p>Usaremos PySpark 4.2.0 desde PyPI, en un proyecto separado dentro de la carpeta de práctica.</p></div><div data-lang="en"><p class="eyebrow">Spark lab</p><h2>Create a project with uv</h2><p>We will use PySpark 4.2.0 from PyPI in a separate project inside the practice folder.</p></div></div><div class="content-flow"><div data-lang="es"><h3>Paso 1. Preparar el proyecto</h3><p>Comprueba uv y crea el proyecto:</p></div><div data-lang="en"><h3>Step 1. Prepare the project</h3><p>Check uv and create the project:</p></div><pre class="code-panel"><code>uv --version
+cd ~/practica-bigdata
+uv init spark-practica
+cd spark-practica
+uv python pin 3.12
+uv add "pyspark==4.2.0"
+uv run python -c "import pyspark; print(pyspark.__version__)"</code></pre><p data-lang="es">Debe aparecer <code>4.2.0</code>.</p><p data-lang="en"><code>4.2.0</code> should be printed.</p><div data-lang="es"><h3>Paso 2. Copiar el CSV</h3></div><div data-lang="en"><h3>Step 2. Copy the CSV</h3></div><pre class="code-panel"><code>cp ../datos/comentarios.csv .
+ls</code></pre><div data-lang="es"><h3>Paso 3. Crear <code>main.py</code></h3><p>Ejecuta <code>nano main.py</code> y pega:</p></div><div data-lang="en"><h3>Step 3. Create <code>main.py</code></h3><p>Run <code>nano main.py</code> and paste:</p></div><pre class="code-panel"><code>from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, count, desc, round as spark_round
+from pyspark.sql.functions import sum as spark_sum, when
 
 spark = (SparkSession.builder
-    .appName("InstitutionalComments")
-    .master("local[2]")
-    .config("spark.sql.shuffle.partitions", "2")
+    .appName("ComentariosRedesSociales")
+    .master("local[*]")
     .getOrCreate())
+spark.sparkContext.setLogLevel("ERROR")
 
-df = (spark.read.option("header", True)
-    .option("inferSchema", True)
-    .option("encoding", "UTF-8")
-    .csv("datos/comentarios.csv"))
+df = spark.read.csv("comentarios.csv", header=True,
+                    inferSchema=True, encoding="UTF-8")
 
+print("\nPRIMEROS COMENTARIOS")
+df.show(5, truncate=False)
+print("\nESTRUCTURA")
 df.printSchema()
-df.show(5, truncate=55)
+print("\nTOTAL")
+print(df.count())
+
+print("\nPOR RED SOCIAL")
 df.groupBy("red_social").count().orderBy(desc("count")).show()
-df.groupBy("prioridad_referencial").count().show()</code></pre>
-        <div class="two-col"><div data-lang="es"><h3>Ejecutar y comprobar</h3><p>Con Docker: <code>docker compose run --rm spark</code>. El programa genera <code>resultados/spark_redes</code>. Verifica total 50, redes 26/17/7 y spam total 10.</p></div><div data-lang="en"><h3>Run and check</h3><p>With Docker: <code>docker compose run --rm spark</code>. The program creates <code>resultados/spark_redes</code>. Check total 50, networks 26/17/7, and total spam 10.</p></div></div>
-        <div data-lang="es"><h3>Porcentaje de spam por red</h3><p>Comparar cantidades absolutas puede engañar: una red grande puede tener más spam simplemente porque tiene más mensajes.</p></div><div data-lang="en"><h3>Spam percentage by network</h3><p>Absolute counts can mislead: a larger network may have more spam simply because it has more messages.</p></div>
-        <pre class="code-panel"><code>summary = (df.groupBy("red_social")
+
+print("\nPRIORIDAD")
+df.groupBy("prioridad_referencial").count().show()
+
+resumen = (df.groupBy("red_social")
     .agg(count("*").alias("total"),
          spark_sum(when(col("spam_referencial") == "Sí", 1)
-                   .otherwise(0)).alias("spam")))
-summary.show()</code></pre>
-        <h3>Spark SQL</h3><pre class="code-panel"><code>df.createOrReplaceTempView("comentarios")
+                   .otherwise(0)).alias("spam"))
+    .withColumn("porcentaje",
+                spark_round(col("spam") / col("total") * 100, 2)))
+resumen.show()
+
+df.createOrReplaceTempView("comentarios")
 spark.sql("""
   SELECT red_social, COUNT(*) AS total
   FROM comentarios
   GROUP BY red_social
   ORDER BY total DESC
-""").show()</code></pre>
-        <div class="note"><p data-lang="es"><strong>Sin Docker:</strong> en Ubuntu/WSL2 crea un entorno virtual, instala <code>pyspark==4.1.3</code>, define <code>SPARK_LOCAL_IP=127.0.0.1</code> y ejecuta <code>python spark/analisis.py</code>.</p><p data-lang="en"><strong>Without Docker:</strong> on Ubuntu/WSL2 create a virtual environment, install <code>pyspark==4.1.3</code>, set <code>SPARK_LOCAL_IP=127.0.0.1</code>, and run <code>python spark/analisis.py</code>.</p></div>
-      </div></div></section>
+""").show()
+spark.stop()</code></pre><div data-lang="es"><h3>Paso 4. Ejecutar</h3></div><div data-lang="en"><h3>Step 4. Run</h3></div><pre class="code-panel"><code>uv run main.py</code></pre><div class="note"><p data-lang="es">Con diez filas, el total debe ser 10; con el dataset de 50, debe ser 50. Verás esquema, conteos, prioridades, porcentaje de spam y SQL.</p><p data-lang="en">With ten rows, total should be 10; with the 50-record dataset, it should be 50. You will see schema, counts, priorities, spam percentage, and SQL.</p></div></div></div></section>
 
-      <section class="section" id="comparacion"><div class="section-inner"><div class="section-head"><div data-lang="es"><h2>Hadoop frente a Spark</h2><p>La comparación busca entender modelos de trabajo, no declarar un ganador universal.</p></div><div data-lang="en"><h2>Hadoop versus Spark</h2><p>The comparison is about understanding work models, not declaring a universal winner.</p></div></div><div class="table-wrap"><table class="data-table"><thead><tr><th data-lang="es">Aspecto</th><th data-lang="es">Hadoop Streaming</th><th data-lang="es">Spark</th><th data-lang="en">Aspect</th><th data-lang="en">Hadoop Streaming</th><th data-lang="en">Spark</th></tr></thead><tbody>
-        <tr><td data-lang="es">Entrada</td><td data-lang="es">CSV como texto</td><td data-lang="es">CSV como DataFrame</td><td data-lang="en">Input</td><td data-lang="en">CSV as text</td><td data-lang="en">CSV as a DataFrame</td></tr>
-        <tr><td data-lang="es">Operación</td><td data-lang="es">map → shuffle → reduce</td><td data-lang="es">filtros, agrupaciones y SQL</td><td data-lang="en">Operation</td><td data-lang="en">map → shuffle → reduce</td><td data-lang="en">filters, groups, and SQL</td></tr>
-        <tr><td data-lang="es">Salida</td><td data-lang="es"><code>resultados/hadoop</code></td><td data-lang="es"><code>resultados/spark_redes</code></td><td data-lang="en">Output</td><td data-lang="en"><code>resultados/hadoop</code></td><td data-lang="en"><code>resultados/spark_redes</code></td></tr>
-        <tr><td data-lang="es">Entorno</td><td data-lang="es">Local, sin HDFS/YARN</td><td data-lang="es"><code>local[2]</code>, sin clúster</td><td data-lang="en">Environment</td><td data-lang="en">Local, without HDFS/YARN</td><td data-lang="en"><code>local[2]</code>, without a cluster</td></tr>
-      </tbody></table></div><div class="mermaid-box" style="margin-top:1rem"><pre class="mermaid">flowchart TD
-  CSV[(50 comments)] --> H[Hadoop mapper + reducer]
-  H --> HC[Count by network]
-  CSV --> S[Spark DataFrame]
-  S --> SC[Groups, percentages, SQL]
-  HC --> Q{Do counts match?}
-  SC --> Q</pre></div></div></section>
+<section class="section alt" id="comparacion"><div class="section-inner"><div class="section-head"><div data-lang="es"><h2>Hadoop y Spark: dos formas de pensar</h2><p>Ambos procesan datos, pero ofrecen niveles de abstracción distintos.</p></div><div data-lang="en"><h2>Hadoop and Spark: two ways of thinking</h2><p>Both process data, but provide different levels of abstraction.</p></div></div><div class="table-wrap"><table class="data-table"><thead><tr><th data-lang="es">Pregunta</th><th data-lang="es">Hadoop MapReduce</th><th data-lang="es">Spark</th><th data-lang="en">Question</th><th data-lang="en">Hadoop MapReduce</th><th data-lang="en">Spark</th></tr></thead><tbody><tr><td data-lang="es">Entrada</td><td data-lang="es">Texto y pares clave–valor.</td><td data-lang="es">DataFrame con esquema.</td><td data-lang="en">Input</td><td data-lang="en">Text and key-value pairs.</td><td data-lang="en">DataFrame with schema.</td></tr><tr><td data-lang="es">Agregación</td><td data-lang="es">Escribir un reducer.</td><td data-lang="es"><code>groupBy</code>, funciones y SQL.</td><td data-lang="en">Aggregation</td><td data-lang="en">Write a reducer.</td><td data-lang="en"><code>groupBy</code>, functions, and SQL.</td></tr><tr><td data-lang="es">Qué demuestra</td><td data-lang="es">Etapas explícitas.</td><td data-lang="es">Planes, particiones y análisis expresivo.</td><td data-lang="en">What it demonstrates</td><td data-lang="en">Explicit stages.</td><td data-lang="en">Plans, partitions, and expressive analysis.</td></tr><tr><td data-lang="es">Qué no demuestra</td><td data-lang="es">Rendimiento distribuido.</td><td data-lang="es">Mayor velocidad con diez filas.</td><td data-lang="en">What it does not prove</td><td data-lang="en">Distributed performance.</td><td data-lang="en">Higher speed with ten rows.</td></tr></tbody></table></div></div></section>
 
-      <section class="section activity" id="actividad"><div class="section-inner"><div class="section-head"><div data-lang="es"><h2>Actividad integradora</h2><p>El equipo de atención quiere orientar un informe inicial sobre sus canales sociales.</p></div><div data-lang="en"><h2>Integrated activity</h2><p>The support team wants an initial report about its social channels.</p></div></div><div class="activity-grid"><article class="card"><h3 data-lang="es">Tareas</h3><h3 data-lang="en">Tasks</h3><ol><li data-lang="es">Ejecuta Hadoop y registra el conteo por red.</li><li data-lang="en">Run Hadoop and record the count by network.</li><li data-lang="es">Ejecuta Spark y verifica que coincide.</li><li data-lang="en">Run Spark and verify that it matches.</li><li data-lang="es">Obtén los tres temas más frecuentes y las áreas con más registros.</li><li data-lang="en">Find the three most frequent topics and areas with the most records.</li><li data-lang="es">Calcula el porcentaje de spam por red e interprétalo.</li><li data-lang="en">Calculate and interpret spam percentage by network.</li><li data-lang="es">Agrega cinco comentarios simulados y repite ambos análisis.</li><li data-lang="en">Add five synthetic comments and repeat both analyses.</li></ol></article><article class="card"><h3 data-lang="es">Entregable</h3><h3 data-lang="en">Deliverable</h3><p data-lang="es">Un <code>README.md</code> con comandos, tabla de resultados, capturas y respuestas breves. No incluyas información personal real.</p><p data-lang="en">A <code>README.md</code> with commands, a results table, screenshots, and brief answers. Do not include real personal information.</p><p data-lang="es"><strong>Pregunta clave:</strong> ¿qué ventajas ofrecen DataFrames y Spark SQL frente a un mapper/reducer escrito para una sola tarea?</p><p data-lang="en"><strong>Key question:</strong> what advantages do DataFrames and Spark SQL offer over a mapper/reducer written for one task?</p></article></div></div></section>
+<section class="section activity" id="actividad"><div class="section-inner"><div class="section-head"><div data-lang="es"><h2>Actividad integradora</h2><p>Construye evidencia de que comprendiste el recorrido.</p></div><div data-lang="en"><h2>Integrated activity</h2><p>Build evidence that you understand the workflow.</p></div></div><div class="activity-grid"><article class="card"><h3 data-lang="es">Tareas</h3><h3 data-lang="en">Tasks</h3><ol><li data-lang="es">Explica MAP, SHUFFLE y REDUCE.</li><li data-lang="en">Explain MAP, SHUFFLE, and REDUCE.</li><li data-lang="es">Ejecuta el pipeline de Python y Hadoop.</li><li data-lang="en">Run the Python pipeline and Hadoop.</li><li data-lang="es">Compara resultados y explica por qué coinciden.</li><li data-lang="en">Compare results and explain why they match.</li><li data-lang="es">Ejecuta Spark y obtén conteos y porcentajes.</li><li data-lang="en">Run Spark and obtain counts and percentages.</li><li data-lang="es">Agrega cinco filas simuladas y repite.</li><li data-lang="en">Add five synthetic rows and repeat.</li></ol></article><article class="card"><h3 data-lang="es">Entregable</h3><h3 data-lang="en">Deliverable</h3><p data-lang="es">Un <code>README.md</code> con comandos, capturas, tabla de resultados y respuestas breves. No incluyas datos personales ni archivos comprimidos.</p><p data-lang="en">A <code>README.md</code> with commands, screenshots, a results table, and brief answers. Do not include personal data or compressed files.</p><p data-lang="es"><strong>Reflexión:</strong> ¿por qué Spark SQL permite formular más preguntas que el reducer de un único conteo?</p><p data-lang="en"><strong>Reflection:</strong> why does Spark SQL allow more questions than a reducer for one count?</p></article></div></div></section>
 
-      <section class="section alt" id="glosario"><div class="section-inner two-col"><div><div data-lang="es"><h2>Glosario breve</h2><p>Conceptos para volver a consultar mientras ejecutas la práctica.</p></div><div data-lang="en"><h2>Short glossary</h2><p>Concepts to revisit while running the lab.</p></div></div><div class="table-wrap"><table class="data-table"><tbody>
-        <tr><td><strong>HDFS</strong></td><td data-lang="es">Sistema de archivos distribuido de Hadoop.</td><td data-lang="en">Hadoop's distributed file system.</td></tr>
-        <tr><td><strong>MapReduce</strong></td><td data-lang="es">Modelo de pares clave–valor.</td><td data-lang="en">Key-value processing model.</td></tr>
-        <tr><td><strong>Mapper</strong></td><td data-lang="es">Transforma entradas en pares.</td><td data-lang="en">Transforms inputs into pairs.</td></tr>
-        <tr><td><strong>Reducer</strong></td><td data-lang="es">Agrega valores de una clave.</td><td data-lang="en">Aggregates values for a key.</td></tr>
-        <tr><td><strong>DataFrame</strong></td><td data-lang="es">Datos con filas, columnas y esquema.</td><td data-lang="en">Data with rows, columns, and a schema.</td></tr>
-        <tr><td><strong>Transformación</strong></td><td data-lang="es">Define un resultado nuevo, normalmente de forma diferida.</td><td data-lang="en">Defines a new result, usually lazily.</td></tr>
-        <tr><td><strong>Acción</strong></td><td data-lang="es">Desencadena el cálculo o materializa una salida.</td><td data-lang="en">Triggers computation or materializes output.</td></tr>
-      </tbody></table></div></div></section>
+<section class="section" id="glosario"><div class="section-inner two-col"><div><div data-lang="es"><h2>Glosario y errores comunes</h2><p>Consulta esta sección si una salida no coincide.</p></div><div data-lang="en"><h2>Glossary and common errors</h2><p>Use this section when output does not match.</p></div></div><div class="content-flow"><div class="table-wrap"><table class="data-table"><tbody><tr><td><strong>HDFS</strong></td><td data-lang="es">Sistema de archivos distribuido.</td><td data-lang="en">Distributed file system.</td></tr><tr><td><strong>YARN</strong></td><td data-lang="es">Administrador de recursos.</td><td data-lang="en">Resource manager.</td></tr><tr><td><strong>Mapper</strong></td><td data-lang="es">Produce pares clave–valor.</td><td data-lang="en">Produces key-value pairs.</td></tr><tr><td><strong>Reducer</strong></td><td data-lang="es">Agrega valores de una clave.</td><td data-lang="en">Aggregates one key's values.</td></tr><tr><td><strong>DataFrame</strong></td><td data-lang="es">Datos tabulares con esquema.</td><td data-lang="en">Tabular data with a schema.</td></tr><tr><td><strong>Acción</strong></td><td data-lang="es">Activa el cálculo.</td><td data-lang="en">Triggers computation.</td></tr></tbody></table></div><div class="note"><p data-lang="es"><strong>Problemas frecuentes:</strong> si falta un comando, revisa Ubuntu y la instalación; si Spark no encuentra Java, define de nuevo <code>JAVA_HOME</code>; si Hadoop dice que la salida existe, elimina <code>resultado_hadoop</code>.</p><p data-lang="en"><strong>Common issues:</strong> if a command is missing, check Ubuntu and installation; if Spark cannot find Java, define <code>JAVA_HOME</code> again; if Hadoop says output exists, remove <code>resultado_hadoop</code>.</p></div></div></div></section>
 
-      <section class="section"><div class="section-inner sources"><div data-lang="es"><h2>Fuentes oficiales</h2><ul><li><a href="https://hadoop.apache.org/docs/r3.5.0/">Apache Hadoop 3.5.0</a> y <a href="https://hadoop.apache.org/docs/stable/hadoop-streaming/HadoopStreaming.html">Hadoop Streaming</a>.</li><li><a href="https://spark.apache.org/docs/4.1.3/">Apache Spark 4.1.3</a> y <a href="https://spark.apache.org/docs/4.1.3/api/python/getting_started/install.html">PySpark</a>.</li><li><a href="https://learn.microsoft.com/es-es/windows/wsl/install">WSL</a> y <a href="https://docs.docker.com/desktop/setup/install/windows-install/">Docker Desktop para Windows</a>.</li></ul></div><div data-lang="en"><h2>Official sources</h2><ul><li><a href="https://hadoop.apache.org/docs/r3.5.0/">Apache Hadoop 3.5.0</a> and <a href="https://hadoop.apache.org/docs/stable/hadoop-streaming/HadoopStreaming.html">Hadoop Streaming</a>.</li><li><a href="https://spark.apache.org/docs/4.1.3/">Apache Spark 4.1.3</a> and <a href="https://spark.apache.org/docs/4.1.3/api/python/getting_started/install.html">PySpark</a>.</li><li><a href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL</a> and <a href="https://docs.docker.com/desktop/setup/install/windows-install/">Docker Desktop for Windows</a>.</li></ul></div></div></section>
-    </main>
-    <footer><div class="section-inner"><span>Diego Alejandro Vela Beltrán</span><span>Magíster en Inteligencia Artificial</span></div></footer>
-    <script type="module">
-      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-      mermaid.initialize({ startOnLoad: false, theme: "base", themeVariables: { primaryColor: "#e7f4f7", primaryTextColor: "#17212b", primaryBorderColor: "#0a6f88", lineColor: "#0a6f88", fontFamily: "Inter, sans-serif" } });
-      await mermaid.run({ querySelector: ".mermaid" });
-    </script>
-    <script src="../../script.js"></script>
-  </body>
+<section class="section alt" id="fuentes"><div class="section-inner sources"><div data-lang="es"><h2>Fuentes y documentación</h2><ul><li><a href="https://hadoop.apache.org/docs/r3.5.0/">Apache Hadoop 3.5.0</a>.</li><li><a href="https://hadoop.apache.org/docs/stable/hadoop-streaming/HadoopStreaming.html">Hadoop Streaming</a>.</li><li><a href="https://spark.apache.org/docs/4.2.0/">Apache Spark 4.2.0</a>.</li><li><a href="https://docs.astral.sh/uv/">uv</a>.</li><li><a href="https://www.kaggle.com/datasets/jorgeynezs/comentarios">Dataset opcional de comentarios en Kaggle</a>.</li></ul></div><div data-lang="en"><h2>Sources and documentation</h2><ul><li><a href="https://hadoop.apache.org/docs/r3.5.0/">Apache Hadoop 3.5.0</a>.</li><li><a href="https://hadoop.apache.org/docs/stable/hadoop-streaming/HadoopStreaming.html">Hadoop Streaming</a>.</li><li><a href="https://spark.apache.org/docs/4.2.0/">Apache Spark 4.2.0</a>.</li><li><a href="https://docs.astral.sh/uv/">uv</a>.</li><li><a href="https://www.kaggle.com/datasets/jorgeynezs/comentarios">Optional comments dataset on Kaggle</a>.</li></ul></div></div></section>
+</main>
+<footer><div class="section-inner"><span>Diego Alejandro Vela Beltrán</span><span>Magíster en Inteligencia Artificial</span></div></footer>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: false, theme: "base", themeVariables: { primaryColor: "#e7f4f7", primaryTextColor: "#17212b", primaryBorderColor: "#0a6f88", lineColor: "#0a6f88", fontFamily: "Inter, sans-serif" } });
+await mermaid.run({ querySelector: ".mermaid" });
+</script>
+<script src="../../script.js"></script>
+</body>
 </html>
