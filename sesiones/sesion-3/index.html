@@ -67,21 +67,10 @@ export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
 export HADOOP_HOME=$HOME/practica-bigdata/hadoop-3.5.0
 export PATH=$HADOOP_HOME/bin:$PATH
 hadoop version</code></pre><div class="note"><p data-lang="es">La salida debe mostrar Hadoop 3.5.0. Las variables <code>export</code> duran mientras permanezca abierta la terminal.</p><p data-lang="en">The output should show Hadoop 3.5.0. The <code>export</code> variables last while the terminal remains open.</p></div>
-<div data-lang="es"><h3>Paso 3. Crear el CSV</h3><p>Escribe estas diez filas de prueba:</p></div><div data-lang="en"><h3>Step 3. Create the CSV</h3><p>Write these ten test rows:</p></div><pre class="code-panel"><code>mkdir -p datos
-cat &gt; datos/comentarios.csv &lt;&lt;'EOF'
-id,comentario,red_social,spam_referencial,prioridad_referencial
-1,Consulta sobre inscripciones,Facebook,No,Media
-2,Gracias por la informacion,Instagram,No,Baja
-3,Publicidad no solicitada,Facebook,Sí,Baja
-4,Cuando son las matriculas,Instagram,No,Media
-5,Quiero estudiar ingenieria,Facebook,No,Alta
-6,Visita nuestro enlace,Facebook,Sí,Baja
-7,Informacion sobre becas,Instagram,No,Alta
-8,Como solicito certificado,Facebook,No,Media
-9,Muchas gracias,Instagram,No,Baja
-10,Consulta sobre horarios,Facebook,No,Media
-EOF
-cat datos/comentarios.csv</code></pre>
+<div data-lang="es"><h3>Paso 3. Descargar y ubicar el CSV</h3><p>Descarga el dataset de <a href="https://www.kaggle.com/datasets/jorgeynezs/comentarios">Kaggle</a> desde el navegador. Extrae el archivo CSV y, usando el Explorador de Windows, ubícalo dentro de tu carpeta Linux. Desde Ubuntu/WSL2 puedes abrir la carpeta actual con:</p></div><div data-lang="en"><h3>Step 3. Download and place the CSV</h3><p>Download the dataset from <a href="https://www.kaggle.com/datasets/jorgeynezs/comentarios">Kaggle</a> in your browser. Extract the CSV and use Windows File Explorer to place it inside your Linux folder. From Ubuntu/WSL2 you can open the current folder with:</p></div><pre class="code-panel"><code>mkdir -p ~/practica-bigdata/datos
+cd ~/practica-bigdata
+explorer.exe .</code></pre><p data-lang="es">En el Explorador, entra en <code>datos</code> y copia allí el CSV. Debe quedar exactamente en:</p><p data-lang="en">In File Explorer, open <code>datos</code> and copy the CSV there. It must be exactly at:</p><pre class="code-panel"><code>~/practica-bigdata/datos/comentarios.csv</code></pre><p data-lang="es">Comprueba el nombre y el encabezado:</p><p data-lang="en">Check the filename and header:</p><pre class="code-panel"><code>ls -lh datos
+head datos/comentarios.csv</code></pre>
 <div data-lang="es"><h3>Paso 4. Crear el MAP</h3><p>Ejecuta <code>nano mapper.py</code> y pega:</p></div><div data-lang="en"><h3>Step 4. Create MAP</h3><p>Run <code>nano mapper.py</code> and paste:</p></div><pre class="code-panel"><code>import csv
 import sys
 
@@ -141,8 +130,16 @@ uv init spark-practica
 cd spark-practica
 uv python pin 3.12
 uv add "pyspark==4.2.0"
-uv run python -c "import pyspark; print(pyspark.__version__)"</code></pre><p data-lang="es">Debe aparecer <code>4.2.0</code>.</p><p data-lang="en"><code>4.2.0</code> should be printed.</p><div data-lang="es"><h3>Paso 2. Copiar el CSV</h3></div><div data-lang="en"><h3>Step 2. Copy the CSV</h3></div><pre class="code-panel"><code>cp ../datos/comentarios.csv .
-ls</code></pre><div data-lang="es"><h3>Paso 3. Crear <code>main.py</code></h3><p>Ejecuta <code>nano main.py</code> y pega:</p></div><div data-lang="en"><h3>Step 3. Create <code>main.py</code></h3><p>Run <code>nano main.py</code> and paste:</p></div><pre class="code-panel"><code>from pyspark.sql import SparkSession
+uv run python -c "import pyspark; print(pyspark.__version__)"</code></pre><p data-lang="es">Debe aparecer <code>4.2.0</code>.</p><p data-lang="en"><code>4.2.0</code> should be printed.</p><div data-lang="es"><h3>Paso 2. Ubicar el CSV dentro de src</h3><p>El proyecto creado por <code>uv init spark-practica</code> usa una estructura como esta:</p></div><div data-lang="en"><h3>Step 2. Place the CSV inside src</h3><p>The project created by <code>uv init spark-practica</code> uses a structure like this:</p></div><pre class="code-panel"><code>spark-practica/
+├── pyproject.toml
+├── main.py
+└── src/
+    └── spark_practica/
+        ├── __init__.py
+        └── datos/
+            └── comentarios.csv</code></pre><p data-lang="es">Desde la carpeta <code>spark-practica</code>, crea la carpeta de datos y abre el Explorador:</p><p data-lang="en">From the <code>spark-practica</code> folder, create the data folder and open File Explorer:</p><pre class="code-panel"><code>mkdir -p src/spark_practica/datos
+explorer.exe .</code></pre><p data-lang="es">Copia manualmente desde Windows el CSV descargado de Kaggle a <code>src/spark_practica/datos/</code>. La ruta final debe ser <code>spark-practica/src/spark_practica/datos/comentarios.csv</code>.</p><p data-lang="en">Copy the Kaggle CSV manually from Windows into <code>src/spark_practica/datos/</code>. The final path must be <code>spark-practica/src/spark_practica/datos/comentarios.csv</code>.</p><pre class="code-panel"><code>ls -lh src/spark_practica/datos
+head src/spark_practica/datos/comentarios.csv</code></pre><div data-lang="es"><h3>Paso 3. Crear <code>main.py</code></h3><p>Ejecuta <code>nano main.py</code> y pega:</p></div><div data-lang="en"><h3>Step 3. Create <code>main.py</code></h3><p>Run <code>nano main.py</code> and paste:</p></div><pre class="code-panel"><code>from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, count, desc, round as spark_round
 from pyspark.sql.functions import sum as spark_sum, when
 
@@ -152,7 +149,7 @@ spark = (SparkSession.builder
     .getOrCreate())
 spark.sparkContext.setLogLevel("ERROR")
 
-df = spark.read.csv("comentarios.csv", header=True,
+df = spark.read.csv("src/spark_practica/datos/comentarios.csv", header=True,
                     inferSchema=True, encoding="UTF-8")
 
 print("\nPRIMEROS COMENTARIOS")
