@@ -11,7 +11,8 @@
     <header class="topbar">
       <div class="brand">
         <strong>Universidad Santo Tomás</strong>
-        <span>Optativa 1 · Big Data</span>
+        <span data-lang="es">Optativa 1 · Big Data</span>
+        <span data-lang="en">Elective 1 · Big Data</span>
       </div>
       <nav class="nav-actions" aria-label="Navigation">
         <a class="home-link" href="../../"><span data-lang="es">Inicio</span><span data-lang="en">Home</span></a>
@@ -51,8 +52,10 @@
                 <path d="M355 202 L298 260"/>
               </g>
               <g fill="#083747" font-family="Inter, sans-serif" font-weight="900" font-size="18">
-                <text x="130" y="148">Clientes</text>
-                <text x="319" y="148">Pedidos</text>
+                <text data-lang="es" x="130" y="148">Clientes</text>
+                <text data-lang="en" x="130" y="148">Customers</text>
+                <text data-lang="es" x="319" y="148">Pedidos</text>
+                <text data-lang="en" x="319" y="148">Orders</text>
                 <text x="228" y="298">SQL</text>
               </g>
               <g fill="#083747" font-family="Inter, sans-serif" font-size="13" font-weight="800">
@@ -106,10 +109,14 @@
             <p data-lang="es">Un dato es una representación registrable: un nombre, una fecha, una edad, el precio de un producto o la calificación de una película. Una base de datos organiza esos datos para almacenarlos, consultarlos, relacionarlos y actualizarlos.</p>
             <p data-lang="en">A datum is a recordable representation: a name, a date, an age, a product price, or a movie rating. A database organizes data so it can be stored, queried, related, and updated.</p>
             <div class="mermaid-box">
-              <pre class="mermaid">flowchart LR
+              <div data-lang="es"><pre class="mermaid">flowchart LR
+    A[Datos: ventas y clientes] --> B[Base de datos]
+    B --> C[Consultas]
+    C --> D[Información para decidir]</pre></div>
+              <div data-lang="en"><pre class="mermaid">flowchart LR
     A[Data: sales and customers] --> B[Database]
     B --> C[Queries]
-    C --> D[Information for decisions]</pre>
+    C --> D[Information for decisions]</pre></div>
             </div>
             <div class="note">
               <p data-lang="es"><strong>Pregunta guía:</strong> ¿qué cambia cuando la misma información deja de vivir en una hoja de cálculo aislada y pasa a ser usada por una aplicación con cientos de usuarios?</p>
@@ -154,7 +161,20 @@
               <p data-lang="es">Organizan información en tablas conectadas por claves. Son muy usadas en matrículas, facturación, inventarios y transacciones.</p>
               <p data-lang="en">They organize information in tables connected by keys. They are widely used for enrollment, billing, inventory, and transactions.</p>
               <div class="mermaid-box">
-                <pre class="mermaid">erDiagram
+                <div data-lang="es"><pre class="mermaid">erDiagram
+    CLIENTES ||--o{ PEDIDOS : realiza
+    CLIENTES {
+        int id_cliente PK
+        string nombre
+        string ciudad
+    }
+    PEDIDOS {
+        int id_pedido PK
+        int id_cliente FK
+        date fecha
+        float total
+    }</pre></div>
+                <div data-lang="en"><pre class="mermaid">erDiagram
     CUSTOMERS ||--o{ ORDERS : places
     CUSTOMERS {
         int customer_id PK
@@ -166,7 +186,7 @@
         int customer_id FK
         date date
         float total
-    }</pre>
+    }</pre></div>
               </div>
             </article>
             <article class="card">
@@ -589,7 +609,8 @@ LIMIT 5;</code></pre>
     <footer>
       <div class="section-inner">
         <span>Diego Alejandro Vela Beltrán</span>
-        <span>Magíster en Inteligencia Artificial</span>
+        <span data-lang="es">Magíster en Inteligencia Artificial</span>
+        <span data-lang="en">Master's Degree in Artificial Intelligence</span>
       </div>
     </footer>
 
