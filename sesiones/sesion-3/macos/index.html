@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruta macOS · Hadoop y Apache Spark</title>
+<meta name="description" content="Ruta bilingüe para instalar y ejecutar Hadoop y Apache Spark en macOS.">
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+<body>
+<header class="topbar"><div class="brand"><strong>Universidad Santo Tomás</strong><span data-lang="es">Optativa 1 · Big Data</span><span data-lang="en">Elective 1 · Big Data</span></div><nav class="nav-actions" aria-label="Navigation"><a class="home-link" href="../"><span data-lang="es">Sesión 3</span><span data-lang="en">Session 3</span></a><div class="language-toggle" aria-label="Language selector"><button type="button" data-lang-button="es">ES</button><button type="button" data-lang-button="en">EN</button></div></nav></header>
+<main>
+<section class="hero lesson-hero"><div class="hero-inner"><div>
+<p class="eyebrow" data-lang="es">Sesión 3 · Ruta alternativa</p><p class="eyebrow" data-lang="en">Session 3 · Alternative path</p>
+<div data-lang="es"><h1>Hadoop y Apache Spark en macOS</h1><p>Instala las herramientas con Homebrew y trabaja desde Terminal. Esta ruta reemplaza los comandos de Ubuntu o WSL2 cuando tu computador usa macOS.</p></div>
+<div data-lang="en"><h1>Hadoop and Apache Spark on macOS</h1><p>Install the tools with Homebrew and work from Terminal. Use this path instead of Ubuntu or WSL2 commands when your computer runs macOS.</p></div>
+<div class="stats-band"><div class="stat"><strong>2</strong><span data-lang="es">proyectos separados</span><span data-lang="en">separate projects</span></div><div class="stat"><strong>50</strong><span data-lang="es">registros CSV</span><span data-lang="en">CSV records</span></div><div class="stat"><strong>0</strong><span data-lang="es">ZIP entregados</span><span data-lang="en">ZIP files provided</span></div></div>
+</div><div class="hero-visual" aria-hidden="true"><svg class="signal-map" viewBox="0 0 520 470" role="img"><rect x="45" y="52" width="430" height="350" rx="28" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.35)" stroke-width="2"/><path d="M88 322 H430 M88 252 H430 M88 182 H430" stroke="rgba(255,255,255,.18)" stroke-width="2"/><path d="M92 330 C150 285 170 190 240 245 S336 330 430 112" fill="none" stroke="#9fe5ef" stroke-width="10" stroke-linecap="round"/><g fill="#fff"><circle cx="92" cy="330" r="13"/><circle cx="178" cy="242" r="13"/><circle cx="240" cy="245" r="13"/><circle cx="335" cy="300" r="13"/><circle cx="430" cy="112" r="13"/></g><g fill="rgba(255,255,255,.9)" font-family="Inter, sans-serif" font-size="18" font-weight="800"><text x="78" y="430">MAC</text><text x="205" y="430">HADOOP</text><text x="382" y="430">SPARK</text></g></svg></div></div></section>
+
+<section class="section alt"><div class="section-inner"><div class="section-head"><div data-lang="es"><h2>Cómo usar esta ruta</h2><p>Esta guía es una subpágina de la <a href="../">sesión 3</a>. Regresa allí para la teoría ampliada de Hadoop, MapReduce y Spark.</p></div><div data-lang="en"><h2>How to use this path</h2><p>This guide is a subpage of <a href="../">Session 3</a>. Return there for extended Hadoop, MapReduce, and Spark theory.</p></div></div><nav class="toc" aria-label="macOS sections"><a href="#preparacion"><span data-lang="es">1. Preparación</span><span data-lang="en">1. Setup</span></a><a href="#hadoop"><span data-lang="es">2. Hadoop</span><span data-lang="en">2. Hadoop</span></a><a href="#spark"><span data-lang="es">3. Spark</span><span data-lang="en">3. Spark</span></a><a href="#errores"><span data-lang="es">4. Problemas y fuentes</span><span data-lang="en">4. Issues and sources</span></a></nav><div class="note" style="margin-top:1rem"><p data-lang="es"><strong>Importante:</strong> no necesitas descargar ni ejecutar un ZIP. Trabajarás con <code>comentarios.csv</code> y crearás el resto desde Terminal.</p><p data-lang="en"><strong>Important:</strong> you do not need to download or run a ZIP. You will work with <code>comentarios.csv</code> and create the rest from Terminal.</p></div></div></section>
+
+<section class="section" id="preparacion"><div class="section-inner two-col"><div><div data-lang="es"><p class="eyebrow">Preparación inicial</p><h2>Instalar Homebrew</h2><p>Homebrew es el gestor de paquetes que usaremos en macOS.</p></div><div data-lang="en"><p class="eyebrow">Initial setup</p><h2>Install Homebrew</h2><p>Homebrew is the package manager we will use on macOS.</p></div></div><div class="content-flow"><p data-lang="es">Abre Terminal y comprueba si ya está instalado:</p><p data-lang="en">Open Terminal and check whether it is already installed:</p><pre class="code-panel"><code>brew --version</code></pre><p data-lang="es">Si aparece <code>command not found</code>, instala Homebrew:</p><p data-lang="en">If you see <code>command not found</code>, install Homebrew:</p><pre class="code-panel"><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre><p data-lang="es">Actívalo en Apple Silicon o Intel y comprueba:</p><p data-lang="en">Activate it on Apple Silicon or Intel and check it:</p><pre class="code-panel"><code>if [ -x /opt/homebrew/bin/brew ]; then
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' &gt;&gt; ~/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+    echo 'eval "$(/usr/local/bin/brew shellenv)"' &gt;&gt; ~/.zprofile
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+brew --version</code></pre><div class="note"><p data-lang="es">Si macOS solicita herramientas de desarrollo, ejecuta <code>xcode-select --install</code>.</p><p data-lang="en">If macOS requests developer tools, run <code>xcode-select --install</code>.</p></div></div></div></section>
+
+<section class="section alt" id="hadoop"><div class="section-inner"><div class="section-head"><div data-lang="es"><p class="eyebrow">Parte 1 · Apache Hadoop</p><h2>Contar comentarios con Hadoop Streaming</h2><p>El mapper produce <code>red_social, 1</code> por fila y el reducer suma esos valores.</p></div><div data-lang="en"><p class="eyebrow">Part 1 · Apache Hadoop</p><h2>Count comments with Hadoop Streaming</h2><p>The mapper produces <code>social_network, 1</code> per row and the reducer sums those values.</p></div></div><div class="content-flow"><h3 data-lang="es">Paso 1. Instalar Java, Python y Hadoop</h3><h3 data-lang="en">Step 1. Install Java, Python, and Hadoop</h3><pre class="code-panel"><code>brew update
+brew install hadoop python@3.12
+
+export JAVA_HOME="$(brew --prefix openjdk@17)/libexec/openjdk.jdk/Contents/Home"
+export PATH="$JAVA_HOME/bin:$(brew --prefix python@3.12)/libexec/bin:$PATH"
+export HADOOP_HOME="$(brew --prefix hadoop)/libexec"
+
+java -version
+python3 --version
+hadoop version</code></pre><p data-lang="es">Debes obtener Java 17, Python 3.12 y Hadoop 3.5.0. Repite los <code>export</code> al abrir otra Terminal.</p><p data-lang="en">You should get Java 17, Python 3.12, and Hadoop 3.5.0. Repeat the <code>export</code> commands in a new Terminal.</p><h3 data-lang="es">Paso 2. Crear el proyecto y ubicar el CSV</h3><h3 data-lang="en">Step 2. Create the project and place the CSV</h3><pre class="code-panel"><code>mkdir -p ~/practica-bigdata/hadoop-practica/datos
+cd ~/practica-bigdata/hadoop-practica
+cp ~/Downloads/comentarios.csv datos/comentarios.csv
+python3 -c 'from pathlib import Path; p=Path("datos/comentarios.csv"); p.write_bytes(p.read_bytes().removeprefix(b"\xef\xbb\xbf"))'
+python3 -c 'import csv; f=open("datos/comentarios.csv",encoding="utf-8"); print("Registros:",sum(1 for _ in csv.DictReader(f))); f.close()'
+ls -lh datos
+head datos/comentarios.csv</code></pre><div class="note"><p data-lang="es">Copia únicamente el CSV en <code>~/Downloads</code>; no se entrega un proyecto comprimido. El resultado esperado es <strong>Registros: 50</strong>.</p><p data-lang="en">Copy only the CSV into <code>~/Downloads</code>; no compressed project is provided. Expected output is <strong>Records: 50</strong>.</p></div><h3 data-lang="es">Paso 3. Crear el Mapper</h3><h3 data-lang="en">Step 3. Create the Mapper</h3><pre class="code-panel"><code>import csv
+import sys
+
+lector = csv.reader(sys.stdin)
+
+for fila in lector:
+    if not fila or fila[0] == "id":
+        continue
+    red_social = fila[2].strip()
+    if red_social:
+        print("{}\t1".format(red_social))</code></pre><p data-lang="es">Guarda el archivo con <code>nano mapper.py</code>. La primera columna es el encabezado <code>id</code>; la tercera contiene <code>red_social</code>.</p><p data-lang="en">Save this file with <code>nano mapper.py</code>. The first column is the <code>id</code> header; the third contains <code>red_social</code>.</p><h3 data-lang="es">Paso 4. Crear el Reducer</h3><h3 data-lang="en">Step 4. Create the Reducer</h3><pre class="code-panel"><code>import sys
+
+red_actual = None
+total = 0
+
+for linea in sys.stdin:
+    red, cantidad = linea.strip().split("\t")
+    cantidad = int(cantidad)
+    if red == red_actual:
+        total += cantidad
+    else:
+        if red_actual is not None:
+            print("{}\t{}".format(red_actual, total))
+        red_actual = red
+        total = cantidad
+
+if red_actual is not None:
+    print("{}\t{}".format(red_actual, total))</code></pre><p data-lang="es">Guarda con <code>nano reducer.py</code>. Hadoop entrega al reducer los pares ya ordenados por clave.</p><p data-lang="en">Save with <code>nano reducer.py</code>. Hadoop gives the reducer pairs already sorted by key.</p><h3 data-lang="es">Paso 5. Probar y ejecutar Hadoop</h3><h3 data-lang="en">Step 5. Test and run Hadoop</h3><pre class="code-panel"><code>cat datos/comentarios.csv | python3 mapper.py | sort | python3 reducer.py</code></pre><pre class="code-panel"><code>STREAMING_JAR="$(find "$HADOOP_HOME/share/hadoop/tools/lib" -name 'hadoop-streaming-*.jar' -print -quit)"
+echo "$STREAMING_JAR"
+
+hadoop jar "$STREAMING_JAR" \
+  -D mapreduce.framework.name=local \
+  -D fs.defaultFS=file:/// \
+  -files mapper.py,reducer.py \
+  -mapper "python3 mapper.py" \
+  -reducer "python3 reducer.py" \
+  -input datos/comentarios.csv \
+  -output resultado_hadoop</code></pre><pre class="code-panel"><code>find resultado_hadoop -maxdepth 1 -type f -name 'part-*' -exec cat {} \;</code></pre><div class="table-wrap"><table class="data-table"><thead><tr><th data-lang="es">Red social</th><th data-lang="es">Comentarios</th><th data-lang="en">Social network</th><th data-lang="en">Comments</th></tr></thead><tbody><tr><td>Facebook</td><td>26</td><td>Facebook</td><td>26</td></tr><tr><td>Instagram</td><td>17</td><td>Instagram</td><td>17</td></tr><tr><td>X</td><td>7</td><td>X</td><td>7</td></tr></tbody></table></div><pre class="code-panel"><code>rm -r resultado_hadoop</code></pre><p data-lang="es">Usa el último comando solo antes de repetir el trabajo.</p><p data-lang="en">Use the last command only before repeating the job.</p></div></div></section>
+
+<section class="section" id="spark"><div class="section-inner two-col"><div><div data-lang="es"><p class="eyebrow">Parte 2 · Apache Spark</p><h2>Analizar el CSV con PySpark</h2><p>Usaremos DataFrames, agrupaciones, filtros y consultas.</p></div><div data-lang="en"><p class="eyebrow">Part 2 · Apache Spark</p><h2>Analyze the CSV with PySpark</h2><p>We will use DataFrames, groups, filters, and queries.</p></div></div><div class="content-flow"><h3 data-lang="es">Paso 1. Crear el proyecto</h3><h3 data-lang="en">Step 1. Create the project</h3><pre class="code-panel"><code>brew install uv
+export JAVA_HOME="$(brew --prefix openjdk@17)/libexec/openjdk.jdk/Contents/Home"
+export PATH="$JAVA_HOME/bin:$PATH"
+uv --version
+java -version
+
+cd ~/practica-bigdata
+uv init spark-practica
+cd spark-practica
+uv python pin 3.12
+uv add "pyspark==4.2.0"
+uv run python -c "import pyspark; print(pyspark.__version__)"</code></pre><p data-lang="es">La salida de PySpark debe ser <code>4.2.0</code>.</p><p data-lang="en">PySpark output should be <code>4.2.0</code>.</p><h3 data-lang="es">Paso 2. Poner el CSV en el proyecto</h3><h3 data-lang="en">Step 2. Put the CSV in the project</h3><pre class="code-panel"><code>cp ../hadoop-practica/datos/comentarios.csv comentarios.csv
+python3 -c 'from pathlib import Path; p=Path("comentarios.csv"); p.write_bytes(p.read_bytes().removeprefix(b"\xef\xbb\xbf"))'
+ls -lh comentarios.csv
+head comentarios.csv</code></pre><p data-lang="es">La ruta final es <code>~/practica-bigdata/spark-practica/comentarios.csv</code>.</p><p data-lang="en">The final path is <code>~/practica-bigdata/spark-practica/comentarios.csv</code>.</p><h3 data-lang="es">Paso 3. Crear <code>main.py</code></h3><h3 data-lang="en">Step 3. Create <code>main.py</code></h3><pre class="code-panel"><code>from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, desc
+
+spark = (SparkSession.builder
+    .appName("ComentariosRedesSociales")
+    .master("local[*]")
+    .getOrCreate())
+spark.sparkContext.setLogLevel("ERROR")
+
+df = spark.read.csv("comentarios.csv", header=True,
+                    inferSchema=True, encoding="UTF-8")
+
+print("\nPRIMEROS COMENTARIOS")
+df.show(5, truncate=False)
+print("\nESTRUCTURA")
+df.printSchema()
+print("\nTOTAL DE COMENTARIOS")
+print(df.count())
+
+print("\nCOMENTARIOS POR RED SOCIAL")
+df.groupBy("red_social").count().orderBy(desc("count")).show()
+
+print("\nCOMENTARIOS SPAM")
+df.filter(col("spam_referencial") == "Sí").show(truncate=False)
+
+print("\nPRIORIDAD")
+df.groupBy("prioridad_referencial").count().show()
+
+spark.stop()</code></pre><h3 data-lang="es">Paso 4. Ejecutar</h3><h3 data-lang="en">Step 4. Run</h3><pre class="code-panel"><code>uv run main.py</code></pre><div class="table-wrap"><table class="data-table"><thead><tr><th data-lang="es">Consulta</th><th data-lang="es">Resultado</th><th data-lang="en">Query</th><th data-lang="en">Result</th></tr></thead><tbody><tr><td data-lang="es">Total</td><td>50</td><td data-lang="en">Total</td><td>50</td></tr><tr><td>Facebook</td><td>26</td><td>Facebook</td><td>26</td></tr><tr><td>Instagram</td><td>17</td><td>Instagram</td><td>17</td></tr><tr><td>X</td><td>7</td><td>X</td><td>7</td></tr></tbody></table></div></div></div></section>
+
+<section class="section alt" id="errores"><div class="section-inner two-col"><div><div data-lang="es"><h2>Estructura y problemas frecuentes</h2><p>Al terminar tendrás dos proyectos independientes.</p></div><div data-lang="en"><h2>Structure and common issues</h2><p>At the end you will have two independent projects.</p></div></div><div class="content-flow"><pre class="code-panel"><code>practica-bigdata/
+├── hadoop-practica/
+│   ├── datos/comentarios.csv
+│   ├── mapper.py
+│   ├── reducer.py
+│   └── resultado_hadoop/
+└── spark-practica/
+    ├── main.py
+    ├── comentarios.csv
+    ├── pyproject.toml
+    └── uv.lock</code></pre><div class="table-wrap"><table class="data-table"><thead><tr><th data-lang="es">Problema</th><th data-lang="es">Solución</th><th data-lang="en">Problem</th><th data-lang="en">Solution</th></tr></thead><tbody><tr><td><code>brew: command not found</code></td><td data-lang="es">Repite la activación de Homebrew y abre otra Terminal.</td><td><code>brew: command not found</code></td><td data-lang="en">Repeat Homebrew activation and open another Terminal.</td></tr><tr><td>Java</td><td data-lang="es">Define de nuevo <code>JAVA_HOME</code> y <code>PATH</code>.</td><td>Java</td><td data-lang="en">Define <code>JAVA_HOME</code> and <code>PATH</code> again.</td></tr><tr><td>Salida existente</td><td data-lang="es">Elimina <code>resultado_hadoop</code> y repite.</td><td>Existing output</td><td data-lang="en">Remove <code>resultado_hadoop</code> and repeat.</td></tr><tr><td>CSV no encontrado</td><td data-lang="es">Comprueba la carpeta actual y la ruta exacta.</td><td>CSV not found</td><td data-lang="en">Check the current folder and exact path.</td></tr></tbody></table></div><div data-lang="es"><h3>Documentación oficial</h3><ul><li><a href="https://brew.sh/">Homebrew</a></li><li><a href="https://formulae.brew.sh/formula/hadoop">Hadoop en Homebrew</a></li><li><a href="https://hadoop.apache.org/docs/current/hadoop-streaming/HadoopStreaming.html">Hadoop Streaming</a></li><li><a href="https://spark.apache.org/docs/latest/api/python/getting_started/install.html">PySpark</a></li><li><a href="https://docs.astral.sh/uv/">uv</a></li></ul></div><div data-lang="en"><h3>Official documentation</h3><ul><li><a href="https://brew.sh/">Homebrew</a></li><li><a href="https://formulae.brew.sh/formula/hadoop">Hadoop on Homebrew</a></li><li><a href="https://hadoop.apache.org/docs/current/hadoop-streaming/HadoopStreaming.html">Hadoop Streaming</a></li><li><a href="https://spark.apache.org/docs/latest/api/python/getting_started/install.html">PySpark</a></li><li><a href="https://docs.astral.sh/uv/">uv</a></li></ul></div></div></div></section>
+</main>
+<footer><div class="section-inner"><span>Diego Alejandro Vela Beltrán</span><span data-lang="es">Magíster en Inteligencia Artificial</span><span data-lang="en">Master's Degree in Artificial Intelligence</span></div></footer>
+<script src="../../../script.js"></script>
+</body>
+</html>
