@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesión 4 · SECOP II, Spark, PLN y Power BI</title>
+<meta name="description" content="Guía bilingüe y responsive para analizar datos de SECOP II con PySpark, PLN y Power BI.">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+<header class="topbar"><div class="brand"><strong>Universidad Santo Tomás</strong><span data-lang="es">Optativa 1 · Big Data</span><span data-lang="en">Elective 1 · Big Data</span></div><nav class="nav-actions" aria-label="Navigation"><a class="home-link" href="../../"><span data-lang="es">Inicio</span><span data-lang="en">Home</span></a><div class="language-toggle" aria-label="Language selector"><button type="button" data-lang-button="es">ES</button><button type="button" data-lang-button="en">EN</button></div></nav></header>
+<main>
+<section class="hero lesson-hero"><div class="hero-inner"><div><p class="eyebrow" data-lang="es">Sesión 4 · Proyecto aplicado</p><p class="eyebrow" data-lang="en">Session 4 · Applied project</p><div data-lang="es"><h1>SECOP II con Spark, PLN y Power BI</h1><p>Construiremos un flujo completo: datos abiertos, limpieza distribuida, análisis exploratorio de sentimientos y tablas listas para visualización.</p></div><div data-lang="en"><h1>SECOP II with Spark, NLP, and Power BI</h1><p>We will build an end-to-end workflow: open data, distributed cleaning, exploratory sentiment analysis, and tables ready for visualization.</p></div><div class="stats-band"><div class="stat"><strong>11</strong><span data-lang="es">columnas relevantes</span><span data-lang="en">relevant columns</span></div><div class="stat"><strong>2.000</strong><span data-lang="es">textos máximos para PLN</span><span data-lang="en">maximum NLP texts</span></div><div class="stat"><strong>3</strong><span data-lang="es">salidas para Power BI</span><span data-lang="en">Power BI outputs</span></div></div></div><div class="hero-visual" aria-hidden="true"><svg class="signal-map" viewBox="0 0 520 470" role="img"><rect x="45" y="52" width="430" height="350" rx="28" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.35)" stroke-width="2"/><path d="M88 322 H430 M88 252 H430 M88 182 H430" stroke="rgba(255,255,255,.18)" stroke-width="2"/><path d="M92 330 C150 285 170 190 240 245 S336 330 430 112" fill="none" stroke="#9fe5ef" stroke-width="10" stroke-linecap="round"/><g fill="#fff"><circle cx="92" cy="330" r="13"/><circle cx="178" cy="242" r="13"/><circle cx="240" cy="245" r="13"/><circle cx="335" cy="300" r="13"/><circle cx="430" cy="112" r="13"/></g><g fill="rgba(255,255,255,.9)" font-family="Inter, sans-serif" font-size="18" font-weight="800"><text x="72" y="430">DATA</text><text x="205" y="430">NLP</text><text x="382" y="430">BI</text></g></svg></div></div></section>
+<section class="section alt"><div class="section-inner"><div class="section-head"><h2><span data-lang="es">Ruta de aprendizaje</span><span data-lang="en">Learning path</span></h2><p data-lang="es">La práctica usa el conjunto oficial de Procesos de Contratación de SECOP II. No confundas las predicciones exploratorias con indicadores de satisfacción, corrupción o calidad institucional.</p><p data-lang="en">The lab uses the official SECOP II contracting dataset. Do not interpret exploratory predictions as satisfaction, corruption, or institutional-quality indicators.</p></div><nav class="toc" aria-label="Session sections"><a href="#objetivo"><span data-lang="es">1. Objetivo y rigor</span><span data-lang="en">1. Objective and rigor</span></a><a href="#wsl2"><span data-lang="es">2. WSL2</span><span data-lang="en">2. WSL2</span></a><a href="#pipeline"><span data-lang="es">3. Pipeline Spark</span><span data-lang="en">3. Spark pipeline</span></a><a href="#macos"><span data-lang="es">4. Ruta macOS</span><span data-lang="en">4. macOS path</span></a><a href="#powerbi"><span data-lang="es">5. Power BI</span><span data-lang="en">5. Power BI</span></a><a href="#fuentes"><span data-lang="es">6. Fuentes</span><span data-lang="en">6. Sources</span></a></nav></div></section>
+<section class="section" id="objetivo"><div class="section-inner two-col"><div><h2><span data-lang="es">Objetivo y consideraciones</span><span data-lang="en">Objective and considerations</span></h2></div><div class="content-flow"><div class="note"><p data-lang="es"><strong>Rigor académico:</strong> SECOP II contiene descripciones administrativas, no opiniones ciudadanas. El sentimiento es una predicción exploratoria y se debe validar manualmente. <code>precio_base</code> es un presupuesto, no necesariamente el valor adjudicado.</p><p data-lang="en"><strong>Academic rigor:</strong> SECOP II contains administrative descriptions, not citizen opinions. Sentiment is an exploratory prediction and must be manually validated. <code>precio_base</code> is a budget, not necessarily the awarded value.</p></div><div class="grid"><article class="card"><strong data-lang="es">Ingeniería</strong><strong data-lang="en">Engineering</strong><p data-lang="es">Leer el CSV completo, conservar 11 columnas, limpiar textos y fechas y escribir Parquet.</p><p data-lang="en">Read the full CSV, keep 11 columns, clean text and dates, and write Parquet.</p></article><article class="card"><strong data-lang="es">PLN</strong><strong data-lang="en">NLP</strong><p data-lang="es">Tomar hasta 2.000 textos y clasificarlos localmente con un Transformer en CPU.</p><p data-lang="en">Sample up to 2,000 texts and classify them locally with a CPU Transformer.</p></article><article class="card"><strong data-lang="es">Visualización</strong><strong data-lang="en">Visualization</strong><p data-lang="es">Exportar agregaciones por departamento, modalidad y año para Power BI.</p><p data-lang="en">Export aggregations by department, modality, and year for Power BI.</p></article></div></div></div></section>
+<section class="section alt" id="wsl2"><div class="section-inner"><div class="section-head"><h2><span data-lang="es">Ruta principal: Ubuntu en WSL2</span><span data-lang="en">Main path: Ubuntu on WSL2</span></h2><p data-lang="es">Trabaja dentro del sistema de archivos Linux, por ejemplo <code>~/Projects</code>, y no dentro de <code>/mnt/c</code>.</p><p data-lang="en">Work inside the Linux filesystem, for example <code>~/Projects</code>, rather than inside <code>/mnt/c</code>.</p></div><div class="content-flow"><h3><span data-lang="es">Paso 1. Java y utilidades</span><span data-lang="en">Step 1. Java and utilities</span></h3><pre class="code-panel"><code>sudo apt update
+sudo apt install -y openjdk-17-jdk curl git ca-certificates
+java -version
+readlink -f &quot;$(command -v java)&quot;</code></pre><h3><span data-lang="es">Paso 2. uv y Python 3.12</span><span data-lang="en">Step 2. uv and Python 3.12</span></h3><pre class="code-panel"><code>uv --version</code></pre><pre class="code-panel"><code>curl -LsSf https://astral.sh/uv/install.sh | sh
+source &quot;$HOME/.local/bin/env&quot;
+uv --version</code></pre><h3><span data-lang="es">Paso 3. Dependencias</span><span data-lang="en">Step 3. Dependencies</span></h3><pre class="code-panel"><code>mkdir -p ~/Projects
+cd ~/Projects
+uv python install 3.12
+uv init --bare secop-bigdata --python 3.12
+cd secop-bigdata
+uv run python --version</code></pre><pre class="code-panel"><code>uv add &quot;pyspark==4.2.0&quot;
+uv add protobuf sentencepiece &quot;transformers&gt;=4.45,&lt;5&quot;</code></pre><pre class="code-panel"><code>uv add torch --index pytorch=https://download.pytorch.org/whl/cpu</code></pre><h3><span data-lang="es">Paso 4. Carpetas y CSV</span><span data-lang="en">Step 4. Folders and CSV</span></h3><pre class="code-panel"><code>uv run python -c &quot;import pyspark; print(&#x27;Spark:&#x27;, pyspark.__version__)&quot;
+uv run python -c &quot;import google.protobuf; print(&#x27;protobuf:&#x27;, google.protobuf.__version__)&quot;
+uv run python -c &quot;import torch; print(&#x27;Torch:&#x27;, torch.__version__, &#x27;CUDA:&#x27;, torch.version.cuda)&quot;</code></pre><pre class="code-panel"><code>mkdir -p datos/original datos/procesados resultados/powerbi</code></pre><pre class="code-panel"><code>ls -lh datos/original/SecopII_ProcesosDeContratacion.csv</code></pre><p data-lang="es">El archivo obligatorio debe llamarse exactamente <code>SecopII_ProcesosDeContratacion.csv</code> y ubicarse en <code>datos/original/</code>.</p><p data-lang="en">The required file must be named exactly <code>SecopII_ProcesosDeContratacion.csv</code> and placed in <code>datos/original/</code>.</p><pre class="code-panel"><code>secop-bigdata/
+├── datos/
+│   ├── original/
+│   │   └── SecopII_ProcesosDeContratacion.csv
+│   └── procesados/
+└── resultados/
+    └── powerbi/</code></pre></div></div></section>
+<section class="section" id="pipeline"><div class="section-inner"><div class="section-head"><h2><span data-lang="es">Los cuatro archivos del pipeline</span><span data-lang="en">The four pipeline files</span></h2><p data-lang="es">Crea estos archivos en la raíz del proyecto. El botón de cada bloque copia únicamente el código, sin numeración ni etiquetas.</p><p data-lang="en">Create these files in the project root. Each block button copies only the code, without numbering or labels.</p></div><div class="content-flow"><h3><span data-lang="es">config.py · parámetros y rutas</span><span data-lang="en">config.py · parameters and paths</span></h3><p data-lang="es">Centraliza rutas, modelo, memoria, número de núcleos y nombres alternativos de encabezados.</p><p data-lang="en">Centralize paths, model, memory, core count, and alternative header names.</p><pre class="code-panel"><code># Path permite construir rutas portables dentro del sistema de archivos Linux.
+from pathlib import Path
+
+# Directorio principal del proyecto: base para todas las rutas.
+BASE_DIR = Path(__file__).resolve().parent
+# Archivo CSV descargado desde Datos Abiertos Colombia.
+DATOS_ORIGINALES = BASE_DIR / &quot;datos&quot; / &quot;original&quot; / &quot;SecopII_ProcesosDeContratacion.csv&quot;
+# Carpeta de salida del conjunto limpio en formato Parquet.
+DATOS_PROCESADOS = BASE_DIR / &quot;datos&quot; / &quot;procesados&quot; / &quot;secop_limpio.parquet&quot;
+# Carpeta general para los resultados analíticos.
+RESULTADOS = BASE_DIR / &quot;resultados&quot;
+# Carpeta donde Spark dejará las tablas agregadas para Power BI.
+POWERBI = RESULTADOS / &quot;powerbi&quot;
+# Archivo de predicciones que podrá importarse en Power BI.
+ARCHIVO_SENTIMIENTOS = RESULTADOS / &quot;sentimientos.csv&quot;
+
+# Identificador del modelo multilingüe para clasificación de sentimientos.
+MODELO_PLN = &quot;cardiffnlp/twitter-xlm-roberta-base-sentiment&quot;
+# Memoria máxima destinada al controlador de Spark (driver).
+MEMORIA_SPARK = &quot;4g&quot;
+# Número de núcleos locales que Spark podrá utilizar.
+NUCLEOS_SPARK = 4
+# Cantidad máxima de textos sobre los que se ejecutará el Transformer.
+MAX_REGISTROS_PLN = 2000
+# Fracción aproximada de registros elegidos antes de aplicar el límite.
+FRACCION_MUESTRA = 0.02
+# Textos que el modelo procesará por lote de inferencia.
+TAMANO_LOTE = 8
+
+# Mapa de nombres técnicos y encabezados alternativos presentes en el CSV.
+# Las claves serán los nombres uniformes de las columnas de salida.
+COLUMNAS = {
+    &quot;id_del_proceso&quot;: [&quot;ID del Proceso&quot;],
+    &quot;entidad&quot;: [&quot;Entidad&quot;],
+    &quot;departamento_entidad&quot;: [&quot;Departamento Entidad&quot;],
+    &quot;ciudad_entidad&quot;: [&quot;Ciudad Entidad&quot;],
+    &quot;nombre_del_procedimiento&quot;: [&quot;Nombre del Procedimiento&quot;],
+    &quot;descripci_n_del_procedimiento&quot;: [&quot;Descripción del Procedimiento&quot;, &quot;Descripcion del Procedimiento&quot;],
+    &quot;modalidad_de_contratacion&quot;: [&quot;Modalidad de Contratacion&quot;, &quot;Modalidad de Contratación&quot;],
+    &quot;justificaci_n_modalidad_de&quot;: [&quot;Justificación Modalidad de Contratación&quot;, &quot;Justificacion Modalidad de Contratacion&quot;],
+    &quot;precio_base&quot;: [&quot;Precio Base&quot;],
+    &quot;fase&quot;: [&quot;Fase&quot;],
+    &quot;fecha_de_publicacion_del&quot;: [&quot;Fecha de Publicacion del Proceso&quot;, &quot;Fecha de Publicación del Proceso&quot;],
+}</code></pre><h3><span data-lang="es">procesamiento.py · limpieza y agregaciones</span><span data-lang="en">procesamiento.py · cleaning and aggregations</span></h3><p data-lang="es">Lee el CSV con Spark, reconoce encabezados, conserva las columnas relevantes, normaliza texto, convierte precios y fechas, escribe Parquet y prepara resultados de Power BI.</p><p data-lang="en">Reads the CSV with Spark, recognizes headers, keeps relevant columns, normalizes text, converts prices and dates, writes Parquet, and prepares Power BI outputs.</p><pre class="code-panel"><code># Expresiones regulares para simplificar los nombres de columnas.
+import re
+# Normalización de acentos y caracteres Unicode.
+import unicodedata
+
+# API de DataFrames de Spark y funciones de transformación de columnas.
+from pyspark.sql import SparkSession, functions as F
+# Rutas y parámetros centralizados del proyecto.
+from config import (
+    DATOS_ORIGINALES, DATOS_PROCESADOS, MEMORIA_SPARK,
+    NUCLEOS_SPARK, COLUMNAS, POWERBI,
+)
+
+
+# Encapsula la lectura, preparación y exportación de datos de contratación.
+class ProcesadorSECOP:
+        # Inicia una sesión Spark en modo local para procesar el CSV.
+    def __init__(self):
+        self.spark = (
+            SparkSession.builder
+            # Nombre que identifica el trabajo dentro de Spark.
+            .appName(&quot;SECOP-II-BigData&quot;)
+            # Ejecuta Spark localmente con el número de núcleos configurado.
+            .master(f&quot;local[{NUCLEOS_SPARK}]&quot;)
+            # Memoria asignada al proceso principal de Spark.
+            .config(&quot;spark.driver.memory&quot;, MEMORIA_SPARK)
+            # Particiones usadas en intercambios de datos (por ejemplo, agregaciones).
+            .config(&quot;spark.sql.shuffle.partitions&quot;, &quot;8&quot;)
+            # Zona horaria empleada para interpretar fechas y horas.
+            .config(&quot;spark.sql.session.timeZone&quot;, &quot;America/Bogota&quot;)
+            .getOrCreate()
+        )
+        # Reduce la cantidad de mensajes informativos en terminal.
+        self.spark.sparkContext.setLogLevel(&quot;WARN&quot;)
+
+    # Permite utilizar esta función sin crear una instancia del procesador.
+    @staticmethod
+        # Quita diferencias de acentos, espacios y signos en los encabezados.
+    def normalizar_nombre(nombre):
+        t = unicodedata.normalize(&quot;NFKD&quot;, nombre)
+        t = &quot;&quot;.join(c for c in t if not unicodedata.combining(c))
+        return re.sub(r&quot;[^a-z0-9]&quot;, &quot;&quot;, t.lower())
+
+        # Comprueba que el CSV exista y crea un DataFrame Spark.
+    def leer(self):
+        if not DATOS_ORIGINALES.is_file():
+            raise FileNotFoundError(f&quot;No se encuentra el CSV: {DATOS_ORIGINALES}&quot;)
+        print(&quot;Leyendo SECOP II...&quot;)
+        return (
+            self.spark.read
+            # La primera fila contiene los nombres de las columnas.
+            .option(&quot;header&quot;, True)
+            # Codificación de los caracteres del archivo.
+            .option(&quot;encoding&quot;, &quot;UTF-8&quot;)
+            # Admite saltos de línea dentro de campos CSV entrecomillados.
+            .option(&quot;multiLine&quot;, True)
+            # Carácter que delimita textos entre comillas.
+            .option(&quot;quote&quot;, &#x27;&quot;&#x27;)
+            # Carácter de escape para comillas dentro de los valores.
+            .option(&quot;escape&quot;, &#x27;&quot;&#x27;)
+            # Detiene el procesamiento ante filas CSV mal formadas.
+            .option(&quot;mode&quot;, &quot;FAILFAST&quot;)
+            .csv(str(DATOS_ORIGINALES))
+        )
+
+        # Detecta encabezados originales y conserva únicamente los definidos en config.py.
+    def seleccionar_columnas(self, df):
+        # Asocia la forma normalizada del encabezado con su nombre original.
+        disponibles = {self.normalizar_nombre(c): c for c in df.columns}
+        expresiones, faltantes = [], []
+            # Busca primero el nombre técnico y luego las variantes descriptivas.
+        for tecnico, alternativas in COLUMNAS.items():
+            original = next(
+                (disponibles[self.normalizar_nombre(n)]
+                 for n in [tecnico, *alternativas]
+                 if self.normalizar_nombre(n) in disponibles),
+                None,
+            )
+            if original is None:
+                faltantes.append(tecnico)
+            else:
+                expresiones.append(F.col(f&quot;`{original}`&quot;).alias(tecnico))
+        # Informa si el CSV carece de columnas requeridas.
+        if faltantes:
+            raise ValueError(
+                f&quot;Columnas ausentes: {faltantes}. Encabezados leídos: {df.columns}&quot;
+            )
+        print(&quot;Seleccionando columnas...&quot;)
+        # Selecciona las columnas y les asigna nombres técnicos consistentes.
+        return df.select(*expresiones)
+
+        # Prepara textos, valores monetarios y fechas para análisis.
+    def limpiar(self, df):
+        print(&quot;Limpiando información...&quot;)
+        # Columnas cuyo contenido debe tratarse como texto.
+        textos = [
+            &quot;id_del_proceso&quot;, &quot;entidad&quot;, &quot;departamento_entidad&quot;,
+            &quot;ciudad_entidad&quot;, &quot;nombre_del_procedimiento&quot;,
+            &quot;descripci_n_del_procedimiento&quot;, &quot;modalidad_de_contratacion&quot;,
+            &quot;justificaci_n_modalidad_de&quot;, &quot;fase&quot;,
+        ]
+        # Quita espacios sobrantes y deja nulos los textos vacíos.
+        for c in textos:
+            df = df.withColumn(
+                c,
+                F.when(F.length(F.trim(F.col(c))) &gt; 0, F.trim(F.col(c)))
+            )
+
+        # SECOP publica precio base como valor numérico textual.
+        df = df.withColumn(
+            &quot;precio_base&quot;,
+            F.expr(&quot;try_cast(regexp_replace(precio_base, &#x27;[^0-9.-]&#x27;, &#x27;&#x27;) AS DOUBLE)&quot;)
+        )
+
+        # Interpretar las fechas de publicación en distintos formatos.
+        # Campo original que contiene la fecha de publicación.
+        fecha = F.col(&quot;fecha_de_publicacion_del&quot;)
+        df = df.withColumn(
+            &quot;fecha_publicacion&quot;,
+            # Escoge el primer formato de fecha que se pueda interpretar.
+            F.coalesce(
+                F.to_date(F.try_to_timestamp(fecha)),
+                F.try_to_date(fecha, &quot;yyyy-MM-dd&quot;),
+                F.try_to_date(fecha, &quot;dd/MM/yyyy&quot;),
+                F.try_to_date(fecha, &quot;MM/dd/yyyy&quot;),
+            )
+        )
+        # Extrae el año para construir tendencias temporales.
+        df = df.withColumn(&quot;anio&quot;, F.year(&quot;fecha_publicacion&quot;))
+        df = df.withColumn(
+            # Une nombre y descripción del procedimiento en un solo texto.
+            &quot;texto_pln&quot;,
+            F.trim(F.regexp_replace(
+                F.lower(F.concat_ws(
+                    &quot; &quot;, F.col(&quot;nombre_del_procedimiento&quot;),
+                    F.col(&quot;descripci_n_del_procedimiento&quot;)
+                )), r&quot;\s+&quot;, &quot; &quot;
+            ))
+        )
+        # Conserva filas con identificador y al menos 30 caracteres de texto.
+        return df.filter(
+            F.col(&quot;id_del_proceso&quot;).isNotNull()
+            &amp; (F.length(F.col(&quot;texto_pln&quot;)) &gt;= 30)
+        )
+
+        # Ejecuta la preparación completa y escribe los datos depurados.
+    def preparar(self):
+        df = self.limpiar(self.seleccionar_columnas(self.leer()))
+        # Garantiza que exista el directorio de salida.
+        DATOS_PROCESADOS.parent.mkdir(parents=True, exist_ok=True)
+        print(&quot;Guardando dataset en Parquet... (puede tardar por el volumen)&quot;)
+        # Sobrescribe la salida previa en formato columnar Parquet.
+        df.write.mode(&quot;overwrite&quot;).parquet(str(DATOS_PROCESADOS))
+        print(&quot;Dataset procesado correctamente.&quot;)
+
+        # Construye tres resúmenes independientes para tableros de Power BI.
+    def exportar_powerbi(self):
+        df = self.spark.read.parquet(str(DATOS_PROCESADOS))
+        POWERBI.mkdir(parents=True, exist_ok=True)
+        # Cada clave será una carpeta CSV producida por Spark.
+        tablas = {
+            # Recuento, suma y promedio del precio base por departamento.
+            &quot;contratos_departamento&quot;: (
+                df.groupBy(&quot;departamento_entidad&quot;)
+                .agg(
+                    F.count(&quot;*&quot;).alias(&quot;total_registros&quot;),
+                    F.sum(&quot;precio_base&quot;).alias(&quot;precio_base_total&quot;),
+                    F.avg(&quot;precio_base&quot;).alias(&quot;precio_base_promedio&quot;),
+                )
+            ),
+            # Recuento y suma del precio base por modalidad contractual.
+            &quot;contratos_modalidad&quot;: (
+                df.groupBy(&quot;modalidad_de_contratacion&quot;)
+                .agg(
+                    F.count(&quot;*&quot;).alias(&quot;total_registros&quot;),
+                    F.sum(&quot;precio_base&quot;).alias(&quot;precio_base_total&quot;),
+                )
+            ),
+            # Recuento y suma del precio base por año de publicación.
+            &quot;contratos_anio&quot;: (
+                df.groupBy(&quot;anio&quot;)
+                .agg(
+                    F.count(&quot;*&quot;).alias(&quot;total_registros&quot;),
+                    F.sum(&quot;precio_base&quot;).alias(&quot;precio_base_total&quot;),
+                )
+            ),
+        }
+            # Guarda cada resumen como CSV con encabezados.
+        for nombre, tabla in tablas.items():
+            (tabla.coalesce(1).write.mode(&quot;overwrite&quot;)
+             .option(&quot;header&quot;, True).csv(str(POWERBI / nombre)))
+        print(&quot;Tablas agregadas para Power BI generadas.&quot;)
+
+        # Libera la sesión Spark y sus recursos.
+    def cerrar(self):
+        self.spark.stop()</code></pre><h3><span data-lang="es">sentimientos.py · clasificación exploratoria</span><span data-lang="en">sentimientos.py · exploratory classification</span></h3><p data-lang="es">Selecciona una muestra limitada, carga el modelo multilingüe y escribe las etiquetas y probabilidades en un CSV.</p><p data-lang="en">Selects a bounded sample, loads the multilingual model, and writes labels and probabilities to a CSV.</p><pre class="code-panel"><code># Biblioteca estándar para crear archivos CSV de resultados.
+import csv
+# Motor de inferencia del modelo neuronal en CPU.
+import torch
+# Interfaz de alto nivel para cargar el clasificador de sentimientos.
+from transformers import pipeline
+# Spark lee Parquet y obtiene la muestra distribuida.
+from pyspark.sql import SparkSession, functions as F
+# Parámetros de muestreo, modelo, memoria y rutas.
+from config import (
+    DATOS_PROCESADOS, ARCHIVO_SENTIMIENTOS, RESULTADOS,
+    MODELO_PLN, MAX_REGISTROS_PLN, FRACCION_MUESTRA,
+    TAMANO_LOTE, MEMORIA_SPARK, NUCLEOS_SPARK,
+)
+
+
+# Obtiene una muestra y clasifica el sentimiento de sus descripciones.
+class AnalizadorSentimientos:
+        # El modelo se cargará solo cuando comience la inferencia.
+    def __init__(self):
+        self.modelo = None
+
+        # Carga un modelo multilingüe y su tokenizador para ejecución local.
+    def cargar_modelo(self):
+        print(&quot;Cargando modelo de sentimientos...&quot;)
+        self.modelo = pipeline(
+            # Tipo de tarea: clasificación de textos.
+            task=&quot;text-classification&quot;,
+            # Identificador de los pesos del modelo en Hugging Face.
+            model=MODELO_PLN,
+            # Tokenizador asociado al mismo modelo.
+            tokenizer=MODELO_PLN,
+            # -1 indica inferencia en CPU.
+            device=-1,
+            # Prefiere los pesos en formato Safetensors.
+            model_kwargs={&quot;use_safetensors&quot;: True},
+        )
+
+        # Selecciona textos del Parquet usando Spark sin traer millones de filas.
+    def obtener_muestra(self):
+        spark = (
+            SparkSession.builder.appName(&quot;SECOP-Muestra-PLN&quot;)
+            .master(f&quot;local[{NUCLEOS_SPARK}]&quot;)
+            .config(&quot;spark.driver.memory&quot;, MEMORIA_SPARK)
+            .getOrCreate()
+        )
+        spark.sparkContext.setLogLevel(&quot;WARN&quot;)
+        try:
+            # Obtiene las variables necesarias para el análisis posterior.
+            df = (
+                spark.read.parquet(str(DATOS_PROCESADOS))
+                .select(&quot;id_del_proceso&quot;, &quot;entidad&quot;, &quot;departamento_entidad&quot;,
+                        &quot;anio&quot;, &quot;precio_base&quot;, &quot;texto_pln&quot;)
+                .filter(F.col(&quot;texto_pln&quot;).isNotNull())
+            )
+            # Muestreo sin reemplazo; la semilla permite reproducir la selección.
+# limit() restringe el máximo de filas transferidas desde Spark a Python.
+            filas = (df.sample(withReplacement=False,
+                               fraction=FRACCION_MUESTRA, seed=42)
+                     .limit(MAX_REGISTROS_PLN).collect())
+            # Convierte las filas Spark recolectadas en diccionarios Python.
+            registros = [f.asDict() for f in filas]
+            # Cierra Spark, incluso si falla la extracción de la muestra.
+        finally:
+            spark.stop()
+        if not registros:
+            raise ValueError(&quot;Muestra vacía: aumenta FRACCION_MUESTRA en config.py&quot;)
+        print(f&quot;Registros seleccionados: {len(registros)}&quot;)
+        return registros
+
+        # Clasifica cada texto de la muestra y escribe etiquetas y probabilidades.
+    def ejecutar(self):
+        registros = self.obtener_muestra()
+        self.cargar_modelo()
+        RESULTADOS.mkdir(parents=True, exist_ok=True)
+        # Orden fijo de las columnas del archivo de salida.
+        campos = [
+            &quot;id_del_proceso&quot;, &quot;entidad&quot;, &quot;departamento_entidad&quot;,
+            &quot;anio&quot;, &quot;precio_base&quot;, &quot;texto_pln&quot;, &quot;sentimiento&quot;,
+            &quot;confianza&quot;, &quot;prob_negativo&quot;, &quot;prob_neutral&quot;, &quot;prob_positivo&quot;,
+        ]
+        # Traducción de las tres etiquetas del modelo al español.
+        etiquetas = {&quot;negative&quot;: &quot;Negativo&quot;, &quot;neutral&quot;: &quot;Neutral&quot;, &quot;positive&quot;: &quot;Positivo&quot;}
+        # UTF-8 con BOM facilita la lectura de tildes en aplicaciones Windows.
+        with open(ARCHIVO_SENTIMIENTOS, &quot;w&quot;, encoding=&quot;utf-8-sig&quot;, newline=&quot;&quot;) as archivo:
+            escritor = csv.DictWriter(archivo, fieldnames=campos)
+            escritor.writeheader()
+            # Procesamiento por lotes para controlar el uso de memoria.
+            for inicio in range(0, len(registros), TAMANO_LOTE):
+                lote = registros[inicio:inicio + TAMANO_LOTE]
+                # Extrae únicamente los textos del lote actual.
+                textos = [r[&quot;texto_pln&quot;] for r in lote]
+                # Desactiva cálculos de gradientes durante la predicción.
+                with torch.inference_mode():
+                    predicciones = self.modelo(
+                        # Recorta las entradas largas para limitar tokens y memoria.
+                        textos, truncation=True, max_length=256,
+                        # Recupera puntuaciones de todas las clases, no solo la ganadora.
+                        top_k=None, batch_size=TAMANO_LOTE,
+                    )
+                # Une cada predicción con el registro al que pertenece.
+                for registro, prediccion in zip(lote, predicciones):
+                    # Convierte las puntuaciones del modelo en un diccionario.
+                    probs = {x[&quot;label&quot;].lower(): float(x[&quot;score&quot;]) for x in prediccion}
+                    # Selecciona la clase con mayor puntuación.
+                    mejor = max(probs, key=probs.get)
+                    # Guarda el registro original y las tres probabilidades.
+                    escritor.writerow({
+                        **registro,
+                        &quot;sentimiento&quot;: etiquetas.get(mejor, mejor),
+                        &quot;confianza&quot;: probs[mejor],
+                        &quot;prob_negativo&quot;: probs.get(&quot;negative&quot;, 0),
+                        &quot;prob_neutral&quot;: probs.get(&quot;neutral&quot;, 0),
+                        &quot;prob_positivo&quot;: probs.get(&quot;positive&quot;, 0),
+                    })
+                print(f&quot;Procesados {min(inicio + TAMANO_LOTE, len(registros))}/{len(registros)}&quot;)
+        print(f&quot;Resultados: {ARCHIVO_SENTIMIENTOS}&quot;)</code></pre><h3><span data-lang="es">main.py · orquestación</span><span data-lang="en">main.py · orchestration</span></h3><p data-lang="es">Permite ejecutar ingeniería, PLN, análisis o todo el flujo desde un único punto de entrada.</p><p data-lang="en">Runs engineering, NLP, analysis, or the complete workflow from one entry point.</p><pre class="code-panel"><code># Permite seleccionar la etapa de ejecución desde la terminal.
+import argparse
+# Clase responsable de preparar datos y generar tablas agregadas.
+from procesamiento import ProcesadorSECOP
+# Clase responsable de ejecutar el modelo de sentimientos.
+from sentimientos import AnalizadorSentimientos
+
+
+# Etapa de ingeniería de datos: CSV original -&gt; Parquet.
+def preparar_datos():
+    # Crea una sesión Spark para la operación solicitada.
+    p = ProcesadorSECOP()
+    try:
+        p.preparar()
+    # Garantiza la liberación de recursos aunque ocurra un error.
+    finally:
+        p.cerrar()
+
+
+# Etapa de PLN: selección de muestra y clasificación de textos.
+def analizar_sentimientos():
+    AnalizadorSentimientos().ejecutar()
+
+
+# Etapa analítica: agrupa registros y genera archivos para Power BI.
+def generar_reportes():
+    # Crea una sesión Spark para la operación solicitada.
+    p = ProcesadorSECOP()
+    try:
+        p.exportar_powerbi()
+    # Garantiza la liberación de recursos aunque ocurra un error.
+    finally:
+        p.cerrar()
+
+
+# Ejecuta las tres etapas en el orden de dependencia.
+def ejecutar_todo():
+    preparar_datos()
+    analizar_sentimientos()
+    generar_reportes()
+
+
+# Interpreta el argumento de línea de comandos y ejecuta la acción.
+def main():
+    parser = argparse.ArgumentParser(description=&quot;SECOP II: Spark, PLN y Power BI&quot;)
+    # Acciones disponibles: preparar, sentimientos, reportes y todo.
+    parser.add_argument(&quot;accion&quot;, choices=[&quot;preparar&quot;, &quot;sentimientos&quot;, &quot;reportes&quot;, &quot;todo&quot;])
+    args = parser.parse_args()
+    # Relaciona cada nombre de acción con su función Python.
+    acciones = {
+        &quot;preparar&quot;: preparar_datos,
+        &quot;sentimientos&quot;: analizar_sentimientos,
+        &quot;reportes&quot;: generar_reportes,
+        &quot;todo&quot;: ejecutar_todo,
+    }
+    # Llama únicamente la función solicitada por el usuario.
+    acciones[args.accion]()
+
+
+# Evita ejecutar el programa automáticamente cuando se importa como módulo.
+if __name__ == &quot;__main__&quot;:
+    main()</code></pre></div></div></section>
+<section class="section alt"><div class="section-inner two-col"><div><h2><span data-lang="es">Ejecutar y verificar</span><span data-lang="en">Run and verify</span></h2></div><div class="content-flow"><p data-lang="es">Ejecuta las etapas en orden. La primera crea Parquet; la segunda produce sentimientos; la tercera exporta tablas agregadas.</p><p data-lang="en">Run the stages in order. The first creates Parquet; the second produces sentiment results; the third exports aggregated tables.</p><pre class="code-panel"><code># 1) Ingeniería de datos: lee el CSV completo y escribe Parquet
+uv run python main.py preparar
+
+# 2) NLP: toma una muestra y produce resultados de sentimientos
+uv run python main.py sentimientos
+
+# 3) Indicadores agregados para Power BI
+uv run python main.py reportes</code></pre><pre class="code-panel"><code>uv run python main.py todo</code></pre><pre class="code-panel"><code>find datos/procesados/secop_limpio.parquet -maxdepth 1 -type f | head
+ls -lh resultados/sentimientos.csv
+find resultados/powerbi -type f -name &#x27;part-*.csv&#x27;</code></pre><div class="note"><p data-lang="es"><strong>Resultado:</strong> verifica que existan <code>datos/procesados/secop_limpio.parquet</code>, <code>resultados/sentimientos.csv</code> y los CSV dentro de <code>resultados/powerbi/</code>.</p><p data-lang="en"><strong>Result:</strong> verify that <code>datos/procesados/secop_limpio.parquet</code>, <code>resultados/sentimientos.csv</code>, and the CSV files inside <code>resultados/powerbi/</code> exist.</p></div></div></div></section>
+<section class="section" id="macos"><div class="section-inner"><div class="section-head"><h2><span data-lang="es">Ruta macOS · misma sesión, otro entorno</span><span data-lang="en">macOS path · same session, another environment</span></h2><p data-lang="es">Si trabajas en macOS, sigue esta subsección en lugar de la preparación WSL2. El pipeline de Python es el mismo; cambian la instalación de Java, la activación del entorno y la forma de trabajar desde Homebrew.</p><p data-lang="en">If you work on macOS, follow this subsection instead of the WSL2 setup. The Python pipeline is the same; Java installation, environment activation, and Homebrew usage change.</p></div><div class="note"><p data-lang="es"><strong>Recomendación:</strong> usa Terminal, Homebrew y el sistema de archivos de tu usuario. La guía no entrega un ZIP ni requiere ejecutar Docker.</p><p data-lang="en"><strong>Recommendation:</strong> use Terminal, Homebrew, and your user filesystem. The guide does not provide a ZIP and does not require Docker.</p></div><div class="content-flow"><h3><span data-lang="es">Paso 1. Java 17 y utilidades</span><span data-lang="en">Step 1. Java 17 and utilities</span></h3><pre class="code-panel"><code>brew update
+brew install openjdk@17 curl git</code></pre><pre class="code-panel"><code>export JAVA_HOME=&quot;$(brew --prefix openjdk@17)/libexec/openjdk.jdk/Contents/Home&quot;
+export PATH=&quot;$JAVA_HOME/bin:$PATH&quot;
+
+printf &#x27;\nexport JAVA_HOME=&quot;$(brew --prefix openjdk@17)/libexec/openjdk.jdk/Contents/Home&quot;\nexport PATH=&quot;$JAVA_HOME/bin:$PATH&quot;\n&#x27; &gt;&gt; ~/.zshrc
+
+java -version
+echo &quot;$JAVA_HOME&quot;</code></pre><h3><span data-lang="es">Paso 2. uv, Python y proyecto</span><span data-lang="en">Step 2. uv, Python, and project</span></h3><pre class="code-panel"><code>uv --version</code></pre><pre class="code-panel"><code>brew install uv
+uv --version</code></pre><pre class="code-panel"><code>mkdir -p ~/Projects
+cd ~/Projects
+uv python install 3.12
+uv init --bare secop-bigdata --python 3.12
+cd secop-bigdata
+uv run python --version</code></pre><pre class="code-panel"><code>uv add &quot;pyspark==4.2.0&quot;
+uv add protobuf sentencepiece &quot;transformers&gt;=4.45,&lt;5&quot;</code></pre><h3><span data-lang="es">Paso 3. Dependencias y carpetas</span><span data-lang="en">Step 3. Dependencies and folders</span></h3><pre class="code-panel"><code>uv add torch</code></pre><pre class="code-panel"><code>uv run python -c &quot;import pyspark; print(&#x27;Spark:&#x27;, pyspark.__version__)&quot;
+uv run python -c &quot;import google.protobuf; print(&#x27;protobuf:&#x27;, google.protobuf.__version__)&quot;
+uv run python -c &quot;import torch; print(&#x27;Torch:&#x27;, torch.__version__, &#x27;CUDA:&#x27;, torch.version.cuda)&quot;</code></pre><pre class="code-panel"><code>mkdir -p datos/original datos/procesados resultados/powerbi</code></pre><pre class="code-panel"><code>ls -lh datos/original/SecopII_ProcesosDeContratacion.csv</code></pre><pre class="code-panel"><code>secop-bigdata/
+├── datos/
+│   ├── original/
+│   │   └── SecopII_ProcesosDeContratacion.csv
+│   └── procesados/
+└── resultados/
+    └── powerbi/</code></pre><p data-lang="es">Coloca el CSV en <code>datos/original/SecopII_ProcesosDeContratacion.csv</code>. Los cuatro archivos Python y sus bloques de código son los mismos de la ruta WSL2.</p><p data-lang="en">Place the CSV at <code>datos/original/SecopII_ProcesosDeContratacion.csv</code>. The four Python files and their code blocks are the same as in the WSL2 path.</p></div></div></section>
+<section class="section alt" id="powerbi"><div class="section-inner"><div class="section-head"><h2><span data-lang="es">Combinar resultados en Power BI</span><span data-lang="en">Combine results in Power BI</span></h2><p data-lang="es">Power BI Desktop no está disponible de forma nativa en macOS. Puedes abrir los CSV desde un equipo Windows, una máquina virtual o un entorno institucional autorizado.</p><p data-lang="en">Power BI Desktop is not natively available on macOS. Open the CSV files from Windows, a virtual machine, or an authorized institutional environment.</p></div><div class="content-flow"><h3><span data-lang="es">Archivos exportados</span><span data-lang="en">Exported files</span></h3><p data-lang="es">Importa las tablas de departamento, modalidad, año y sentimientos. Relaciónalas con una clave común solo cuando tenga sentido y documenta cualquier transformación.</p><p data-lang="en">Import department, modality, year, and sentiment tables. Relate them through a common key only when meaningful, and document any transformation.</p><pre class="code-panel"><code>Documentos analizados = COUNTROWS(sentimientos)</code></pre><pre class="code-panel"><code>Porcentaje neutral =
+DIVIDE(
+    CALCULATE(COUNTROWS(sentimientos), sentimientos[sentimiento] = &quot;Neutral&quot;),
+    COUNTROWS(sentimientos)
+)</code></pre><pre class="code-panel"><code>Confianza promedio = AVERAGE(sentimientos[confianza])</code></pre><div class="grid"><article class="card"><p data-lang="es"><strong>Departamento × año</strong><br>Observa volumen de procesos y presupuesto por periodo.</p><p data-lang="en"><strong>Department × year</strong><br>Explore process volume and budget by period.</p></article><article class="card"><p data-lang="es"><strong>Modalidad × sentimiento</strong><br>Usa el sentimiento como señal exploratoria y revisa una muestra manual.</p><p data-lang="en"><strong>Modality × sentiment</strong><br>Use sentiment as an exploratory signal and manually review a sample.</p></article><article class="card"><p data-lang="es"><strong>Indicadores DAX</strong><br>Explica el denominador y los filtros de cada medida.</p><p data-lang="en"><strong>DAX measures</strong><br>Explain the denominator and filters for each measure.</p></article></div></div></div></section>
+<section class="section" id="fuentes"><div class="section-inner two-col"><div><h2><span data-lang="es">Alcances y fuentes</span><span data-lang="en">Scope and sources</span></h2></div><div class="content-flow"><div class="note"><p data-lang="es">Una predicción de sentimiento no demuestra corrupción, satisfacción o irregularidad. El análisis sirve para practicar el pipeline y formular preguntas que después requieren validación metodológica.</p><p data-lang="en">A sentiment prediction does not demonstrate corruption, satisfaction, or irregularity. The analysis is for practicing the pipeline and forming questions that require methodological validation.</p></div><div data-lang="es"><h3>Fuentes oficiales</h3><ul><li><a href="https://www.datos.gov.co/d/p6dx-8zbt">SECOP II · Procesos de Contratación</a></li><li><a href="https://spark.apache.org/docs/latest/api/python/">Documentación de PySpark</a></li><li><a href="https://huggingface.co/cardiffnlp/twitter-xlm-roberta-base-sentiment">Modelo multilingüe de sentimientos</a></li><li><a href="https://docs.astral.sh/uv/">uv</a></li></ul></div><div data-lang="en"><h3>Official sources</h3><ul><li><a href="https://www.datos.gov.co/d/p6dx-8zbt">SECOP II · Contracting Processes</a></li><li><a href="https://spark.apache.org/docs/latest/api/python/">PySpark documentation</a></li><li><a href="https://huggingface.co/cardiffnlp/twitter-xlm-roberta-base-sentiment">Multilingual sentiment model</a></li><li><a href="https://docs.astral.sh/uv/">uv</a></li></ul></div></div></div></section>
+</main>
+<footer><div class="section-inner"><span>Diego Alejandro Vela Beltrán</span><span data-lang="es">Magíster en Inteligencia Artificial</span><span data-lang="en">Master's Degree in Artificial Intelligence</span></div></footer>
+<script src="../../script.js"></script>
+</body>
+</html>
