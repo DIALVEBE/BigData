@@ -4,7 +4,11 @@ function applyLanguage(lang) {
   const selected = lang === "en" ? "en" : "es";
   document.documentElement.lang = selected;
   document.querySelectorAll("[data-lang]").forEach((node) => {
-    node.hidden = node.dataset.lang !== selected;
+    const shouldHide = node.dataset.lang !== selected;
+    node.toggleAttribute("hidden", shouldHide);
+    if (node.namespaceURI === "http://www.w3.org/2000/svg") {
+      node.style.display = shouldHide ? "none" : "";
+    }
   });
   document.querySelectorAll("[data-lang-button]").forEach((button) => {
     const active = button.dataset.langButton === selected;
