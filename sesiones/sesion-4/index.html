@@ -306,7 +306,7 @@ class AnalizadorSentimientos:
             # -1 indica inferencia en CPU.
             device=-1,
             # Prefiere los pesos en formato Safetensors.
-            model_kwargs={&quot;use_safetensors&quot;: True},
+            # model_kwargs={"use_safetensors": True},
         )
 
         # Selecciona textos del Parquet usando Spark sin traer millones de filas.
