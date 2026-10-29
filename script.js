@@ -20,6 +20,12 @@ function applyLanguage(lang) {
     const suffix = selected === "en" ? "En" : "Es";
     button.textContent = button.dataset[`copyLabel${suffix}`];
   });
+  document.querySelectorAll("[data-expand-code]").forEach((button) => {
+    const suffix = selected === "en" ? "En" : "Es";
+    button.textContent = button.dataset.expandedState === "true"
+      ? button.dataset[`collapseLabel${suffix}`]
+      : button.dataset[`expandLabel${suffix}`];
+  });
   localStorage.setItem(STORAGE_KEY, selected);
 }
 
@@ -36,6 +42,9 @@ function initCopyButtons() {
   document.querySelectorAll("pre.code-panel").forEach((panel) => {
     if (panel.querySelector("[data-copy-code]")) return;
 
+    const code = panel.querySelector("code");
+    const actions = document.createElement("div");
+    actions.className = "code-actions";
     const button = document.createElement("button");
     button.type = "button";
     button.className = "copy-code-button";
@@ -46,7 +55,6 @@ function initCopyButtons() {
     button.dataset.copiedEn = "Copied!";
     button.textContent = document.documentElement.lang === "en" ? "Copy" : "Copiar";
     button.addEventListener("click", async () => {
-      const code = panel.querySelector("code");
       try {
         await navigator.clipboard.writeText(code.textContent);
       } catch {
@@ -67,7 +75,31 @@ function initCopyButtons() {
         button.textContent = button.dataset[`copyLabel${currentSuffix}`];
       }, 1600);
     });
-    panel.append(button);
+    actions.append(button);
+    if (code.textContent.trimEnd().split("\n").length > 12) {
+      panel.classList.add("is-collapsed");
+      const expandButton = document.createElement("button");
+      expandButton.type = "button";
+      expandButton.className = "expand-code-button";
+      expandButton.dataset.expandCode = "";
+      expandButton.dataset.expandLabelEs = "Expandir";
+      expandButton.dataset.expandLabelEn = "Expand";
+      expandButton.dataset.collapseLabelEs = "Contraer";
+      expandButton.dataset.collapseLabelEn = "Collapse";
+      expandButton.setAttribute("aria-expanded", "false");
+      expandButton.textContent = document.documentElement.lang === "en" ? "Expand" : "Expandir";
+      expandButton.addEventListener("click", () => {
+        const expanded = panel.classList.toggle("is-collapsed") === false;
+        expandButton.dataset.expandedState = String(expanded);
+        expandButton.setAttribute("aria-expanded", String(expanded));
+        const suffix = document.documentElement.lang === "en" ? "En" : "Es";
+        expandButton.textContent = expanded
+          ? expandButton.dataset[`collapseLabel${suffix}`]
+          : expandButton.dataset[`expandLabel${suffix}`];
+      });
+      actions.append(expandButton);
+    }
+    panel.append(actions);
   });
 }
 
