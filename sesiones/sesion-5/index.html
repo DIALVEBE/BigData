@@ -2,15 +2,15 @@
 <html lang="es">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sesión 5 · Power BI y gobernanza de datos</title>
+<title>Sesión 5 · Machine Learning con SECOP II</title>
 <meta name="description" content="Clase bilingüe y responsive sobre Power BI y gobernanza de datos aplicada a SECOP II.">
 <link rel="stylesheet" href="../../styles.css">
 </head>
 <body>
 <header class="topbar"><div class="brand"><strong>Universidad Santo Tomás</strong><span data-lang="es">Optativa 1 · Big Data</span><span data-lang="en">Elective 1 · Big Data</span></div><nav class="nav-actions" aria-label="Navigation"><a class="home-link" href="../../"><span data-lang="es">Inicio</span><span data-lang="en">Home</span></a><div class="language-toggle" aria-label="Language selector"><button type="button" data-lang-button="es">ES</button><button type="button" data-lang-button="en">EN</button></div></nav></header>
 <main>
-<section class="hero lesson-hero"><div class="hero-inner"><div><p class="eyebrow" data-lang="es">Sesión 5 · Analítica responsable</p><p class="eyebrow" data-lang="en">Session 5 · Responsible analytics</p><div data-lang="es"><h1>Power BI y gobernanza de datos</h1><p>Convertiremos datos en indicadores comprensibles y trazables, y definiremos quién puede usarlos, con qué calidad, propósito y controles.</p></div><div data-lang="en"><h1>Power BI and data governance</h1><p>We will turn data into clear, traceable measures and define who can use them, for which purpose, and under what quality and control rules.</p></div><div class="stats-band"><div class="stat"><strong>2</strong><span data-lang="es">productos analíticos</span><span data-lang="en">analytics products</span></div><div class="stat"><strong>5</strong><span data-lang="es">dimensiones de calidad</span><span data-lang="en">quality dimensions</span></div><div class="stat"><strong>1</strong><span data-lang="es">caso SECOP II</span><span data-lang="en">SECOP II case</span></div></div></div><div class="hero-visual" aria-hidden="true"><svg class="signal-map" viewBox="0 0 520 470" role="img"><rect x="36" y="48" width="448" height="344" rx="28" fill="none" stroke="rgba(255,255,255,.42)" stroke-width="2"/><path d="M88 340 H432 M88 270 H432 M88 200 H432 M88 130 H432" stroke="rgba(255,255,255,.17)" stroke-width="2"/><rect x="115" y="245" width="45" height="95" rx="7" fill="#9fe5ef"/><rect x="196" y="190" width="45" height="150" rx="7" fill="#fff"/><rect x="277" y="220" width="45" height="120" rx="7" fill="#9fe5ef"/><rect x="358" y="120" width="45" height="220" rx="7" fill="#fff"/><path d="M112 178 C170 150 202 167 240 135 S320 148 394 82" fill="none" stroke="#f6c76b" stroke-width="7" stroke-linecap="round"/><g fill="#f6c76b"><circle cx="112" cy="178" r="9"/><circle cx="240" cy="135" r="9"/><circle cx="394" cy="82" r="9"/></g><g fill="rgba(255,255,255,.9)" font-family="Inter, sans-serif" font-size="17" font-weight="800"><text x="85" y="420">DATA</text><text x="220" y="420">MODEL</text><text x="366" y="420">BI</text></g></svg></div></div></section>
-<section class="section alt"><div class="section-inner"><div class="section-head"><div data-lang="es"><h2>Ruta de aprendizaje</h2><p>Una clase aplicada: modelar y comunicar en Power BI, y gobernar el ciclo completo para que el tablero sea confiable y responsable.</p></div><div data-lang="en"><h2>Learning path</h2><p>An applied class: model and communicate with Power BI, then govern the full data lifecycle so the dashboard is trustworthy and responsible.</p></div></div><nav class="toc" aria-label="Session sections"><a href="#powerbi">1. Power BI</a><a href="#modelo"><span data-lang="es">2. Modelo y medidas</span><span data-lang="en">2. Model and measures</span></a><a href="#gobernanza"><span data-lang="es">3. Gobernanza y roles</span><span data-lang="en">3. Governance and roles</span></a><a href="#bigdata"><span data-lang="es">4. Big Data y principios</span><span data-lang="en">4. Big Data and principles</span></a><a href="#ciclo"><span data-lang="es">5. Ciclo de vida</span><span data-lang="en">5. Data lifecycle</span></a><a href="#catalogo"><span data-lang="es">6. Catálogo y linaje</span><span data-lang="en">6. Catalog and lineage</span></a><a href="#calidad"><span data-lang="es">7. Calidad y controles</span><span data-lang="en">7. Quality and controls</span></a><a href="#implementacion"><span data-lang="es">8. Implementación</span><span data-lang="en">8. Implementation</span></a><a href="#controles-plataforma"><span data-lang="es">Controles por tecnología</span><span data-lang="en">Technology controls</span></a><a href="#marco-completo"><span data-lang="es">9. Marco colombiano</span><span data-lang="en">9. Colombian framework</span></a><a href="#casos"><span data-lang="es">10. SECOP II y DANE</span><span data-lang="en">10. SECOP II and DANE</span></a><a href="#instrumentos"><span data-lang="es">11. Formatos e indicadores</span><span data-lang="en">11. Templates and metrics</span></a><a href="#fuentes"><span data-lang="es">Fuentes completas</span><span data-lang="en">Full references</span></a></nav></div></section>
+<section class="hero lesson-hero"><div class="hero-inner"><div><p class="eyebrow" data-lang="es">Sesión 5 · Machine Learning</p><p class="eyebrow" data-lang="en">Session 5 · Machine Learning</p><div data-lang="es"><h1>Machine Learning con SECOP II</h1><p>Construiremos un flujo supervisado con PySpark, Spark MLlib y regresión logística para estudiar la etiqueta de adjudicación.</p></div><div data-lang="en"><h1>Machine learning with SECOP II</h1><p>We will build a supervised workflow with PySpark, Spark MLlib, and logistic regression to study the award label.</p></div><div class="stats-band"><div class="stat"><strong>4</strong><span data-lang="es">archivos Python</span><span data-lang="en">Python files</span></div><div class="stat"><strong>80/20</strong><span data-lang="es">entrenamiento / prueba</span><span data-lang="en">train / test</span></div><div class="stat"><strong>1</strong><span data-lang="es">modelo supervisado</span><span data-lang="en">supervised model</span></div></div></div><div class="hero-visual" aria-hidden="true"><svg class="signal-map" viewBox="0 0 520 470" role="img"><rect x="36" y="48" width="448" height="344" rx="28" fill="none" stroke="rgba(255,255,255,.42)" stroke-width="2"/><path d="M88 340 H432 M88 270 H432 M88 200 H432 M88 130 H432" stroke="rgba(255,255,255,.17)" stroke-width="2"/><rect x="115" y="245" width="45" height="95" rx="7" fill="#9fe5ef"/><rect x="196" y="190" width="45" height="150" rx="7" fill="#fff"/><rect x="277" y="220" width="45" height="120" rx="7" fill="#9fe5ef"/><rect x="358" y="120" width="45" height="220" rx="7" fill="#fff"/><path d="M112 178 C170 150 202 167 240 135 S320 148 394 82" fill="none" stroke="#f6c76b" stroke-width="7" stroke-linecap="round"/><g fill="#f6c76b"><circle cx="112" cy="178" r="9"/><circle cx="240" cy="135" r="9"/><circle cx="394" cy="82" r="9"/></g><g fill="rgba(255,255,255,.9)" font-family="Inter, sans-serif" font-size="17" font-weight="800"><text x="85" y="420">DATA</text><text x="220" y="420">MODEL</text><text x="366" y="420">BI</text></g></svg></div></div></section>
+<section class="section alt"><div class="section-inner"><div class="section-head"><div data-lang="es"><h2>Ruta de aprendizaje</h2><p>Una clase aplicada: modelar y comunicar en Power BI, y gobernar el ciclo completo para que el tablero sea confiable y responsable.</p></div><div data-lang="en"><h2>Learning path</h2><p>An applied class: model and communicate with Power BI, then govern the full data lifecycle so the dashboard is trustworthy and responsible.</p></div></div><nav class="toc" aria-label="Session sections"><a href="#powerbi">1. Power BI</a><a href="#modelo"><span data-lang="es">2. Modelo y medidas</span><span data-lang="en">2. Model and measures</span></a><a href="#gobernanza"><span data-lang="es">3. Gobernanza y roles</span><span data-lang="en">3. Governance and roles</span></a><a href="#bigdata"><span data-lang="es">4. Big Data y principios</span><span data-lang="en">4. Big Data and principles</span></a><a href="#ciclo"><span data-lang="es">5. Ciclo de vida</span><span data-lang="en">5. Data lifecycle</span></a><a href="#catalogo"><span data-lang="es">6. Catálogo y linaje</span><span data-lang="en">6. Catalog and lineage</span></a><a href="#calidad"><span data-lang="es">7. Calidad y controles</span><span data-lang="en">7. Quality and controls</span></a><a href="#implementacion"><span data-lang="es">8. Implementación</span><span data-lang="en">8. Implementation</span></a><a href="#controles-plataforma"><span data-lang="es">Controles por tecnología</span><span data-lang="en">Technology controls</span></a><a href="#marco-completo"><span data-lang="es">9. Marco colombiano</span><span data-lang="en">9. Colombian framework</span></a><a href="#casos"><span data-lang="es">10. SECOP II y DANE</span><span data-lang="en">10. SECOP II and DANE</span></a><a href="#instrumentos"><span data-lang="es">11. Formatos e indicadores</span><span data-lang="en">11. Templates and metrics</span></a><a href="#machine-learning"><span data-lang="es">12. Machine Learning</span><span data-lang="en">12. Machine Learning</span></a><a href="#fuentes"><span data-lang="es">Fuentes completas</span><span data-lang="en">Full references</span></a></nav></div></section>
 <section class="section" id="powerbi"><div class="section-inner two-col"><div><h2><span data-lang="es">De datos a una historia útil</span><span data-lang="en">From data to a useful story</span></h2></div><div class="content-flow"><p data-lang="es">Power BI integra preparación de datos, modelado, medidas y visualizaciones en un producto analítico. El tablero comunica resultados; no corrige por sí solo problemas de definición, calidad o autorización.</p><p data-lang="en">Power BI brings data preparation, modeling, measures, and visualizations together in an analytics product. A dashboard communicates results; it does not fix definition, quality, or authorization problems by itself.</p><div class="architecture"><div class="arch-step"><strong data-lang="es">1. Obtener</strong><strong data-lang="en">1. Get data</strong><span data-lang="es">Conectar a fuentes autorizadas; registrar fecha y versión.</span><span data-lang="en">Connect to authorized sources; record date and version.</span></div><div class="arch-step"><strong data-lang="es">2. Preparar</strong><strong data-lang="en">2. Prepare</strong><span data-lang="es">Limpiar y tipar en Power Query; conservar pasos reproducibles.</span><span data-lang="en">Clean and set types in Power Query; keep steps reproducible.</span></div><div class="arch-step"><strong data-lang="es">3. Modelar</strong><strong data-lang="en">3. Model</strong><span data-lang="es">Definir granularidad, relaciones y calendario.</span><span data-lang="en">Define grain, relationships, and calendar.</span></div><div class="arch-step"><strong data-lang="es">4. Medir</strong><strong data-lang="en">4. Measure</strong><span data-lang="es">Crear medidas con denominadores documentados.</span><span data-lang="en">Create measures with documented denominators.</span></div><div class="arch-step"><strong data-lang="es">5. Publicar</strong><strong data-lang="en">5. Publish</strong><span data-lang="es">Revisar acceso, actualización y exportaciones.</span><span data-lang="en">Review access, refresh, and exports.</span></div></div><div class="note"><p data-lang="es"><strong>Regla:</strong> cada visual responde una pregunta. Evita ejes engañosos y cifras sin periodo, unidad o población de referencia.</p><p data-lang="en"><strong>Rule:</strong> each visual answers a question. Avoid misleading axes and figures without a period, unit, or reference population.</p></div><div class="table-wrap"><table class="data-table"><thead><tr><th data-lang="es">Pregunta</th><th data-lang="es">Visual útil</th><th data-lang="en">Question</th><th data-lang="en">Useful visual</th></tr></thead><tbody><tr><td data-lang="es">¿Cómo cambia en el tiempo?</td><td data-lang="es">Línea, con periodo y fuente de fecha claros.</td><td data-lang="en">How does it change over time?</td><td data-lang="en">Line chart, with clear date field and period.</td></tr><tr><td data-lang="es">¿Cómo se comparan categorías?</td><td data-lang="es">Barras ordenadas; limitar categorías y explicar el denominador.</td><td data-lang="en">How do categories compare?</td><td data-lang="en">Sorted bars; limit categories and explain denominator.</td></tr><tr><td data-lang="es">¿Cómo se distribuye una magnitud?</td><td data-lang="es">Histograma o caja; informar unidad y valores extremos.</td><td data-lang="en">How is a measure distributed?</td><td data-lang="en">Histogram or box plot; state units and outliers.</td></tr><tr><td data-lang="es">¿Cómo se desglosa un total?</td><td data-lang="es">Barras apiladas con pocas series o tabla cuando comparar importa.</td><td data-lang="en">How is a total composed?</td><td data-lang="en">Stacked bars with few series, or a table when comparison matters.</td></tr></tbody></table></div><div class="grid"><article class="card"><strong>Power Query</strong><p data-lang="es">Preparación y transformación repetible antes de cargar; documenta cambios de tipo, filtros y columnas derivadas.</p><p data-lang="en">Repeatable preparation and transformation before loading; document type changes, filters, and derived fields.</p></article><article class="card"><strong>Modelo semántico y DAX</strong><p data-lang="es">Relaciones y medidas reutilizables. Distingue columna calculada de medida y valida contexto de filtros.</p><p data-lang="en">Reusable relationships and measures. Distinguish calculated columns from measures and validate filter context.</p></article><article class="card"><strong>Informe / panel</strong><p data-lang="es">Un informe explora páginas y filtros; un panel de servicio puede reunir visuales. No publiques ni compartas antes de revisar audiencia, licencias y permisos.</p><p data-lang="en">A report explores pages and filters; a service dashboard can pin visuals. Review audience, licensing, and permissions before publishing or sharing.</p></article></div></div></div></section>
 <section class="section alt" id="modelo"><div class="section-inner"><div class="section-head"><div data-lang="es"><h2>Modelo analítico y medidas</h2><p>Usa un modelo en estrella cuando las tablas representan hechos con dimensiones descriptivas compartidas.</p></div><div data-lang="en"><h2>Analytical model and measures</h2><p>Use a star schema when fact tables share descriptive dimensions.</p></div></div><div data-lang="es" class="mermaid-box"><pre class="mermaid">flowchart LR
   F["Hechos: procesos"] -->|"departamento_id"| D["Dimensión: departamento"]
@@ -89,6 +89,505 @@ GET https://www.datos.gov.co/resource/p6dx-8zbt.json?$limit=500&amp;$order=:id
 # No imprimir filas, nombres ni identificadores de proveedores.</code></pre><p data-lang="es">Antes de producción hacen falta extracción incremental, límites y errores API controlados, accesos, observabilidad, reconciliación y autorización. Un nulo puede significar “no aplica”; el diccionario debe definirlo.</p><p data-lang="en">Production requires incremental extraction, API limits and error handling, access controls, observability, reconciliation, and approval. A null may mean “not applicable”; define it in the dictionary.</p><h3 data-lang="es">Segundo referente: DANE y Sistema Estadístico Nacional</h3><h3 data-lang="en">Second reference: DANE and the National Statistical System</h3><p data-lang="es">La Ley 2335 de 2023 establece el marco de estadísticas oficiales, reconoce el papel técnico del DANE y trata coordinación, estándares, calidad, registros administrativos, metadatos y reserva estadística. Este referente muestra gobernanza interinstitucional. Sus reglas no convierten todo conjunto de datos de cualquier entidad en estadística oficial ni habilitan usar información confidencial para evaluar personas individualmente.</p><p data-lang="en">Law 2335 of 2023 establishes the official statistics framework, recognizes DANE's technical role, and addresses coordination, standards, quality, administrative records, metadata, and statistical confidentiality. It illustrates inter-agency governance. It does not make every dataset official statistics or allow confidential data to be used to assess individuals.</p></div></div></section>
 <section class="section alt" id="instrumentos"><div class="section-inner"><div class="section-head"><div data-lang="es"><h2>Instrumentos prácticos y tablero de gobernanza</h2><p>Un programa se mide con evidencia de decisiones y controles, no por la cantidad de herramientas compradas.</p></div><div data-lang="en"><h2>Practical instruments and governance dashboard</h2><p>Measure a program through evidence of decisions and controls, not the number of tools purchased.</p></div></div><div class="concept-grid"><article class="card"><strong data-lang="es">Ficha de activo</strong><strong data-lang="en">Asset record</strong><p data-lang="es">ID, nombre/versión, propósito, dominio, productor, URL, corte e ingesta, cadencia, Owner/Steward/custodio, grano/claves, cobertura, clasificación, base/condiciones, retención, pruebas, linaje, derivados, usuarios, riesgos, soporte y última revisión.</p><p data-lang="en">ID, name/version, purpose, domain, producer, URL, cutoff/ingestion, cadence, Owner/Steward/custodian, grain/keys, coverage, classification, legal basis/terms, retention, tests, lineage, derivatives, users, risks, support, and review date.</p></article><article class="card"><strong data-lang="es">Registro de regla de calidad</strong><strong data-lang="en">Quality rule record</strong><p data-lang="es">ID · activo/campo · regla de negocio · cálculo · umbral · severidad · Owner · frecuencia · acción al fallar. Ejemplo: ID no nulo ≥99,9 % (propuesto), regla crítica, cuarentena y registro.</p><p data-lang="en">ID · asset/field · business rule · calculation · threshold · severity · Owner · frequency · failure action. Example: non-null ID ≥99.9% (proposed), critical rule, quarantine, and log.</p></article><article class="card"><strong data-lang="es">Solicitud de acceso</strong><strong data-lang="en">Access request</strong><p data-lang="es">Solicitante/área · activo · rol · finalidad · justificación · atributos necesarios · plazo · aprobación Owner · revisión de privacidad/seguridad · fechas de aprobación y revocación · evidencia.</p><p data-lang="en">Requester/team · asset · role · purpose · justification · needed fields · duration · Owner approval · privacy/security review · approval/revocation dates · evidence.</p></article><article class="card"><strong data-lang="es">Incidente de datos</strong><strong data-lang="en">Data incident</strong><p data-lang="es">ID/fecha · activo/versión · tipo (calidad, esquema, seguridad, privacidad, disponibilidad o interpretación) · impacto/gravedad · evidencia · contención · responsable · fecha objetivo · corrección · validación/cierre.</p><p data-lang="en">ID/date · asset/version · type (quality, schema, security, privacy, availability, interpretation) · impact/severity · evidence · containment · owner · due date · correction · validation/closure.</p></article><article class="card"><strong data-lang="es">Ficha de producto publicable</strong><strong data-lang="en">Publishable product record</strong><p data-lang="es">Nombre/versión/autor · pregunta y población · fuentes, claves y corte · granularidad y fórmulas · filtros/exclusiones · calidad/limitaciones · clasificación, privacidad y destinatarios · responsable, cambios y mantenimiento.</p><p data-lang="en">Name/version/publisher · question and population · sources, keys, and cutoff · grain and formulas · filters/exclusions · quality/limits · classification, privacy, and audience · owner, changes, and maintenance.</p></article><article class="card"><strong data-lang="es">Madurez didáctica (no certificación)</strong><strong data-lang="en">Teaching maturity scale (not certification)</strong><p data-lang="es">0 Ausente: informal. 1 Inicial: políticas dispersas. 2 Definido: inventario, RACI y reglas. 3 Gestionado: controles, métricas e incidentes. 4 Integrado: linaje, automatización y mejora sistemática.</p><p data-lang="en">0 Absent: informal. 1 Initial: scattered policies. 2 Defined: inventory, RACI, and rules. 3 Managed: controls, metrics, and incidents. 4 Integrated: lineage, automation, and systematic improvement.</p></article></div><h3 style="margin-top:1.5rem" data-lang="es">Indicadores sugeridos</h3><h3 style="margin-top:1.5rem" data-lang="en">Suggested indicators</h3><div class="table-wrap"><table class="data-table"><thead><tr><th data-lang="es">Indicador</th><th data-lang="es">Evidencia / frecuencia</th><th data-lang="en">Metric</th><th data-lang="en">Evidence / cadence</th></tr></thead><tbody><tr><td data-lang="es">Cobertura de activos críticos</td><td data-lang="es">Activos con ficha / activos identificados · mensual.</td><td data-lang="en">Critical asset coverage</td><td data-lang="en">Assets with records / identified assets · monthly.</td></tr><tr><td data-lang="es">Cobertura de Owner</td><td data-lang="es">Activos con dueño confirmado / activos críticos · mensual.</td><td data-lang="en">Owner coverage</td><td data-lang="en">Assets with confirmed owner / critical assets · monthly.</td></tr><tr><td data-lang="es">Calidad y oportunidad</td><td data-lang="es">Ejecuciones que cumplen reglas críticas; cargas dentro de SLA · por carga/semanal.</td><td data-lang="en">Quality and timeliness</td><td data-lang="en">Runs passing critical checks; loads within SLA · per run/weekly.</td></tr><tr><td data-lang="es">Trazabilidad</td><td data-lang="es">Productos con fuente, versión y reglas documentadas · mensual.</td><td data-lang="en">Traceability</td><td data-lang="en">Products with documented source, version, and rules · monthly.</td></tr><tr><td data-lang="es">Incidentes/resolución</td><td data-lang="es">Pendientes por gravedad/antigüedad; tiempo medio de cierre · semanal/mensual.</td><td data-lang="en">Incidents/resolution</td><td data-lang="en">Open issues by severity/age; mean time to close · weekly/monthly.</td></tr><tr><td data-lang="es">Revisión de accesos</td><td data-lang="es">Permisos revisados a tiempo / permisos por revisar · trimestral.</td><td data-lang="en">Access review</td><td data-lang="en">Permissions reviewed on time / due permissions · quarterly.</td></tr></tbody></table></div><div class="note" style="margin-top:1rem"><p data-lang="es">Evalúa madurez con evidencia en estrategia, roles, calidad, metadatos, seguridad/privacidad, interoperabilidad, linaje y valor. Usa el resultado para priorizar brechas; no lo presentes como certificación oficial.</p><p data-lang="en">Assess maturity with evidence across strategy, roles, quality, metadata, security/privacy, interoperability, lineage, and value. Use results to prioritize gaps; do not present this as official certification.</p></div></div></section>
 <section class="section alt" id="fuentes"><div class="section-inner two-col"><div><h2><span data-lang="es">Fuentes oficiales y técnicas de la guía</span><span data-lang="en">Official and technical references from the guide</span></h2></div><div class="content-flow sources"><div data-lang="es"><ul><li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=191409">Decreto 1389 de 2022 · Función Pública</a></li><li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=49981">Ley 1581 de 2012 · Función Pública</a></li><li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=56882">Ley 1712 de 2014 · Función Pública</a></li><li><a href="https://www.datos.gov.co/d/p6dx-8zbt">SECOP II · Procesos de Contratación</a></li><li><a href="https://learn.microsoft.com/power-bi/">Microsoft Learn · Power BI</a></li><li><a href="https://mintic.gov.co/arquitecturaempresarial/630/articles-398776_recurso_1.pdf">MinTIC · Data Governance Guide v3.0</a></li><li><a href="https://normograma.mintic.gov.co/mintic/compilacion/docs/resolucion_mintic_1519_2020.htm">MinTIC Resolution 1519 of 2020 · open data</a></li><li><a href="https://www.dnp.gov.co/LaEntidad_/subdireccion-general-prospectiva-desarrollo-nacional/direccion-desarrollo-digital/Paginas/documentos-conpes-infraestructura-de-datos.aspx">DNP · CONPES 3920 (Big Data)</a></li><li><a href="https://normograma.mintic.gov.co/mintic/compilacion/docs/resolucion_mintic_0460_2022.htm">MinTIC Resolution 460 of 2022 (PNID)</a></li><li><a href="https://herramientas.datos.gov.co/sites/default/files/2025-08/Gu%C3%ADa%20de%20calidad%20e%20interoperabilidad%20datos%20abiertos-2025.pdf">MinTIC · Open Data Quality and Interoperability Guide v8 (2025)</a></li><li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=221910">Law 2335 of 2023 · official statistics</a></li><li><a href="https://sedeelectronica.sic.gov.co/publicaciones/boletin-juridico/concepto/cuales-personas-estan-obligadas-realizar-el-registro-de-bases-de-datos-personales-en-el-rnbd">SIC · RNBD registration duties</a></li><li><a href="https://www.colombiacompra.gov.co/transparencia/datos-abiertos/conjuntos-de-datos-abiertos">Colombia Compra Eficiente · SECOP datasets and manual</a></li><li><a href="https://conceptos.dane.gov.co/conceptos/conceptos/4430/ficha/">DANE · data governance and administration</a></li><li><a href="https://doi.org/10.6028/NIST.SP.800-188">NIST SP 800-188 · de-identification</a></li><li><a href="https://www.w3.org/TR/vocab-dcat-3/">W3C · Data Catalog Vocabulary (DCAT) v3</a></li><li><a href="https://standard.open-contracting.org/latest/es/guidance/">Open Contracting · OCDS guidance</a></li><li><a href="https://dev.socrata.com/docs/paging.html">Socrata · API paging</a></li><li><a href="https://mintic.gov.co/arquitecturaempresarial/630/articles-398776_recurso_1.pdf">MinTIC · Guía específica de Gobierno de Datos v3.0</a></li><li><a href="https://normograma.mintic.gov.co/mintic/compilacion/docs/resolucion_mintic_1519_2020.htm">Resolución MinTIC 1519 de 2020 · datos abiertos</a></li><li><a href="https://www.dnp.gov.co/LaEntidad_/subdireccion-general-prospectiva-desarrollo-nacional/direccion-desarrollo-digital/Paginas/documentos-conpes-infraestructura-de-datos.aspx">DNP · CONPES 3920 (Big Data)</a></li><li><a href="https://normograma.mintic.gov.co/mintic/compilacion/docs/resolucion_mintic_0460_2022.htm">MinTIC · Resolución 460 de 2022 (PNID)</a></li><li><a href="https://herramientas.datos.gov.co/sites/default/files/2025-08/Gu%C3%ADa%20de%20calidad%20e%20interoperabilidad%20datos%20abiertos-2025.pdf">MinTIC · Guía de calidad e interoperabilidad v8 (2025)</a></li><li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=221910">Ley 2335 de 2023 · estadísticas oficiales</a></li><li><a href="https://sedeelectronica.sic.gov.co/publicaciones/boletin-juridico/concepto/cuales-personas-estan-obligadas-realizar-el-registro-de-bases-de-datos-personales-en-el-rnbd">SIC · sujetos obligados al RNBD</a></li><li><a href="https://www.colombiacompra.gov.co/transparencia/datos-abiertos/conjuntos-de-datos-abiertos">Colombia Compra Eficiente · manual y datasets SECOP</a></li><li><a href="https://conceptos.dane.gov.co/conceptos/conceptos/4430/ficha/">DANE · gobernanza y administración de datos</a></li><li><a href="https://doi.org/10.6028/NIST.SP.800-188">NIST SP 800-188 · desidentificación de datos</a></li><li><a href="https://www.w3.org/TR/vocab-dcat-3/">W3C · Data Catalog Vocabulary (DCAT) v3</a></li><li><a href="https://standard.open-contracting.org/latest/es/guidance/">Open Contracting · guía OCDS</a></li><li><a href="https://dev.socrata.com/docs/paging.html">Socrata · paginación de API</a></li></ul></div><div data-lang="en"><ul><li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=191409">Decree 1389 of 2022 · Función Pública</a></li><li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=49981">Law 1581 of 2012 · Función Pública</a></li><li><a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=56882">Law 1712 of 2014 · Función Pública</a></li><li><a href="https://www.datos.gov.co/d/p6dx-8zbt">SECOP II · Contracting Processes</a></li><li><a href="https://learn.microsoft.com/power-bi/">Microsoft Learn · Power BI</a></li></ul></div><h3 data-lang="es">Glosario mínimo</h3><h3 data-lang="en">Essential glossary</h3><div class="grid"><article class="card"><p data-lang="es"><strong>Activo:</strong> recurso de información con propósito y responsable. <strong>Catálogo:</strong> inventario de activos y metadatos. <strong>Diccionario:</strong> definición técnica y semántica de campos.</p><p data-lang="en"><strong>Asset:</strong> information resource with purpose and owner. <strong>Catalog:</strong> inventory of assets and metadata. <strong>Dictionary:</strong> technical and semantic field definitions.</p></article><article class="card"><p data-lang="es"><strong>Glosario:</strong> términos de negocio aprobados. <strong>Linaje:</strong> origen, transformaciones y destinos. <strong>Grano:</strong> qué representa cada fila o evento.</p><p data-lang="en"><strong>Glossary:</strong> approved business terms. <strong>Lineage:</strong> source, transformations, and destinations. <strong>Grain:</strong> what each row or event represents.</p></article><article class="card"><p data-lang="es"><strong>Owner/Steward:</strong> autoridad funcional / responsable de metadatos y calidad. <strong>Contrato:</strong> interfaz versionada con semántica, reglas y condiciones.</p><p data-lang="en"><strong>Owner/Steward:</strong> business authority / metadata and quality lead. <strong>Contract:</strong> versioned interface with semantics, checks, and terms.</p></article><article class="card"><p data-lang="es"><strong>RACI:</strong> ejecuta, responde, consulta, informa. <strong>SLA:</strong> nivel de servicio acordado. <strong>Producto de datos:</strong> conjunto curado, documentado y mantenido para un uso.</p><p data-lang="en"><strong>RACI:</strong> responsible, accountable, consulted, informed. <strong>SLA:</strong> agreed service level. <strong>Data product:</strong> curated, documented, maintained data for a use.</p></article></div><p data-lang="es">Contenido elaborado a partir de la guía de gobernanza entregada en la carpeta local <code>assets</code>.</p><p data-lang="en">Content developed from the governance guide supplied in the local <code>assets</code> folder.</p></div></div></section>
+<section class="section alt" id="machine-learning"><div class="section-inner"><div class="section-head"><div data-lang="es"><p class="eyebrow">Módulo aplicado · SECOP II</p><h2>Machine Learning con regresión logística</h2><p>Construiremos un flujo de clasificación supervisada con PySpark y Spark MLlib para estudiar la etiqueta de adjudicación.</p></div><div data-lang="en"><p class="eyebrow">Applied module · SECOP II</p><h2>Machine learning with logistic regression</h2><p>We will build a supervised classification workflow with PySpark and Spark MLlib to study the award label.</p></div></div><div class="note"><p data-lang="es"><strong>Alcance:</strong> “No adjudicado” no significa necesariamente “rechazado”; puede ser un proceso en curso. El modelo refleja asociaciones de la muestra, no causalidad ni predicciones validadas de adjudicaciones futuras.</p><p data-lang="en"><strong>Scope:</strong> “Not awarded” does not necessarily mean “rejected”; it may be an ongoing process. The model reflects associations in the sample, not causality or validated predictions of future awards.</p></div><nav class="toc" aria-label="Machine Learning sections"><a href="#ml-fundamentos"><span data-lang="es">Fundamentos</span><span data-lang="en">Foundations</span></a><a href="#ml-entorno"><span data-lang="es">Entorno</span><span data-lang="en">Setup</span></a><a href="#ml-codigo"><span data-lang="es">Código</span><span data-lang="en">Code</span></a><a href="#ml-resultados"><span data-lang="es">Resultados</span><span data-lang="en">Results</span></a></nav><div class="content-flow" style="margin-top:1.5rem"><section id="ml-fundamentos"><h3><span data-lang="es">1. Fundamentos y recorrido</span><span data-lang="en">1. Foundations and workflow</span></h3><p data-lang="es">En aprendizaje supervisado, cada fila tiene variables de entrada X y una respuesta conocida Y. La regresión logística calcula una puntuación entre 0 y 1 y aplica un umbral para clasificar dos clases.</p><p data-lang="en">In supervised learning, each row has input variables X and a known response Y. Logistic regression computes a score between 0 and 1 and applies a threshold to classify two classes.</p><p data-lang="es"><strong>Objetivo:</strong> asociar precio base, modalidad, tipo de contrato y departamento con <code>adjudicado</code>. El identificador no se usa como predictor.</p><p data-lang="en"><strong>Goal:</strong> associate base price, modality, contract type, and department with <code>adjudicado</code>. The identifier is not used as a predictor.</p><pre class="code-panel"><code>CSV SECOP II
+  ↓
+CargaDatos: leer y seleccionar seis columnas; muestrear
+  ↓
+LimpiezaDatos: convertir precio y etiqueta; tratar nulos; log_precio; deduplicar
+  ↓
+ModeloML: persistir en DISK_ONLY; separar 80%/20%
+  ↓
+StringIndexer → OneHotEncoder → VectorAssembler → LogisticRegression
+  ↓
+Predicciones → Accuracy + AUC-ROC + matriz de confusión
+  ↓
+CSV de predicciones + modelo guardado</code></pre><p data-lang="es">La muestra usa aproximadamente 0,5 % de las filas y luego limita a 10.000 registros. La división 80/20 se reproduce con <code>seed=42</code>; los transformadores se ajustan solo con entrenamiento.</p><p data-lang="en">The sample uses approximately 0.5% of rows and then limits to 10,000 records. The 80/20 split is reproducible with <code>seed=42</code>; transformers are fitted only on training data.</p><pre class="code-panel"><code>modalidad_vec + tipo_vec + departamento_vec + log_precio
+                           ↓
+                       features</code></pre></section><section id="ml-entorno"><h3><span data-lang="es">2. Preparar WSL2, uv y Spark</span><span data-lang="en">2. Prepare WSL2, uv, and Spark</span></h3><p data-lang="es">Trabaja dentro del sistema de archivos Linux, por ejemplo <code>~/Projects</code>, no dentro de <code>/mnt/c</code>.</p><p data-lang="en">Work inside the Linux filesystem, for example <code>~/Projects</code>, not inside <code>/mnt/c</code>.</p><pre class="code-panel"><code>sudo apt update
+sudo apt install -y openjdk-17-jdk curl git ca-certificates libblas3 liblapack3 libopenblas0-pthread
+java -version</code></pre><pre class="code-panel"><code>uv --version</code></pre><pre class="code-panel"><code>curl -LsSf https://astral.sh/uv/install.sh | sh
+source &quot;$HOME/.local/bin/env&quot;</code></pre><pre class="code-panel"><code>mkdir -p ~/Projects
+cd ~/Projects
+uv init --bare secop-ml -p 3.12
+cd secop-ml
+uv python install 3.12</code></pre><pre class="code-panel"><code>uv add &quot;pyspark==4.2.0&quot; &quot;numpy==2.5.4&quot;</code></pre><pre class="code-panel"><code>uv run python -c &quot;import pyspark, numpy; print(&#x27;Spark:&#x27;, pyspark.__version__, &#x27;NumPy:&#x27;, numpy.__version__)&quot;</code></pre><pre class="code-panel"><code>mkdir -p datos/original datos/procesados resultados</code></pre><p data-lang="es">Descarga el CSV oficial de SECOP II y guárdalo como <code>datos/original/SecopII_ProcesosDeContratacion.csv</code>.</p><p data-lang="en">Download the official SECOP II CSV and save it as <code>datos/original/SecopII_ProcesosDeContratacion.csv</code>.</p><pre class="code-panel"><code>secop-ml/
+├── datos/
+│   ├── original/
+│   └── procesados/
+├── resultados/
+├── pyproject.toml
+└── uv.lock</code></pre><pre class="code-panel"><code>hx carga.py
+hx limpieza.py
+hx modelo.py
+hx main.py</code></pre></section><section id="ml-codigo"><h3><span data-lang="es">3. Archivos del proyecto</span><span data-lang="en">3. Project files</span></h3><p data-lang="es">Crea estos cuatro archivos Python en la raíz. Los bloques conservan el código fuente de la guía y cada botón copia únicamente el contenido del código.</p><p data-lang="en">Create these four Python files in the project root. The blocks preserve the guide source and each button copies only the code content.</p><h4><span data-lang="es">carga.py · carga, selección y muestreo</span><span data-lang="en">carga.py · loading, selection, and sampling</span></h4><pre class="code-panel"><code>
+import re
+import unicodedata
+
+from pathlib import Path
+from pyspark.sql import SparkSession, functions as F
+
+
+class CargaDatos:
+
+    def __init__(self):
+
+        # Ruta del archivo original
+        self.ruta = (
+            Path(__file__).resolve().parent
+            / &quot;datos&quot;
+            / &quot;original&quot;
+            / &quot;SecopII_ProcesosDeContratacion.csv&quot;
+        )
+
+        # Crear una sesión local de Spark
+        # local[4] permite utilizar 4 núcleos
+        self.spark = (
+            SparkSession.builder
+            .appName(&quot;SECOP-II-Machine-Learning&quot;)
+            .master(&quot;local[2]&quot;)
+            .config(&quot;spark.driver.memory&quot;, &quot;2g&quot;)
+            .config(&quot;spark.sql.shuffle.partitions&quot;, &quot;4&quot;)
+            .getOrCreate()
+        )
+
+        # Mostrar únicamente advertencias y errores
+        self.spark.sparkContext.setLogLevel(&quot;WARN&quot;)
+
+    @staticmethod
+    def normalizar(nombre):
+
+        # Eliminar tildes, espacios y signos
+        # para comparar nombres de columnas
+        texto = unicodedata.normalize(&quot;NFKD&quot;, nombre)
+
+        texto = &quot;&quot;.join(
+            c for c in texto
+            if not unicodedata.combining(c)
+        )
+
+        return re.sub(r&quot;[^a-z0-9]&quot;, &quot;&quot;, texto.lower())
+
+    def cargar(self):
+
+        if not self.ruta.exists():
+            raise FileNotFoundError(
+                f&quot;No se encuentra el archivo: {self.ruta}&quot;
+            )
+
+        # Leer el CSV original de SECOP II
+        df = (
+            self.spark.read
+            .option(&quot;header&quot;, True)
+            .option(&quot;multiLine&quot;, True)
+            .option(&quot;quote&quot;, &#x27;&quot;&#x27;)
+            .option(&quot;escape&quot;, &#x27;&quot;&#x27;)
+            .csv(str(self.ruta))
+        )
+
+        # Correspondencia entre nombres técnicos
+        # y encabezados descriptivos del CSV
+        columnas = {
+            &quot;id_del_proceso&quot;: &quot;ID del Proceso&quot;,
+            &quot;precio_base&quot;: &quot;Precio Base&quot;,
+            &quot;modalidad_de_contratacion&quot;:
+                &quot;Modalidad de Contratacion&quot;,
+            &quot;tipo_de_contrato&quot;: &quot;Tipo de Contrato&quot;,
+            &quot;departamento_entidad&quot;: &quot;Departamento Entidad&quot;,
+            &quot;adjudicado&quot;: &quot;Adjudicado&quot;
+        }
+
+        # Localizar los encabezados disponibles
+        disponibles = {
+            self.normalizar(c): c
+            for c in df.columns
+        }
+
+        expresiones = []
+
+        for tecnico, descriptivo in columnas.items():
+
+            # Buscar primero el nombre técnico
+            # y después el nombre descriptivo
+            encontrado = None
+
+            for nombre in [tecnico, descriptivo]:
+                clave = self.normalizar(nombre)
+
+                if clave in disponibles:
+                    encontrado = disponibles[clave]
+                    break
+
+            if encontrado is None:
+                raise ValueError(
+                    f&quot;No se encontró la columna: {tecnico}&quot;
+                )
+
+            # Conservar la columna y asignar
+            # un nombre uniforme
+            expresiones.append(
+                F.col(f&quot;`{encontrado}`&quot;).alias(tecnico)
+            )
+
+        # Conservar únicamente las columnas necesarias
+        df = df.select(*expresiones)
+
+        # Obtener una muestra aleatoria reproducible del CSV
+        df = df.sample(
+            withReplacement=False,
+            fraction=0.005,
+            seed=42
+        )
+
+        # Limitar el número de registros para la práctica
+        df = df.limit(10000)
+
+        return df
+
+    def cerrar(self):
+
+        # Liberar los recursos de Spark
+        self.spark.stop()</code></pre><h4><span data-lang="es">limpieza.py · tipificación y preparación</span><span data-lang="en">limpieza.py · typing and preparation</span></h4><pre class="code-panel"><code>
+from pyspark.sql import functions as F
+
+
+class LimpiezaDatos:
+
+    def limpiar(self, df):
+
+        # Convertir el precio base de texto a número
+        df = df.withColumn(
+            &quot;precio_base&quot;,
+            F.regexp_replace(
+                F.col(&quot;precio_base&quot;),
+                r&quot;[^0-9.-]&quot;,
+                &quot;&quot;
+            ).cast(&quot;double&quot;)
+        )
+
+        # Normalizar la respuesta de adjudicación
+        respuesta = F.lower(
+            F.trim(F.col(&quot;adjudicado&quot;))
+        )
+
+        # Convertir Sí/No en 1/0
+        # label será la variable objetivo
+        df = df.withColumn(
+            &quot;label&quot;,
+            F.when(
+                respuesta.isin(
+                    &quot;si&quot;, &quot;sí&quot;, &quot;yes&quot;, &quot;true&quot;, &quot;1&quot;
+                ),
+                1.0
+            ).when(
+                respuesta.isin(
+                    &quot;no&quot;, &quot;false&quot;, &quot;0&quot;
+                ),
+                0.0
+            )
+        )
+
+        # Eliminar registros sin identificador,
+        # sin clasificación o sin precio válido
+        df = df.filter(
+            F.col(&quot;id_del_proceso&quot;).isNotNull()
+            &amp; F.col(&quot;label&quot;).isNotNull()
+            &amp; F.col(&quot;precio_base&quot;).isNotNull()
+            &amp; (F.col(&quot;precio_base&quot;) &gt; 0)
+        )
+
+        # Reemplazar valores categóricos vacíos
+        categorias = [
+            &quot;modalidad_de_contratacion&quot;,
+            &quot;tipo_de_contrato&quot;,
+            &quot;departamento_entidad&quot;
+        ]
+
+        for columna in categorias:
+
+            df = df.withColumn(
+                columna,
+                F.when(
+                    F.col(columna).isNull()
+                    | (F.trim(F.col(columna)) == &quot;&quot;),
+                    &quot;Desconocido&quot;
+                ).otherwise(
+                    F.trim(F.col(columna))
+                )
+            )
+
+        # Reducir la escala de la variable precio
+        # log1p calcula log(1 + precio_base)
+        df = df.withColumn(
+            &quot;log_precio&quot;,
+            F.log1p(F.col(&quot;precio_base&quot;))
+        )
+
+        # Conservar un registro por identificador
+        # dentro de la muestra seleccionada
+        df = df.dropDuplicates([&quot;id_del_proceso&quot;])
+
+        return df</code></pre><h4><span data-lang="es">modelo.py · Pipeline y evaluación</span><span data-lang="en">modelo.py · Pipeline and evaluation</span></h4><pre class="code-panel"><code>from pathlib import Path
+
+from pyspark import StorageLevel
+from pyspark.ml import Pipeline
+from pyspark.ml.feature import (
+    StringIndexer,
+    OneHotEncoder,
+    VectorAssembler
+)
+from pyspark.ml.functions import vector_to_array
+from pyspark.ml.classification import LogisticRegression
+from pyspark.ml.evaluation import (
+    BinaryClassificationEvaluator,
+    MulticlassClassificationEvaluator
+)
+from pyspark.sql import functions as F
+
+
+class ModeloML:
+
+    def entrenar(self, df):
+
+        # La muestra ya fue seleccionada en carga.py.
+        # No es necesario volver a aplicar sample().
+
+        # Guardar temporalmente los datos en disco
+        # para evitar recalcular toda la limpieza
+        # durante el entrenamiento y la evaluación.
+        df = df.persist(StorageLevel.DISK_ONLY)
+
+        try:
+            # Materializar los datos procesados.
+            # count() ejecuta las transformaciones pendientes.
+            total = df.count()
+
+            print(f&quot;Registros disponibles para ML: {total}&quot;)
+
+            # Verificar que tengamos suficientes datos
+            if total &lt; 100:
+                raise ValueError(
+                    &quot;No hay suficientes registros para entrenar.&quot;
+                )
+
+            # Dividir los registros:
+            # 80% entrenamiento y 20% prueba.
+            entrenamiento, prueba = df.randomSplit(
+                [0.8, 0.2],
+                seed=42
+            )
+
+            # Columnas categóricas que utilizaremos
+            # para predecir la adjudicación.
+            categorias = [
+                &quot;modalidad_de_contratacion&quot;,
+                &quot;tipo_de_contrato&quot;,
+                &quot;departamento_entidad&quot;
+            ]
+
+            # Convertir las categorías de texto
+            # a índices numéricos.
+            indexador = StringIndexer(
+                inputCols=categorias,
+                outputCols=[
+                    &quot;modalidad_idx&quot;,
+                    &quot;tipo_idx&quot;,
+                    &quot;departamento_idx&quot;
+                ],
+                handleInvalid=&quot;keep&quot;
+            )
+
+            # Convertir los índices numéricos
+            # en vectores binarios.
+            codificador = OneHotEncoder(
+                inputCols=[
+                    &quot;modalidad_idx&quot;,
+                    &quot;tipo_idx&quot;,
+                    &quot;departamento_idx&quot;
+                ],
+                outputCols=[
+                    &quot;modalidad_vec&quot;,
+                    &quot;tipo_vec&quot;,
+                    &quot;departamento_vec&quot;
+                ],
+                handleInvalid=&quot;keep&quot;
+            )
+
+            # Unir todas las variables predictoras
+            # en una columna llamada features.
+            vectorizador = VectorAssembler(
+                inputCols=[
+                    &quot;modalidad_vec&quot;,
+                    &quot;tipo_vec&quot;,
+                    &quot;departamento_vec&quot;,
+                    &quot;log_precio&quot;
+                ],
+                outputCol=&quot;features&quot;
+            )
+
+            # Configurar el modelo de regresión logística.
+            # maxIter: máximo de iteraciones.
+            # regParam: intensidad de regularización.
+            clasificador = LogisticRegression(
+                featuresCol=&quot;features&quot;,
+                labelCol=&quot;label&quot;,
+                maxIter=30,
+                regParam=0.1
+            )
+
+            # Crear el Pipeline con todas las etapas.
+            pipeline = Pipeline(
+                stages=[
+                    indexador,
+                    codificador,
+                    vectorizador,
+                    clasificador
+                ]
+            )
+
+            print(&quot;Entrenando regresión logística...&quot;)
+
+            # Entrenar utilizando solamente
+            # los registros de entrenamiento.
+            modelo = pipeline.fit(entrenamiento)
+
+            print(&quot;Evaluando modelo...&quot;)
+
+            # Generar predicciones sobre los datos de prueba.
+            predicciones = modelo.transform(prueba)
+
+            # Calcular Accuracy:
+            # porcentaje de predicciones correctas.
+            evaluador_accuracy = MulticlassClassificationEvaluator(
+                labelCol=&quot;label&quot;,
+                predictionCol=&quot;prediction&quot;,
+                metricName=&quot;accuracy&quot;
+            )
+
+            accuracy = evaluador_accuracy.evaluate(
+                predicciones
+            )
+
+            # Calcular AUC-ROC:
+            # capacidad del modelo para distinguir
+            # entre las dos clases.
+            evaluador_auc = BinaryClassificationEvaluator(
+                labelCol=&quot;label&quot;,
+                rawPredictionCol=&quot;rawPrediction&quot;,
+                metricName=&quot;areaUnderROC&quot;
+            )
+
+            auc = evaluador_auc.evaluate(predicciones)
+
+            print(f&quot;Accuracy: {accuracy:.4f}&quot;)
+            print(f&quot;AUC-ROC: {auc:.4f}&quot;)
+
+            # Mostrar la matriz de confusión:
+            # comparar valores reales con predicciones.
+            print(&quot;Matriz de confusión:&quot;)
+
+            (
+                predicciones
+                .groupBy(&quot;label&quot;, &quot;prediction&quot;)
+                .count()
+                .orderBy(&quot;label&quot;, &quot;prediction&quot;)
+                .show()
+            )
+
+            # Crear carpeta de resultados.
+            carpeta = Path(&quot;resultados&quot;)
+            carpeta.mkdir(
+                parents=True,
+                exist_ok=True
+            )
+
+            # Guardar el Pipeline entrenado
+            # para reutilizarlo posteriormente.
+            modelo.write().overwrite().save(
+                str(carpeta / &quot;modelo_logistico&quot;)
+            )
+
+            # Seleccionar columnas para Power BI.
+            salida = predicciones.select(
+                &quot;id_del_proceso&quot;,
+                &quot;departamento_entidad&quot;,
+                &quot;modalidad_de_contratacion&quot;,
+                &quot;tipo_de_contrato&quot;,
+                &quot;precio_base&quot;,
+                &quot;label&quot;,
+                &quot;prediction&quot;,
+
+                # La posición 1 representa la puntuación
+                # correspondiente a la clase adjudicada.
+                vector_to_array(
+                    F.col(&quot;probability&quot;)
+                )[1].alias(&quot;probabilidad_adjudicacion&quot;)
+            )
+
+            # Exportar las predicciones a CSV.
+            (
+                salida.coalesce(1)
+                .write.mode(&quot;overwrite&quot;)
+                .option(&quot;header&quot;, True)
+                .csv(str(carpeta / &quot;predicciones&quot;))
+            )
+
+            print(&quot;Resultados guardados correctamente.&quot;)
+
+        finally:
+            # Liberar los datos persistidos en Spark.
+            df.unpersist()</code></pre><h4><span data-lang="es">main.py · ejecución</span><span data-lang="en">main.py · execution</span></h4><pre class="code-panel"><code>
+from carga import CargaDatos
+from limpieza import LimpiezaDatos
+from modelo import ModeloML
+
+
+def main():
+
+    # Primera etapa: cargar datos originales
+    print(&quot;1. Cargando SECOP II...&quot;)
+
+    cargador = CargaDatos()
+
+    try:
+        df = cargador.cargar()
+
+        # Segunda etapa: limpiar información
+        print(&quot;2. Limpiando datos...&quot;)
+
+        limpiador = LimpiezaDatos()
+        df_limpio = limpiador.limpiar(df)
+
+        # Tercera etapa: entrenar el modelo
+        print(&quot;3. Entrenando Machine Learning...&quot;)
+
+        modelo = ModeloML()
+        modelo.entrenar(df_limpio)
+
+        print(&quot;Proceso finalizado.&quot;)
+
+    finally:
+        # Cerrar la sesión de Spark
+        cargador.cerrar()
+
+
+if __name__ == &quot;__main__&quot;:
+    main()</code></pre><pre class="code-panel"><code>uv run python main.py</code></pre></section><section id="ml-resultados"><h3><span data-lang="es">4. Resultados e interpretación</span><span data-lang="en">4. Results and interpretation</span></h3><pre class="code-panel"><code>resultados/
+├── modelo_logistico/        # Modelo y transformaciones guardadas por Spark
+└── predicciones/           # CSV de registros del conjunto de prueba
+    ├── part-00000-....csv
+    └── _SUCCESS</code></pre><pre class="code-panel"><code>Accuracy: 0.9555
+AUC-ROC: 0.9871
+
+Matriz de confusión:
++-----+----------+-----+
+|label|prediction|count|
++-----+----------+-----+
+|  0.0|       0.0| 1677|
+|  0.0|       1.0|   20|
+|  1.0|       0.0|   62|
+|  1.0|       1.0|   84|
++-----+----------+-----+</code></pre><p data-lang="es"><strong>Accuracy</strong> mide aciertos generales; <strong>precision</strong> indica cuántos “Sí” predichos eran correctos; <strong>recall</strong> indica cuántos “Sí” reales detectó; <strong>F1</strong> equilibra precision y recall; <strong>AUC-ROC</strong> mide ordenamiento entre clases al variar el umbral.</p><p data-lang="en"><strong>Accuracy</strong> measures overall correctness; <strong>precision</strong> asks how many predicted “Yes” cases were correct; <strong>recall</strong> asks how many actual “Yes” cases were detected; <strong>F1</strong> balances precision and recall; <strong>AUC-ROC</strong> measures ranking between classes across thresholds.</p><p data-lang="es">La muestra es didáctica y puede cambiar entre ejecuciones. La división aleatoria puede sobreestimar desempeño, los duplicados se simplifican y la etiqueta no prueba causalidad, legalidad ni utilidad fuera del conjunto evaluado.</p><p data-lang="en">The sample is instructional and may change between runs. A random split can overestimate performance, duplicates are simplified, and the label does not prove causality, legality, or usefulness outside the evaluated set.</p></section></div></div></section>
+
 </main>
 <footer><div class="section-inner"><span>Diego Alejandro Vela Beltrán</span><span data-lang="es">Magíster en Inteligencia Artificial</span><span data-lang="en">Master's Degree in Artificial Intelligence</span></div></footer>
 <script type="module">
