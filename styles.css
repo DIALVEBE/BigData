@@ -610,10 +610,163 @@ h1 {
   min-height: 7rem;
 }
 
+.practice-lab {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(145deg, #f8fcfd, #eef7f8);
+}
+
+.practice-mode-list,
+.practice-topic-list,
+.practice-options {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.practice-mode-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.practice-mode,
+.practice-topic-option,
+.practice-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  cursor: pointer;
+}
+
+.practice-mode {
+  justify-content: center;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: white;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 800;
+  text-align: center;
+}
+
+.practice-mode.is-selected,
+.practice-mode:focus-visible {
+  border-color: var(--brand);
+  background: var(--blue-soft);
+  outline: 2px solid rgba(10, 111, 136, 0.25);
+}
+
+.practice-topic-picker {
+  padding: 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.practice-topic-option {
+  font-size: 0.95rem;
+}
+
+.practice-question {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: white;
+}
+
+.practice-progress {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.practice-level {
+  color: var(--brand-dark);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.practice-option {
+  padding: 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fbfdfd;
+}
+
+.practice-option:has(input:checked) {
+  border-color: var(--brand);
+  background: var(--blue-soft);
+}
+
+.practice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.practice-actions button,
+.practice-start-button {
+  border: 1px solid var(--brand);
+  border-radius: 7px;
+  padding: 0.65rem 0.9rem;
+  background: var(--brand);
+  color: white;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.practice-actions button.secondary,
+.practice-start-button.secondary {
+  background: white;
+  color: var(--brand-dark);
+}
+
+.practice-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.practice-feedback,
+.practice-explanation,
+.practice-hint {
+  padding: 0.9rem;
+  border-radius: 9px;
+  background: #fff9e8;
+  border: 1px solid #f0d58a;
+}
+
+.practice-feedback p,
+.practice-explanation p {
+  margin: 0.55rem 0 0;
+}
+
+.practice-finish {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1.4rem;
+  border-radius: 10px;
+  background: var(--green-soft);
+  border: 1px solid #cfe8dc;
+}
+
 @media (max-width: 820px) {
   .theory-grid,
   .theory-flow {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .practice-mode-list {
+    grid-template-columns: 1fr;
   }
 }
 
