@@ -702,7 +702,26 @@ h1 {
   background: #fbfdfd;
 }
 
-.practice-option:has(input:checked) {
+.practice-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.legend-swatch { display: inline-grid; width: 1.45rem; height: 1.45rem; place-items: center; border-radius: 50%; font-weight: 900; }
+.legend-correct { background: #d9f2df; color: #176b39; }
+.legend-incorrect { margin-left: 0.75rem; background: #ffe0dc; color: #a43a2f; }
+.practice-option { flex-wrap: wrap; transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease; }
+.practice-option.is-correct { border-color: #3c9b61; background: #effaf1; box-shadow: inset 4px 0 0 #3c9b61; }
+.practice-option.is-incorrect { border-color: #d76b5f; background: #fff2f0; box-shadow: inset 4px 0 0 #d76b5f; }
+.practice-option-status { flex-basis: 100%; margin-left: 1.55rem; color: #176b39; font-size: 0.85rem; font-weight: 900; }
+.practice-option.is-incorrect .practice-option-status { color: #a43a2f; }
+
+.practice-option:has(input:checked):not(.is-correct):not(.is-incorrect) {
   border-color: var(--brand);
   background: var(--blue-soft);
 }

@@ -103,11 +103,15 @@ function renderQuestion() {
     input.name = "practice-option";
     input.value = option.id;
     input.addEventListener("change", () => {
+      updateSelectionFeedback(item);
       byId("practice-check").disabled = selectedIds().length === 0;
     });
     const text = document.createElement("span");
     text.textContent = option.texto;
-    label.append(input, text);
+    const status = document.createElement("span");
+    status.className = "practice-option-status";
+    status.hidden = true;
+    label.append(input, text, status);
     options.append(label);
   });
   setText(byId("practice-type"), multiple ? "Puedes marcar varias opciones." : "Selecciona una opción.", multiple ? "You may select more than one option." : "Select one option.");
@@ -118,6 +122,23 @@ function renderQuestion() {
   byId("practice-hint").disabled = false;
   byId("practice-hint-text").textContent = "";
   byId("practice-explain").disabled = true;
+}
+
+function updateSelectionFeedback(item) {
+  root.querySelectorAll(".practice-option").forEach((label) => {
+    const input = label.querySelector("input");
+    const status = label.querySelector(".practice-option-status");
+    const selected = input.checked;
+    const correct = item.correctas.includes(input.value);
+    label.classList.remove("is-correct", "is-incorrect");
+    status.hidden = !selected;
+    status.textContent = "";
+    if (!selected) return;
+    label.classList.add(correct ? "is-correct" : "is-incorrect");
+    status.textContent = correct
+      ? copyText("✓ Correcta", "✓ Correct")
+      : copyText("× No es la respuesta esperada", "× Not the expected answer");
+  });
 }
 
 function checkAnswer() {
