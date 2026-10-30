@@ -105,6 +105,7 @@ function renderQuestion() {
     input.addEventListener("change", () => {
       updateSelectionFeedback(item);
       byId("practice-check").disabled = selectedIds().length === 0;
+      byId("practice-next").disabled = selectedIds().length === 0;
     });
     const text = document.createElement("span");
     text.textContent = option.texto;
